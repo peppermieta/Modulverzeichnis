@@ -187,16 +187,18 @@ html = f'''<!DOCTYPE html>
 <body>
 
 <div class="disclaimer">
-  ⚠️ <strong>Inoffizielle, selbst erstellte Übersicht ohne Rechtsverbindlichkeit.</strong>
+  <strong>Inoffizielle, selbst erstellte Übersicht ohne Rechtsverbindlichkeit.</strong>
   Alle Angaben nach bestem Wissen aus dem Modulhandbuch übertragen, Fehler aber nicht ausgeschlossen.
-  Maßgeblich ist ausschließlich das offizielle Modulhandbuch der EH Ludwigsburg –
+  Maßgeblich ist ausschließlich das
+  <a href="https://www.eh-ludwigsburg.de/fileadmin/user_upload/Studium/Studienangebot/Bachelorstudiengaenge/Soziale_Arbeit/BA_Soziale_Arbeit_MHB_2025_Stand_03.2026.pdf" target="_blank">offizielle Modulhandbuch der EH Ludwigsburg</a> –
   <a href="#kontakt">Fehler gefunden? Kontakt siehe unten</a>.
 </div>
 
 <header>
   <div>
     <h1>Modulverzeichnis</h1>
-    <p>Bachelor Soziale Arbeit · EH Ludwigsburg · alle 28 Module im Überblick</p>
+    <p>Bachelor Soziale Arbeit · EH Ludwigsburg · alle 28 Module im Überblick ·
+       <a href="https://kalender.xn--peppermita-lnb.de/" target="_blank" style="color:var(--accent);font-weight:600;text-decoration:none;">Vorlesungskalender ↗</a></p>
   </div>
   <div class="sem-select-wrap">
     <label for="semSelect">Mein aktuelles Semester:</label>
@@ -215,12 +217,15 @@ html = f'''<!DOCTYPE html>
 
 <div class="intro">
   Übersicht aller Module des Studiengangs mit Bausteinen, Modulprüfungen, Modulverantwortlichen,
-  Workload-Aufteilung und Voraussetzungen – basierend auf dem offiziellen Modulhandbuch
-  B.A. Soziale Arbeit der EH Ludwigsburg (Stand 03/2026). Das Original-Handbuch erhältst du direkt
-  über deinen Studiengang. Wähle oben dein aktuelles Semester, um zu sehen, wie die Module
-  aufeinander aufbauen.
+  Workload-Aufteilung und Voraussetzungen – basierend auf dem
+  <a href="https://www.eh-ludwigsburg.de/fileadmin/user_upload/Studium/Studienangebot/Bachelorstudiengaenge/Soziale_Arbeit/BA_Soziale_Arbeit_MHB_2025_Stand_03.2026.pdf" target="_blank">offiziellen Modulhandbuch (Stand 03/2026)</a>.
+  Wähle oben dein aktuelles Semester, um zu sehen, wie die Module aufeinander aufbauen.
+  Wer sich zusätzlich für den Semesterplan interessiert: der
+  <a href="https://kalender.xn--peppermita-lnb.de/" target="_blank">Vorlesungskalender</a> ist auf Android auch
+  als installierbare App nutzbar (inkl. Offline-Zugriff).
 </div>
 
+<p style="max-width:1100px;margin:0 auto;padding:0 24px 6px;font-size:11.5px;color:var(--muted);">Farblegende der Studienbereiche:</p>
 <div class="sb-legend" id="sbLegend"></div>
 
 <div class="mv-plan" id="plan"></div>

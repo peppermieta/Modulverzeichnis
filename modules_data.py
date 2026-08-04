@@ -158,7 +158,7 @@ MODULES = [
        workload=dict(gesamt=180, kontakt=53, selbst=127, praxis=0),
        verwendbarkeit=["BA ISA 18","BA DW 24"]),
   dict(nr=19, name="Praxissemester", sem=[5], cp=30, sws=3, sb=6,
-       verantwortung=None,  # im Handbuch für dieses Modul nicht eindeutig einer Einzelperson zugeordnet
+       verantwortung="Beatrice Gerst",
        bausteine=[("Praxispräsenzzeit","Praxis (800 h)",None),
                   ("Praxisbegleitende Lehrveranstaltung (PBL)","Seminar","UPL"),
                   ("Reflexionszeit zur Selbstevaluation / Dokumentationszeit","Selbststudium (68 h)",None)],

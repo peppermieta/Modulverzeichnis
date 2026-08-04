@@ -7,6 +7,21 @@ Format angelehnt an [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
 _Noch keine offenen Änderungen._
 
+## [1.1.0] - 2026-08-04
+
+### Added
+- Link zum offiziellen PDF-Modulhandbuch der EH Ludwigsburg (extern verlinkt,
+  nicht selbst gehostet – Original bleibt bei der Hochschule)
+- Hinweis "Farblegende der Studienbereiche" direkt über der Farblegende
+- Verlinkung zum Vorlesungskalender (inkl. Hinweis auf die installierbare
+  Android-App) im Header und im Intro-Text
+- Modulverantwortung für Modul 19 (Praxissemester) nachgetragen: Beatrice
+  Gerst (im Original-Handbuch gefunden, Platzhalter "wird nachgetragen"
+  entfernt)
+
+### Changed
+- Disclaimer-Symbol (⚠️) entfernt, Text bleibt inhaltlich gleich
+
 ## [1.0.0] - 2026-08-04
 
 ### Added
