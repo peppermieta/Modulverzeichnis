@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modulverzeichnis – B.A. Soziale Arbeit</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='27' fill='%235B3FC8'/%3E%3C/svg%3E">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg:       #F7F6F3;
+    --surface:  #FFFFFF;
+    --border:   #E2E0D8;
+    --text:     #1A1A18;
+    --muted:    #7A7870;
+    --shadow:   0 2px 8px rgba(0,0,0,.07);
+    --radius:   10px;
+    --accent:   #5B3FC8;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── DISCLAIMER (ganz oben, prominent) ── */
+  .disclaimer {
+    background: #FEF3E2; border-bottom: 2px solid #F5CC80;
+    padding: 14px 24px; font-size: 12.5px; color: #7A5500; line-height: 1.55;
+  }
+  .disclaimer strong { font-weight: 700; }
+  .disclaimer a { color: #7A5500; text-decoration: underline; }
+
+  header {
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    padding: 20px 24px; position: sticky; top: 0; z-index: 50;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;
+  }
+  header h1 { font-size: 20px; font-weight: 700; margin: 0; letter-spacing: -.3px; }
+  header p { font-size: 13px; color: var(--muted); margin: 2px 0 0; }
+
+  .sem-select-wrap { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+  .sem-select-wrap label { color: var(--muted); font-weight: 500; }
+  #semSelect {
+    font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: var(--accent);
+    border: 1px solid var(--border); border-radius: 7px; padding: 7px 10px; background: var(--bg);
+    cursor: pointer;
+  }
+
+  .intro {
+    max-width: 1100px; margin: 0 auto; padding: 20px 24px 4px;
+    font-size: 13.5px; color: var(--muted); line-height: 1.6;
+  }
+
+  /* ── STUDIENVERLAUFSPLAN ── */
+  .mv-plan { max-width: 1100px; margin: 16px auto 32px; padding: 0 24px; }
+  .mv-row { display: flex; align-items: flex-start; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .mv-row:last-child { border-bottom: none; }
+  .mv-row-label { flex: 0 0 100px; display: flex; flex-direction: column; gap: 4px; padding-top: 6px; }
+  .mv-row-sem { font-weight: 700; font-size: 13.5px; }
+  .mv-row-status {
+    font-size: 10.5px; font-weight: 600; padding: 2px 7px; border-radius: 20px;
+    width: fit-content; text-transform: uppercase; letter-spacing: .3px;
+  }
+  .status-done { background: #EEEEEC; color: #777775; }
+  .status-current { background: var(--accent); color: #fff; }
+  .status-upcoming { background: var(--bg); color: var(--muted); border: 1px solid var(--border); }
+  .mv-row-cards { display: flex; flex-wrap: wrap; gap: 8px; flex: 1; }
+  .mv-card {
+    display: block; text-decoration: none; color: var(--text);
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    padding: 8px 11px; min-width: 130px; max-width: 190px; transition: transform .1s, box-shadow .1s;
+  }
+  .mv-card:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+  .mv-card-nr { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 700; opacity: .7; }
+  .mv-card-name { font-size: 12px; font-weight: 600; line-height: 1.3; margin-top: 2px; }
+  .mv-card-span { font-size: 10px; opacity: .65; margin-top: 3px; }
+  .mv-card-done { opacity: .55; }
+
+  /* ── LEGENDE STUDIENBEREICHE ── */
+  .sb-legend { display: flex; flex-wrap: wrap; gap: 7px; max-width: 1100px; margin: 0 auto; padding: 0 24px 8px; }
+  .sb-legend-item {
+    display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 500;
+    padding: 4px 10px; border-radius: 20px; border: 1px solid;
+  }
+  .sb-legend-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ── DETAILKARTEN ── */
+  .mv-details { max-width: 1100px; margin: 0 auto 40px; padding: 0 24px; }
+  .mv-details > h2 { font-size: 15px; margin: 36px 0 14px; padding-top: 20px; border-top: 1px solid var(--border); }
+  .mv-details > h2:first-child { border-top: none; margin-top: 0; }
+  .mv-detail {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 18px 20px; margin-bottom: 14px; scroll-margin-top: 90px;
+  }
+  .mv-detail-head {
+    display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; flex-wrap: wrap;
+    border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 14px;
+  }
+  .mv-detail-nr { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--accent); }
+  .mv-detail-head h3 { font-size: 16px; margin: 2px 0 0; line-height: 1.35; }
+  .mv-detail-meta { font-size: 12px; color: var(--muted); white-space: nowrap; padding-top: 4px; }
+  .mv-sb-tag { display: inline-block; margin-top: 6px; font-size: 10px; font-weight: 700; border-radius: 20px; padding: 2px 9px; }
+  .mv-tag {
+    display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 700;
+    background: #FEF3E2; color: #7A5500; border: 1px solid #F5CC80; border-radius: 20px; padding: 1px 7px;
+  }
+  .mv-detail-body { display: grid; grid-template-columns: 1.5fr 1fr; gap: 22px; }
+  .mv-label {
+    font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px;
+    color: var(--muted); margin-bottom: 8px;
+  }
+  .mv-baustein { display: flex; align-items: center; gap: 8px; font-size: 12.5px; padding: 7px 0; border-bottom: 1px solid var(--border); }
+  .mv-baustein:last-child { border-bottom: none; }
+  .mv-baustein-name { flex: 1; }
+  .mv-baustein-art { font-size: 11px; color: var(--muted); white-space: nowrap; }
+  .mv-pl-badge { font-size: 10px; font-weight: 700; background: #FCE8EF; color: #7A1038; border-radius: 5px; padding: 1px 6px; white-space: nowrap; }
+  .mv-pruefung { font-size: 13px; font-weight: 600; }
+  .mv-pruefung-note { font-weight: 400; color: var(--muted); }
+  .mv-voraus { display: flex; flex-wrap: wrap; gap: 6px; }
+  .mv-voraus-chip { font-size: 11px; padding: 4px 9px; border-radius: 20px; background: var(--bg); border: 1px solid var(--border); color: var(--text); }
+  .mv-voraus-link { text-decoration: none; cursor: pointer; }
+  .mv-voraus-link:hover { border-color: var(--accent); color: var(--accent); }
+  .mv-voraus-none { font-size: 12px; color: var(--muted); font-style: italic; }
+  .mv-verantwortung { font-size: 13px; }
+  .mv-verantwortung.placeholder { color: var(--muted); font-style: italic; font-size: 12px; }
+  .mv-workload { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; }
+  .mv-workload-item { display: flex; flex-direction: column; }
+  .mv-workload-val { font-weight: 700; font-size: 14px; }
+  .mv-workload-label { color: var(--muted); font-size: 10.5px; }
+  .mv-verwendbarkeit { display: flex; flex-wrap: wrap; gap: 5px; }
+  .mv-verwendbarkeit-chip { font-size: 10.5px; padding: 3px 8px; border-radius: 20px; background: var(--bg); border: 1px solid var(--border); color: var(--muted); }
+  .mv-verwendbarkeit-none { font-size: 12px; color: var(--muted); font-style: italic; }
+
+  /* ── KONTAKT / FOOTER ── */
+  .contact-section {
+    max-width: 1100px; margin: 0 auto 24px; padding: 18px 24px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: var(--radius); font-size: 13px; line-height: 1.6;
+  }
+  .contact-section a { color: var(--accent); font-weight: 600; text-decoration: none; }
+  .contact-section a:hover { text-decoration: underline; }
+
+  footer {
+    max-width: 1100px; margin: 0 auto; padding: 20px 24px 40px; font-size: 11.5px;
+    color: var(--muted); line-height: 1.7; border-top: 1px solid var(--border);
+  }
+  footer a { color: var(--muted); }
+
+  @media (max-width: 700px) {
+    header { padding: 14px 16px; }
+    .disclaimer { padding: 12px 16px; }
+    .intro { padding: 14px 16px 4px; }
+    .mv-plan { padding: 0 16px; }
+    .sb-legend { padding: 0 16px 8px; }
+    .mv-row { flex-direction: column; gap: 8px; }
+    .mv-row-label { flex-direction: row; align-items: center; gap: 8px; }
+    .mv-details { padding: 0 16px; }
+    .mv-detail-body { grid-template-columns: 1fr; }
+    .mv-card { min-width: 0; max-width: none; flex: 1 1 45%; }
+    .contact-section, footer { margin-left: 16px; margin-right: 16px; padding-left: 0; padding-right: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="disclaimer">
+  ⚠️ <strong>Inoffizielle, selbst erstellte Übersicht ohne Rechtsverbindlichkeit.</strong>
+  Alle Angaben nach bestem Wissen aus dem Modulhandbuch übertragen, Fehler aber nicht ausgeschlossen.
+  Maßgeblich ist ausschließlich das offizielle Modulhandbuch der EH Ludwigsburg –
+  <a href="#kontakt">Fehler gefunden? Kontakt siehe unten</a>.
+</div>
+
+<header>
+  <div>
+    <h1>Modulverzeichnis</h1>
+    <p>Bachelor Soziale Arbeit · EH Ludwigsburg · alle 28 Module im Überblick</p>
+  </div>
+  <div class="sem-select-wrap">
+    <label for="semSelect">Mein aktuelles Semester:</label>
+    <select id="semSelect">
+      <option value="0">– auswählen –</option>
+      <option value="1">1. Semester</option>
+      <option value="2">2. Semester</option>
+      <option value="3">3. Semester</option>
+      <option value="4">4. Semester</option>
+      <option value="5">5. Semester</option>
+      <option value="6">6. Semester</option>
+      <option value="7">7. Semester</option>
+    </select>
+  </div>
+</header>
+
+<div class="intro">
+  Übersicht aller Module des Studiengangs mit Bausteinen, Modulprüfungen, Modulverantwortlichen,
+  Workload-Aufteilung und Voraussetzungen – basierend auf dem offiziellen Modulhandbuch
+  B.A. Soziale Arbeit der EH Ludwigsburg (Stand 03/2026). Das Original-Handbuch erhältst du direkt
+  über deinen Studiengang. Wähle oben dein aktuelles Semester, um zu sehen, wie die Module
+  aufeinander aufbauen.
+</div>
+
+<div class="sb-legend" id="sbLegend"></div>
+
+<div class="mv-plan" id="plan"></div>
+
+<div class="mv-details" id="details"></div>
+
+<div class="contact-section" id="kontakt">
+  <strong>Fehler gefunden oder Feedback?</strong> Diese Seite wird ehrenamtlich von Studierenden für
+  Studierende gepflegt. Über Hinweise zu Fehlern oder Ergänzungen freuen wir uns:
+  <a href="mailto:info@peppermięta.de">info@peppermięta.de</a>
+</div>
+
+<footer>
+  Der Quellcode dieser Seite ist unter der <strong>MIT-Lizenz</strong> frei nutzbar und veränderbar –
+  Repository auf <a href="https://github.com/peppermieta/Modulverzeichnis" target="_blank">GitHub</a>.
+  Die Inhalte (Modulhandbuch-Daten) gehören der EH Ludwigsburg und sind davon ausgenommen, siehe Disclaimer oben.
+</footer>
+
+<script>
+const MODULES = [{"nr": 1, "name": "Wissenschaftliches Arbeiten", "sem": [1], "cp": 6, "sws": 4, "sb": 5, "verantwortung": "Prof. Dr. Heike Stammer", "bausteine": [["Einführung in das Wissenschaftliche Arbeiten", "Seminar", "UPL"]], "pruefung": ["0745", "MtA", "unbenotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 01", "BA DW 01", "BA RPGP 01"], "modulart": null}, {"nr": 2, "name": "Theorie und Methoden der Beratung in der Sozialen Arbeit", "sem": [1, 2], "cp": 6, "sws": 4, "sb": 5, "verantwortung": "Prof. Dr. Eva Maria Lohner", "bausteine": [["Einführung in die Grundlagen der psychosozialen Beratung", "Vorlesung", "UPL"], ["Gesprächsführung und Kommunikationskompetenzen", "Übung", null]], "pruefung": ["0746", "MtA", "unbenotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 02", "BA DW 02", "BA RPGP 02"], "modulart": null}, {"nr": 3, "name": "Ethische und theologische Perspektiven", "sem": [1], "cp": 6, "sws": 4, "sb": 1, "verantwortung": "Prof. Dr. Björn Görder", "bausteine": [["Grundlagen einer Ethik Sozialer Arbeit", "Seminar", "PL"], ["Ethische Konflikte und ethische Urteilsbildung", "Übung", null]], "pruefung": ["0747", "Klausur / Referat", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 03"], "modulart": null}, {"nr": 4, "name": "Genderperspektiven", "sem": [1], "cp": 6, "sws": 4, "sb": 5, "verantwortung": "Prof. Dr. Johanna Possinger", "bausteine": [["Wie lese ich Daten sozialer Ungleichheit?", "Vorlesung", null], ["Wahlpflichtseminar zu aktuellen Themen", "Seminar", "PL"]], "pruefung": ["0750", "Hausarbeit / Referat", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 04"], "modulart": null}, {"nr": 5, "name": "Einführung in die Soziale Arbeit als Disziplin und Profession", "sem": [1], "cp": 6, "sws": 6, "sb": 1, "verantwortung": "Prof. Dr. Rolf Ahlrichs", "bausteine": [["Einführung in die Grundfragen und Grundlagen Sozialer Arbeit", "Seminar", "UPL"], ["Einführung in die politischen Bezüge Sozialer Arbeit", "Seminar", null], ["Einführung in die rechtlichen Bezüge Sozialer Arbeit", "Seminar", null]], "pruefung": ["0752", "MtA", "unbenotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 63, "selbst": 117, "praxis": 0}, "verwendbarkeit": ["BA ISA 05", "BA DW 05"], "modulart": null}, {"nr": 6, "name": "Inklusion und Exklusion", "sem": [2], "cp": 6, "sws": 4, "sb": 3, "verantwortung": "Prof. Dr. Philine Zölls-Kaser", "bausteine": [["Inklusion – Exklusion im Kontext der Systemtheorie, Inklusionspädagogik und Theorien der Sozialen Arbeit", "Vorlesung", null], ["Wahlpflichtseminare", "Seminar", "PL"]], "pruefung": ["0756", "Hausarbeit / Referat", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 06", "BA DW 20", "BA IPHP 09"], "modulart": null}, {"nr": 7, "name": "Entwicklung und Sozialisation", "sem": [2], "cp": 6, "sws": 4, "sb": 4, "verantwortung": "Prof. Dr. Heike Stammer", "bausteine": [["Entwicklungs- und Sozialisationstheorien unter Berücksichtigung von Verhaltensauffälligkeiten", "Vorlesung", "UPL"], ["Wahlpflichtseminare", "Seminar", null]], "pruefung": ["0757", "MtA", "unbenotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 07", "BA DW 07"], "modulart": null}, {"nr": 8, "name": "Rechtliche Grundlagen und Aufträge Sozialer Arbeit", "sem": [2], "cp": 6, "sws": 5, "sb": 4, "verantwortung": "Prof. Dr. Marc Sieper", "bausteine": [["Grundlagen des Kinder- und Jugendhilfe- sowie Familienrechts", "Seminar", "PL"], ["Rechtliche Grundlagen und Einführung in das Grundsicherungsrecht", "Seminar", "PL"], ["Sozialverwaltungsrecht", "Seminar", "PL"], ["Arbeitsfelder und Aufträge Sozialer Arbeit", "Seminar", null]], "pruefung": ["0759", "Klausur", "benotet"], "voraus": [5], "workload": {"gesamt": 180, "kontakt": 53, "selbst": 127, "praxis": 0}, "verwendbarkeit": ["BA ISA 08", "BA DW 08", "BA RPGP 13"], "modulart": null}, {"nr": 9, "name": "Ästhetik, Kultur, Medien", "sem": [1, 2], "cp": 6, "sws": 5, "sb": 5, "verantwortung": "Prof. Dr. Corinna Schubert", "bausteine": [["Theoretische Grundlagen (1. Sem.)", "Seminar", null], ["Workshop (1. Sem.)", "Workshop", null], ["Methodikworkshop (2. Sem.)", "Workshop", "PL"]], "pruefung": ["0760", "MtA", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 53, "selbst": 127, "praxis": 0}, "verwendbarkeit": ["BA ISA 09", "BA DW 09", "BA RPGP 07"], "modulart": null}, {"nr": 10, "name": "Forschung", "sem": [2], "cp": 6, "sws": 5, "sb": 7, "verantwortung": "Prof. Dr. Peter Höfflin", "bausteine": [["Methoden der empirischen Sozialforschung", "Vorlesung", null], ["Der Einsatz von Forschungsmethoden in sozialen Arbeitsfeldern", "Seminar", "PL"]], "pruefung": ["0764", "MtA", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 53, "selbst": 127, "praxis": 0}, "verwendbarkeit": ["BA ISA 10", "BA DW 10"], "modulart": null}, {"nr": 11, "name": "Projektstudium I", "sem": [3], "cp": 12, "sws": 6, "sb": 2, "verantwortung": "Prof. Dr. Johanna Possinger / Prof. Dr. Stephanie Goeke", "bausteine": [["Projekt", "Praxis", null], ["Projektbegleitseminar (PBS)", "Seminar", "PL"], ["Theorie- / Praxisbezug", "Seminar", null], ["Präsentationstag inkl. Vorbereitung", "Workshop", null]], "pruefung": ["0766", "MtA", "benotet"], "voraus": [1, 4, 5, 8, 10], "workload": {"gesamt": 360, "kontakt": 63, "selbst": 147, "praxis": 150}, "verwendbarkeit": ["BA ISA 11", "BA DW 11"], "modulart": null}, {"nr": 12, "name": "Unterstützung bei der Lebensbewältigung: Beratung und Begleitung", "sem": [3], "cp": 6, "sws": 4, "sb": 6, "verantwortung": "Prof. Dr. Eva Maria Lohner", "bausteine": [["Methoden zur Beratung Einzelner, von Familien und Gruppen", "Seminar", "UPL"], ["Professionelle Anforderungen in den Feldern der Sozialen Arbeit", "Übung", null]], "pruefung": ["0770", "MtA", "unbenotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 12", "BA DW 12", "BA RPGP 20"], "modulart": null}, {"nr": 13, "name": "Rechtliche Perspektiven und Organisationsgrundlagen Sozialer Arbeit", "sem": [3], "cp": 6, "sws": 4, "sb": 2, "verantwortung": "Prof. Dr. Tamara Bloch", "bausteine": [["Vertiefung des Grundsicherungs- und Sozialhilferechts", "Seminar", "PL"], ["Vertiefung des Kinder- und Jugendhilfe- sowie Familienrechts / Prävention sexualisierter Gewalt", "Seminar", "PL"], ["Organisationsgrundlagen", "Seminar", null]], "pruefung": ["0771", "Klausur", "benotet"], "voraus": [8], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 13", "BA DW 18"], "modulart": null}, {"nr": 14, "name": "Internationale, interkulturelle und interreligiöse Perspektiven", "sem": [3], "cp": 6, "sws": 5, "sb": 5, "verantwortung": "Prof. Dr. Nadine Sylla", "bausteine": [["Vielfalt und Unterschiedlichkeit in der Migrationsgesellschaft", "Vorlesung", null], ["Wahlpflichtseminare", "Seminar", "PL"], ["Interkulturelles und diversityorientiertes Training", "Workshop", null]], "pruefung": ["0772", "Referat / Hausarbeit", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 53, "selbst": 127, "praxis": 0}, "verwendbarkeit": ["BA ISA 14", "BA DW 14"], "modulart": null}, {"nr": 15, "name": "Projektstudium II", "sem": [4], "cp": 12, "sws": 6, "sb": 6, "verantwortung": "Prof. Dr. Johanna Possinger / Prof. Dr. Stephanie Goeke", "bausteine": [["Projekt", "Praxis", null], ["Projektbegleitseminar (PBS)", "Seminar", "PL"], ["Theorie- / Praxisbezug", "Seminar", null], ["Präsentationstag inkl. Vorbereitung", "Workshop", null]], "pruefung": ["0774", "MtA", "benotet"], "voraus": [1, 4, 5, 8, 10], "workload": {"gesamt": 360, "kontakt": 63, "selbst": 147, "praxis": 150}, "verwendbarkeit": ["BA ISA 15", "BA DW 15", "BA RPGP 15"], "modulart": null}, {"nr": 16, "name": "Kasuistik, Case-Management und Hilfeplanung", "sem": [4], "cp": 6, "sws": 5, "sb": 6, "verantwortung": "Prof. Dr. Elke Schierer", "bausteine": [["Einführung in das theoriegeleitete, methodische Handeln / Case-Management", "Seminar", "PL"], ["Anwendungsformen in Arbeitsbereichen, Hilfeplanung", "Übung", null]], "pruefung": ["0778", "mündliche Prüfung", "benotet"], "voraus": [2, 5, 8, 12], "workload": {"gesamt": 180, "kontakt": 53, "selbst": 127, "praxis": 0}, "verwendbarkeit": ["BA ISA 16", "BA DW 16"], "modulart": null}, {"nr": 17, "name": "Unterstützung ausgewählter Zielgruppen in Rechtsfragen und betriebswirtschaftliche Aspekte", "sem": [4], "cp": 6, "sws": 4, "sb": 4, "verantwortung": "Prof. Dr. Annette Rabe", "bausteine": [["Wahlpflichtseminare", "Seminar", "UPL"], ["Betriebswirtschaftliche Aspekte", "Seminar", "UPL"]], "pruefung": ["0779", "MtA", "unbenotet"], "voraus": [8], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 17"], "modulart": null}, {"nr": 18, "name": "Gesellschaftliche Strukturen und Prozesse", "sem": [4], "cp": 6, "sws": 5, "sb": 3, "verantwortung": "Prof. Dr. Peter Höfflin", "bausteine": [["Einführung in grundlegende allgemeine Theorien und Schlüsselbegriffe der Soziologie", "Vorlesung", null], ["Soziologische Grundlagen in speziellen Arbeitsfeldern", "Seminar", "PL"]], "pruefung": ["0781", "Hausarbeit / Referat", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 53, "selbst": 127, "praxis": 0}, "verwendbarkeit": ["BA ISA 18", "BA DW 24"], "modulart": null}, {"nr": 19, "name": "Praxissemester", "sem": [5], "cp": 30, "sws": 3, "sb": 6, "verantwortung": null, "bausteine": [["Praxispräsenzzeit", "Praxis (800 h)", null], ["Praxisbegleitende Lehrveranstaltung (PBL)", "Seminar", "UPL"], ["Reflexionszeit zur Selbstevaluation / Dokumentationszeit", "Selbststudium (68 h)", null]], "pruefung": ["0783", "MtA", "unbenotet"], "voraus": ["Module 01–18 (gesamter 1. Studienabschnitt)"], "workload": {"gesamt": 900, "kontakt": 32, "selbst": 68, "praxis": 800}, "verwendbarkeit": ["BA ISA 19", "BA DW 19", "BA RPGP 19"], "modulart": null}, {"nr": 20, "name": "Rahmenbedingungen Sozialer Arbeit und Öffentlichkeitsbezug", "sem": [6], "cp": 6, "sws": 4, "sb": 6, "verantwortung": "Prof. Dr. Jens Müller", "bausteine": [["Moderation und Kommunikation", "Seminar", "PL"], ["Marketing und Fundraising", "Übung", null]], "pruefung": ["0784", "Hausarbeit / Referat", "benotet"], "voraus": [13, 17], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 20"], "modulart": null}, {"nr": 21, "name": "Soziale Arbeit als Disziplin und Profession", "sem": [6], "cp": 6, "sws": 6, "sb": 7, "verantwortung": "Prof. Dr. Elke Schierer", "bausteine": [["Theorien Sozialer Arbeit, disziplinäre Grundlagen und ihre Relevanz für methodische Konzepte und Handlungsherausforderungen", "Seminar", "PL"], ["Biografisch orientierte Kompetenzprofilierung / Projekt BA-Thesis", "Seminar", null]], "pruefung": ["0787", "MtA", "benotet"], "voraus": [5, 19], "workload": {"gesamt": 180, "kontakt": 63, "selbst": 117, "praxis": 0}, "verwendbarkeit": ["BA ISA 21", "BA DW 21"], "modulart": "Wahlpflichtmodul"}, {"nr": 22, "name": "Gemeinwesen und Sozialraum in pluralen Gesellschaften", "sem": [6], "cp": 6, "sws": 5, "sb": 2, "verantwortung": "Prof. Dr. Nadine Sylla", "bausteine": [["Von der Gemeinwesenarbeit über das Quartiersmanagement zur Sozialraumorientierung und zurück?", "Vorlesung", null], ["Wahlpflichtseminare", "Seminar", "PL"], ["Das Allgemeine Gleichbehandlungsgesetz (AGG)", "Seminar", null], ["Methoden der Gemeinwesenarbeit und der Sozialraumanalyse", "Workshop", null]], "pruefung": ["0789", "Referat / Hausarbeit", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 53, "selbst": 127, "praxis": 0}, "verwendbarkeit": ["BA ISA 22", "BA DW 22", "BA RPGP 25"], "modulart": null}, {"nr": 23, "name": "Diakonie und weltanschauliche Organisationen im sozialen Wandel: religiöse und ethische Perspektiven", "sem": [6], "cp": 6, "sws": 4, "sb": 4, "verantwortung": "Prof. Dr. Björn Görder", "bausteine": [["Wertebasiertes soziales Handeln im Kontext von Sozialstaat, Subsidiarität und Freier Wohlfahrtspflege", "Vorlesung", null], ["Diakonische und ethische Fragestellungen in Organisationen der Sozialwirtschaft", "Seminar", "PL"]], "pruefung": ["0794", "MtA", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 23", "BA DW 23"], "modulart": null}, {"nr": 24, "name": "Gesundheit und Soziale Arbeit / Gesundheitsförderung", "sem": [6], "cp": 6, "sws": 4, "sb": 4, "verantwortung": "Prof. Dr. Simone Ries", "bausteine": [["Einführung in Theorie und Praxis der gesundheitsbezogenen Sozialen Arbeit", "Vorlesung", "UPL"], ["Wahlpflichtseminare", "Seminar", null]], "pruefung": ["0796", "MtA", "unbenotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 24"], "modulart": null}, {"nr": 25, "name": "Organisation und Management sozialer Einrichtungen", "sem": [7], "cp": 6, "sws": 4, "sb": 6, "verantwortung": "Prof. Dr. Jens Müller", "bausteine": [["Sozialmanagement", "Seminar", "PL"], ["Arbeitsrecht", "Seminar", null]], "pruefung": ["0799", "Klausur", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 25", "BA RPGP 21"], "modulart": null}, {"nr": 26, "name": "Gestaltung von Lern- und Bildungsprozessen", "sem": [7], "cp": 6, "sws": 4, "sb": 4, "verantwortung": "Prof. Dr. Elke Reichmann", "bausteine": [["Erziehungswissenschaftliche Grundlagen von Lern- und Bildungsprozessen", "Vorlesung", "UPL"], ["Wahlpflichtseminare", "Seminar", null]], "pruefung": ["0802", "MtA", "unbenotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 26"], "modulart": null}, {"nr": 27, "name": "Sozialpolitik und transnationale Bezüge Sozialer Arbeit", "sem": [7], "cp": 6, "sws": 4, "sb": 3, "verantwortung": "Prof. Bettina Heinrich", "bausteine": [["Allgemeine politische, volkswirtschaftliche und geopolitische Rahmenbedingungen Sozialer Arbeit", "Seminar", "UPL"], ["Politische Handlungsfelder Sozialer Arbeit", "Seminar", "UPL"]], "pruefung": ["0803", "MtA", "unbenotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 27"], "modulart": null}, {"nr": 28, "name": "Bachelor-Thesis / Bachelor-Kolloquium", "sem": [7], "cp": 12, "sws": 0, "sb": 0, "verantwortung": "Studiengangsleitung", "bausteine": [["Bachelor-Thesis", "Thesis", null], ["Bachelor-Kolloquium", "Kolloquium", null]], "pruefung": ["8900 / 8905", "Thesis + Kolloquium", "benotet"], "voraus": ["Bestehen des Praxissemesters (Modul 19)"], "workload": {"gesamt": 360, "kontakt": 0, "selbst": 360, "praxis": 0}, "verwendbarkeit": [], "modulart": null}];
+const STUDIENBEREICHE = {"1": {"name": "Grundlagen der Sozialen Arbeit als Disziplin und Profession", "bg": "#E8F5ED", "tx": "#1A5C34", "bd": "#A8D5B5", "dot": "#2E8B57"}, "2": {"name": "Zielgruppen und Arbeitsfelder der Sozialen Arbeit", "bg": "#EDE8FF", "tx": "#3B1D8C", "bd": "#B8A8F0", "dot": "#5B3FC8"}, "3": {"name": "Gesellschaftliche Rahmenbedingungen", "bg": "#E0F4EF", "tx": "#0D5A4A", "bd": "#8DD4C2", "dot": "#1A8C70"}, "4": {"name": "Bezugsdisziplinen", "bg": "#FEF3E2", "tx": "#7A5500", "bd": "#F5CC80", "dot": "#C48A00"}, "5": {"name": "Schlüsselqualifikationen", "bg": "#E0EEFF", "tx": "#1A3A8C", "bd": "#A0BCEA", "dot": "#2050C8"}, "6": {"name": "Sozialarbeiterische Handlungskompetenzen", "bg": "#FCE9E0", "tx": "#8A4526", "bd": "#EFC0A8", "dot": "#CC6B3F"}, "7": {"name": "Reflexion und Evaluation der Sozialen Arbeit", "bg": "#FCE8EF", "tx": "#7A1038", "bd": "#F0A0BC", "dot": "#C41A50"}, "0": {"name": "Ohne spezifische Zuordnung", "bg": "#EEEEEC", "tx": "#444440", "bd": "#BBBBBA", "dot": "#777775"}};
+const CURRENT_KEY = 'mv_current_semester';
+
+function esc(s) {
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function renderLegend() {
+  const el = document.getElementById('sbLegend');
+  el.innerHTML = Object.entries(STUDIENBEREICHE).filter(([k]) => k !== '0').map(([k, sb]) => `
+    <span class="sb-legend-item" style="background:${sb.bg};color:${sb.tx};border-color:${sb.bd}">
+      <span class="sb-legend-dot" style="background:${sb.dot}"></span>${esc(sb.name)}
+    </span>`).join('');
+}
+
+function moduleCardHtml(m, currentSem) {
+  const sb = STUDIENBEREICHE[m.sb];
+  let cls = 'mv-card';
+  let style = `style="background:${sb.bg};color:${sb.tx};border-color:${sb.bd}"`;
+  if (currentSem && m.sem[0] < currentSem && !m.sem.includes(currentSem)) cls += ' mv-card-done';
+  const span = m.sem.length > 1 ? `<div class="mv-card-span">${m.sem[0]}.–${m.sem[m.sem.length-1]}. Sem.</div>` : '';
+  return `<a href="#modul-${m.nr}" class="${cls}" ${style}>
+    <div class="mv-card-nr">M${String(m.nr).padStart(2,'0')}</div>
+    <div class="mv-card-name">${esc(m.name)}</div>
+    ${span}
+  </a>`;
+}
+
+function renderPlan(currentSem) {
+  const el = document.getElementById('plan');
+  let html = '';
+  for (let sem = 1; sem <= 7; sem++) {
+    const modsInSem = MODULES.filter(m => m.sem.includes(sem));
+    let status, statusCls;
+    if (!currentSem) { status = ''; statusCls = ''; }
+    else if (sem < currentSem) { status = 'abgeschlossen'; statusCls = 'status-done'; }
+    else if (sem === currentSem) { status = 'aktuelles Semester'; statusCls = 'status-current'; }
+    else { status = 'kommend'; statusCls = 'status-upcoming'; }
+    const statusHtml = status ? `<span class="mv-row-status ${statusCls}">${status}</span>` : '';
+    html += `<div class="mv-row">
+      <div class="mv-row-label"><span class="mv-row-sem">${sem}. Sem.</span>${statusHtml}</div>
+      <div class="mv-row-cards">${modsInSem.map(m => moduleCardHtml(m, currentSem)).join('')}</div>
+    </div>`;
+  }
+  el.innerHTML = html;
+}
+
+function baustein(b) {
+  const [name, art, pl] = b;
+  const plHtml = pl ? `<span class="mv-pl-badge">${pl}</span>` : '';
+  return `<div class="mv-baustein"><span class="mv-baustein-name">${esc(name)}</span><span class="mv-baustein-art">${esc(art)}</span>${plHtml}</div>`;
+}
+
+function voraus(v) {
+  if (!v.length) return '<span class="mv-voraus-none">keine</span>';
+  return v.map(x => {
+    if (typeof x === 'string') return `<span class="mv-voraus-chip">${esc(x)}</span>`;
+    const target = MODULES.find(m => m.nr === x);
+    return `<a href="#modul-${x}" class="mv-voraus-chip mv-voraus-link">M${String(x).padStart(2,'0')} – ${esc(target.name)}</a>`;
+  }).join(' ');
+}
+
+function verwendbarkeit(v) {
+  if (!v.length) return '<span class="mv-verwendbarkeit-none">keine bekannte Verwendung in anderen Studiengängen</span>';
+  return v.map(x => `<span class="mv-verwendbarkeit-chip">${esc(x)}</span>`).join('');
+}
+
+function renderDetails() {
+  const el = document.getElementById('details');
+  let html = '';
+  let lastSem = null;
+  for (const m of MODULES) {
+    const firstSem = m.sem[0];
+    if (firstSem !== lastSem) { html += `<h2>${firstSem}. Semester</h2>`; lastSem = firstSem; }
+    const sb = STUDIENBEREICHE[m.sb];
+    const semLabel = m.sem.length > 1 ? `${m.sem[0]}.–${m.sem[m.sem.length-1]}. Semester` : `${m.sem[0]}. Semester`;
+    const [pnr, part, pben] = m.pruefung;
+    const modart = m.modulart ? `<span class="mv-tag">${esc(m.modulart)}</span>` : '';
+    const verantwortungHtml = m.verantwortung
+      ? `<div class="mv-verantwortung">${esc(m.verantwortung)}</div>`
+      : `<div class="mv-verantwortung placeholder">wird nachgetragen</div>`;
+    const w = m.workload;
+    html += `
+    <div class="mv-detail" id="modul-${m.nr}">
+      <div class="mv-detail-head">
+        <div>
+          <div class="mv-detail-nr">MODUL ${String(m.nr).padStart(2,'0')}</div>
+          <h3>${esc(m.name)}</h3>
+          <span class="mv-sb-tag" style="background:${sb.bg};color:${sb.tx}">${esc(sb.name)}</span>
+        </div>
+        <div class="mv-detail-meta">${semLabel} · ${m.cp} CP · ${m.sws} SWS ${modart}</div>
+      </div>
+      <div class="mv-detail-body">
+        <div class="mv-col">
+          <div class="mv-label">Bausteine</div>
+          ${m.bausteine.map(baustein).join('')}
+          <div class="mv-label" style="margin-top:16px;">Verwendbarkeit in anderen Studiengängen</div>
+          <div class="mv-verwendbarkeit">${verwendbarkeit(m.verwendbarkeit)}</div>
+        </div>
+        <div class="mv-col mv-col-side">
+          <div class="mv-label">Modulverantwortung</div>
+          ${verantwortungHtml}
+          <div class="mv-label" style="margin-top:14px;">Modulprüfung</div>
+          <div class="mv-pruefung">${esc(pnr)} · ${esc(part)} <span class="mv-pruefung-note">(${esc(pben)})</span></div>
+          <div class="mv-label" style="margin-top:14px;">Workload</div>
+          <div class="mv-workload">
+            <div class="mv-workload-item"><span class="mv-workload-val">${w.gesamt} h</span><span class="mv-workload-label">Gesamt</span></div>
+            <div class="mv-workload-item"><span class="mv-workload-val">${w.kontakt} h</span><span class="mv-workload-label">Kontaktzeit</span></div>
+            <div class="mv-workload-item"><span class="mv-workload-val">${w.selbst} h</span><span class="mv-workload-label">Selbststudium</span></div>
+            ${w.praxis ? `<div class="mv-workload-item"><span class="mv-workload-val">${w.praxis} h</span><span class="mv-workload-label">Praxis</span></div>` : ''}
+          </div>
+          <div class="mv-label" style="margin-top:14px;">Voraussetzungen</div>
+          <div class="mv-voraus">${voraus(m.voraus)}</div>
+        </div>
+      </div>
+    </div>`;
+  }
+  el.innerHTML = html;
+}
+
+function applySemester(sem) {
+  renderPlan(sem || null);
+  if (sem) localStorage.setItem(CURRENT_KEY, sem);
+  else localStorage.removeItem(CURRENT_KEY);
+}
+
+document.getElementById('semSelect').addEventListener('change', e => {
+  applySemester(Number(e.target.value) || null);
+});
+
+// Init
+renderLegend();
+renderDetails();
+const saved = Number(localStorage.getItem(CURRENT_KEY)) || null;
+if (saved) document.getElementById('semSelect').value = String(saved);
+applySemester(saved);
+</script>
+</body>
+</html>
