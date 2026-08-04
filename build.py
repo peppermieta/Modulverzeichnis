@@ -223,8 +223,6 @@ html = f'''<!DOCTYPE html>
   Workload-Aufteilung und Voraussetzungen – basierend auf dem
   <a href="https://www.eh-ludwigsburg.de/fileadmin/user_upload/Studium/Studienangebot/Bachelorstudiengaenge/Soziale_Arbeit/BA_Soziale_Arbeit_MHB_2025_Stand_03.2026.pdf" target="_blank">offiziellen Modulhandbuch (Stand 03/2026)</a>.
   Wähle oben dein aktuelles Semester, um zu sehen, wie die Module aufeinander aufbauen.
-  Wer sich zusätzlich für den Semesterplan interessiert: hier geht's zum
-  <a href="https://kalender.xn--peppermita-lnb.de/" target="_blank">Vorlesungskalender</a>.
 </div>
 
 <p style="max-width:1100px;margin:0 auto;padding:0 24px 6px;font-size:11.5px;color:var(--muted);">Farblegende der Studienbereiche:</p>

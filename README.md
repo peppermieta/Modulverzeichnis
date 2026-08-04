@@ -50,15 +50,17 @@ Fehler gefunden oder Feedback? `info@peppermięta.de`
 
 ## Versionshistorie
 
-Alle Änderungen werden in [CHANGELOG.md](CHANGELOG.md) dokumentiert (aktuelle Version: **1.2.0**).
+Alle Änderungen werden in [CHANGELOG.md](CHANGELOG.md) dokumentiert (aktuelle Version: **1.2.1**).
 
 ## Farbpalette
 
-Siehe [PALETTE.md](PALETTE.md) – Basis-UI identisch zum Kalender, plus eigene Farbe pro
-Studienbereich.
+![Website-Farbpalette](docs/website-palette.svg)
+
+Vollständige Werte (Hex, RGB, CMYK, HSB, HSL, Lab) in [PALETTE.md](PALETTE.md).
 
 ## Tech-Stack
 
 Reines HTML/CSS/JavaScript, keine Frameworks oder Build-Schritte (außer dem optionalen
-Python-Generator für die Moduldaten). Schriftart: [Inter](https://fonts.google.com/specimen/Inter)
-über Google Fonts.
+Python-Generator für die Moduldaten). Schriftarten: [Inter](https://fonts.google.com/specimen/Inter)
+(Fließtext) und [JetBrains Mono](https://www.jetbrains.com/lp/mono/) (Modul-Nummern), beide über
+Google Fonts.

@@ -7,6 +7,21 @@ Format angelehnt an [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
 _Noch keine offenen Änderungen._
 
+## [1.2.1] - 2026-08-04
+
+### Fixed
+- README: Tech-Stack nannte fälschlich nur Inter als Schriftart – JetBrains
+  Mono (für die Modul-Nummern-Badges) wird ebenfalls verwendet, genau wie
+  im Kalender-Repo. Korrigiert.
+
+### Changed
+- README: Farbpalette wird jetzt wie im Kalender-Repo direkt als Swatch-Bild
+  eingebettet (`docs/website-palette.svg`) statt nur auf PALETTE.md zu
+  verweisen.
+- Intro-Text: Satz mit dem Link zum Vorlesungskalender entfernt (der
+  eigenständige Link im Header oben bleibt bestehen) – wie zuvor
+  vereinbart, jetzt gebündelt mit dieser Änderung umgesetzt.
+
 ## [1.2.0] - 2026-08-04
 
 ### Added
