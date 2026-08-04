@@ -7,6 +7,16 @@ Format angelehnt an [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
 _Noch keine offenen Änderungen._
 
+## [1.1.1] - 2026-08-04
+
+### Changed
+- Favicon von generischem Lila-Punkt auf das eigentliche Kalender-Logo
+  umgestellt (Pink-Orchid-Kreis mit Gunmetal-Kalender-Icon), passend zur
+  "Textmarker og"-Palette und identisch zum Kalender-App-Icon.
+- Hinweis auf die installierbare Android-App aus dem Intro-Text entfernt
+  (nicht relevant hier, da rein privates Kalender-Feature) – die Verlinkung
+  zum Vorlesungskalender selbst bleibt bestehen.
+
 ## [1.1.0] - 2026-08-04
 
 ### Added
