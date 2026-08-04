@@ -7,6 +7,24 @@ Format angelehnt an [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
 _Noch keine offenen Änderungen._
 
+## [1.2.0] - 2026-08-04
+
+### Added
+- **Modulverantwortliche mit E-Mail-Adressen**: alle 19 zugehörigen Kontakte
+  aus dem [Personenverzeichnis der EH Ludwigsburg](https://www.eh-ludwigsburg.de/hochschule/personenverzeichnis)
+  recherchiert und als klickbares Mail-Symbol neben jedem Namen ergänzt
+  (bei mehreren Verantwortlichen pro Modul jeweils einzeln verlinkt).
+  Quelle im Footer vermerkt.
+- **Farbpalette wie im Kalender-Repo**: `docs/website-palette.svg` (visueller
+  Swatch, 13 Farben: Basis-UI + 8 Studienbereichsfarben) und
+  `docs/website-palette.txt` (CSV, Hex, Array, Object, Extended Array mit
+  RGB/CMYK/HSB/HSL/Lab, XML) ergänzt, `PALETTE.md` entsprechend neu
+  strukturiert.
+
+### Changed
+- Studiengangsleitung (Modul 28) mit der Mail-Adresse des aktuellen
+  Studiengangsleiters (Prof. Dr. Rolf Ahlrichs) verknüpft.
+
 ## [1.1.1] - 2026-08-04
 
 ### Changed

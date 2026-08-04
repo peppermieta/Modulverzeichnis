@@ -10,7 +10,7 @@ js_modules = []
 for m in MODULES:
     js_modules.append({
         "nr": m["nr"], "name": m["name"], "sem": m["sem"], "cp": m["cp"], "sws": m["sws"],
-        "sb": m["sb"], "verantwortung": m["verantwortung"],
+        "sb": m["sb"], "verantwortung": m["verantwortung"], "email": m.get("email"),
         "bausteine": m["bausteine"], "pruefung": m["pruefung"], "voraus": m["voraus"],
         "workload": m["workload"], "verwendbarkeit": m["verwendbarkeit"],
         "modulart": m.get("modulart"),
@@ -146,6 +146,9 @@ html = f'''<!DOCTYPE html>
   .mv-voraus-link:hover {{ border-color: var(--accent); color: var(--accent); }}
   .mv-voraus-none {{ font-size: 12px; color: var(--muted); font-style: italic; }}
   .mv-verantwortung {{ font-size: 13px; }}
+  .mv-verantwortung > div {{ margin-bottom: 2px; }}
+  .mv-mail-link {{ text-decoration: none; opacity: .7; }}
+  .mv-mail-link:hover {{ opacity: 1; }}
   .mv-verantwortung.placeholder {{ color: var(--muted); font-style: italic; font-size: 12px; }}
   .mv-workload {{ display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; }}
   .mv-workload-item {{ display: flex; flex-direction: column; }}
@@ -238,6 +241,9 @@ html = f'''<!DOCTYPE html>
 </div>
 
 <footer>
+  Kontaktdaten der Modulverantwortlichen entnommen aus dem
+  <a href="https://www.eh-ludwigsburg.de/hochschule/personenverzeichnis" target="_blank">Personenverzeichnis der EH Ludwigsburg</a>,
+  alle übrigen Angaben aus dem oben verlinkten Modulhandbuch.<br>
   Der Quellcode dieser Seite ist unter der <strong>MIT-Lizenz</strong> frei nutzbar und veränderbar –
   Repository auf <a href="https://github.com/peppermieta/Modulverzeichnis" target="_blank">GitHub</a>.
   Die Inhalte (Modulhandbuch-Daten) gehören der EH Ludwigsburg und sind davon ausgenommen, siehe Disclaimer oben.
@@ -312,6 +318,16 @@ function verwendbarkeit(v) {{
   return v.map(x => `<span class="mv-verwendbarkeit-chip">${{esc(x)}}</span>`).join('');
 }}
 
+function renderVerantwortung(names, emails) {{
+  const nameList = names.split(' / ');
+  const emailList = (emails || '').split(' / ');
+  return '<div class="mv-verantwortung">' + nameList.map((name, i) => {{
+    const email = emailList[i];
+    const mail = email ? ` <a href="mailto:${{email}}" class="mv-mail-link" title="E-Mail an ${{esc(name)}}">✉</a>` : '';
+    return `<div>${{esc(name)}}${{mail}}</div>`;
+  }}).join('') + '</div>';
+}}
+
 function renderDetails() {{
   const el = document.getElementById('details');
   let html = '';
@@ -324,7 +340,7 @@ function renderDetails() {{
     const [pnr, part, pben] = m.pruefung;
     const modart = m.modulart ? `<span class="mv-tag">${{esc(m.modulart)}}</span>` : '';
     const verantwortungHtml = m.verantwortung
-      ? `<div class="mv-verantwortung">${{esc(m.verantwortung)}}</div>`
+      ? renderVerantwortung(m.verantwortung, m.email)
       : `<div class="mv-verantwortung placeholder">wird nachgetragen</div>`;
     const w = m.workload;
     html += `

@@ -1,47 +1,35 @@
 # Farbpalette
 
-Basis-UI-Farben identisch zum Kalender-Projekt, plus eine eigene Farbe pro Studienbereich
-(statt einer Farbe pro Modul, da 28 Module sonst zu unruhig gewirkt hätten).
+Basis-UI (Hintergrund, Fläche, Rahmen, Text) identisch zum Kalender-Projekt, plus eine eigene
+Farbe pro Studienbereich – statt einer Farbe pro Modul, da 28 einzelne Modulfarben zu unruhig
+gewirkt hätten. Details zur Zuordnung siehe [PLANUNG_Modulverzeichnis-v2.md](https://github.com/peppermieta/Kalender/blob/main/PLANUNG_Modulverzeichnis-v2.md) im Kalender-Repo.
 
-## Basis-UI
+![Website-Farbpalette](docs/website-palette.svg)
 
-| Name | Hex |
-|---|---|
-| Hintergrund | `#F7F6F3` |
-| Fläche | `#FFFFFF` |
-| Rahmen | `#E2E0D8` |
-| Text | `#1A1A18` |
-| Gedämpft | `#7A7870` |
-| Akzent-Lila | `#5B3FC8` |
-
-## Studienbereiche (7 + "ohne Zuordnung")
-
-| Studienbereich | Farbe | Hex | Herkunft |
-|---|---|---|---|
-| 1 · Grundlagen der Sozialen Arbeit als Disziplin und Profession | Smaragdgrün | `#2E8B57` | vom Kalender übernommen (bisher M09) |
-| 2 · Zielgruppen und Arbeitsfelder der Sozialen Arbeit | Lila | `#5B3FC8` | vom Kalender übernommen (bisher M07), identisch zum Akzent-Lila |
-| 3 · Gesellschaftliche Rahmenbedingungen | Petrol/Grün | `#1A8C70` | vom Kalender übernommen (bisher M06) |
-| 4 · Bezugsdisziplinen | Gold | `#C48A00` | vom Kalender übernommen (bisher M08) |
-| 5 · Schlüsselqualifikationen | Blau | `#2050C8` | vom Kalender übernommen (bisher M02) |
-| 6 · Sozialarbeiterische Handlungskompetenzen | Terrakotta | `#CC6B3F` | neu, da alle 6 bisherigen Kalenderfarben bereits anderen Bereichen zugeordnet waren |
-| 7 · Reflexion und Evaluation der Sozialen Arbeit | Pink | `#C41A50` | vom Kalender übernommen (bisher M10) |
-| Ohne spezifische Zuordnung (Modul 28) | Grau | `#777775` | vom Kalender übernommen (bisher ZA) |
-
-Jede Farbe wird im selben Vierer-Set wie im Kalender verwendet: Hintergrund (pastellig), Text (dunkel),
-Rahmen (mittlerer Ton), Punkt/Akzent (kräftig) – siehe `index.html`, Objekt `STUDIENBEREICHE`.
+Der lila Akzent ("Akzent-Lila") wird für Links, Fokus-Zustände und das aktuelle Semester in der
+Semesterauswahl verwendet und ist identisch mit der Farbe von Studienbereich 2.
 
 ## Formate zum Kopieren
+
+Alle Werte auch als reine Textdatei verfügbar: [`docs/website-palette.txt`](docs/website-palette.txt) (CSV, Hex, Array, Object, Extended Array, XML).
 
 - CSV
 
 ```
-F7F6F3,FFFFFF,E2E0D8,1A1A18,7A7870,5B3FC8,2E8B57,5B3FC8,1A8C70,C48A00,2050C8,CC6B3F,C41A50,777775
+f7f6f3,ffffff,e2e0d8,1a1a18,7a7870,5b3fc8,2e8b57,1a8c70,c48a00,2050c8,cc6b3f,c41a50,777775
 ```
 
 - With #
 
 ```
-#F7F6F3, #FFFFFF, #E2E0D8, #1A1A18, #7A7870, #5B3FC8, #2E8B57, #5B3FC8, #1A8C70, #C48A00, #2050C8, #CC6B3F, #C41A50, #777775
+#f7f6f3, #ffffff, #e2e0d8, #1a1a18, #7a7870, #5b3fc8, #2e8b57, #1a8c70, #c48a00, #2050c8, #cc6b3f, #c41a50, #777775
 ```
 
-Ausführliche Werte (RGB/CMYK/HSB/HSL/Lab) siehe [PALETTE.md im Kalender-Repo](https://github.com/peppermieta/Kalender/blob/main/PALETTE.md) – dieselbe Methodik, hier aus Aufwandsgründen nicht dupliziert.
+- Object
+
+```json
+{"Hintergrund": "f7f6f3", "Flaeche": "ffffff", "Rahmen": "e2e0d8", "Text": "1a1a18", "Gedaempft": "7a7870", "Akzent-Lila / SB 2": "5b3fc8", "SB 1 - Grundlagen": "2e8b57", "SB 3 - Rahmenbed.": "1a8c70", "SB 4 - Bezugsdisz.": "c48a00", "SB 5 - Schluesselq.": "2050c8", "SB 6 - Handl.komp.": "cc6b3f", "SB 7 - Reflexion": "c41a50", "Ohne Zuordnung": "777775"}
+```
+
+Ausführlichere Formate (Array, Extended Array mit RGB/CMYK/HSB/HSL/Lab, XML) stehen in
+[`docs/website-palette.txt`](docs/website-palette.txt).

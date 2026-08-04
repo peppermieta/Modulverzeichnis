@@ -36,9 +36,6 @@ python3 build.py
 erzeugt eine neue `index.html` aus den aktuellen Daten in `modules_data.py`. Nicht direkt in der
 generierten `index.html` editieren – Änderungen gehen beim nächsten Build verloren.
 
-**Aktuell noch offen:** Für Modul 19 (Praxissemester) ist die Modulverantwortung im Handbuch nicht
-eindeutig einer Einzelperson zugeordnet – zeigt aktuell den Platzhalter "wird nachgetragen".
-
 ## Lizenz & Quelle
 
 Der Quellcode dieser Seite steht unter der [MIT-Lizenz](LICENSE) und darf frei genutzt und
@@ -53,7 +50,7 @@ Fehler gefunden oder Feedback? `info@peppermięta.de`
 
 ## Versionshistorie
 
-Alle Änderungen werden in [CHANGELOG.md](CHANGELOG.md) dokumentiert (aktuelle Version: **1.1.1**).
+Alle Änderungen werden in [CHANGELOG.md](CHANGELOG.md) dokumentiert (aktuelle Version: **1.2.0**).
 
 ## Farbpalette
 
