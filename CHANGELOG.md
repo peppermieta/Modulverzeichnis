@@ -3,6 +3,26 @@
 Alle nennenswerten Änderungen an diesem Projekt werden hier dokumentiert.
 Format angelehnt an [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
+## [1.4.0] - 2026-08-05
+
+### Changed
+- **Disclaimer/Kontakt/Footer grundlegend neu strukturiert** (nach ausführlicher
+  Abstimmung, statt der bisherigen schrittweisen Einzeländerungen): Jede der
+  6 Meta-Infos (Status, Datenquelle+Version, Kontaktdaten-Quelle, Feedback,
+  Lizenz, Rechte an den Inhalten) steht jetzt an genau einer Stelle.
+  - Obere Leiste: nur noch "Inoffizielle Seite · mehr dazu" (kein separater
+    Kontakt-Link mehr oben).
+  - Die bisherige `.disclaimer-full`-Box entfällt komplett, ihr Inhalt ist
+    jetzt Teil des Footers (dort standen ohnehin schon Lizenz/Rechte-Angaben).
+  - Kontakt-Box enthält nur noch die eigentliche Aufforderung ("Fehler
+    gefunden oder Feedback?" + E-Mail), keine Quellenangaben mehr.
+  - Footer bündelt jetzt alle Quellen-/Rechte-Angaben (Modulhandbuch-Version,
+    Personenverzeichnis, MIT-Lizenz, Datenrechte) und ist zugleich das
+    Sprungziel für "mehr dazu" oben.
+  - Kleinere sprachliche Dopplung behoben ("Modulhandbuch der EH Ludwigsburg
+    (Modulhandbuch 2025 ...)" → "... (Version 2025 ...)").
+  - Tote CSS-Regel für die längst ersetzte alte `.disclaimer`-Klasse entfernt.
+
 ## [1.3.2] - 2026-08-05
 
 ### Changed

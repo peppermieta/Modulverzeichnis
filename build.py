@@ -54,16 +54,6 @@ html = f'''<!DOCTYPE html>
   }}
   .disclaimer-mini a {{ color: #403f4c; font-weight: 600; text-decoration: underline; }}
 
-  /* ── DISCLAIMER, unten: ausführliche Version bei Kontakt/Footer ── */
-  .disclaimer-full {{
-    max-width: 1100px; margin: 32px auto 0; padding: 16px 20px; scroll-margin-top: var(--header-h);
-    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-    font-size: 12.5px; color: var(--muted); line-height: 1.6;
-  }}
-  .disclaimer-full strong {{ color: var(--text); font-weight: 700; }}
-  .disclaimer-full a {{ color: var(--accent); font-weight: 600; text-decoration: none; }}
-  .disclaimer-full a:hover {{ text-decoration: underline; }}
-
   header {{
     background: var(--surface); border-bottom: 1px solid var(--border);
     padding: 20px 24px; position: sticky; top: 0; z-index: 50;
@@ -179,12 +169,13 @@ html = f'''<!DOCTYPE html>
   footer {{
     max-width: 1100px; margin: 0 auto; padding: 20px 24px 40px; font-size: 11.5px;
     color: var(--muted); line-height: 1.7; border-top: 1px solid var(--border);
+    scroll-margin-top: var(--header-h);
   }}
   footer a {{ color: var(--muted); }}
 
   @media (max-width: 700px) {{
     header {{ padding: 14px 16px; }}
-    .disclaimer {{ padding: 12px 16px; }}
+    .disclaimer-mini {{ padding: 9px 16px; }}
     .intro {{ padding: 14px 16px 4px; }}
     .mv-plan {{ padding: 0 16px; }}
     .sb-legend {{ padding: 0 16px 8px; }}
@@ -193,7 +184,7 @@ html = f'''<!DOCTYPE html>
     .mv-details {{ padding: 0 16px; }}
     .mv-detail-body {{ grid-template-columns: 1fr; }}
     .mv-card {{ min-width: 0; max-width: none; flex: 1 1 45%; }}
-    .disclaimer-full, .contact-section {{ margin-left: 16px; margin-right: 16px; padding: 16px; }}
+    .contact-section {{ margin-left: 16px; margin-right: 16px; padding: 16px; }}
     footer {{ margin-left: 16px; margin-right: 16px; padding-left: 0; padding-right: 0; }}
   }}
 </style>
@@ -201,9 +192,8 @@ html = f'''<!DOCTYPE html>
 <body>
 
 <div class="disclaimer-mini">
-  Inoffizielle Seite nach dem Studiengang Soziale Arbeit, Bachelor of Arts (B.A.) – Modulhandbuch 2025, Stand: 27.03.2026 ·
-  <a href="#disclaimer">mehr dazu</a> ·
-  <a href="#kontakt">Kontakt</a>
+  Inoffizielle Seite ·
+  <a href="#disclaimer">mehr dazu</a>
 </div>
 
 <header>
@@ -240,23 +230,18 @@ html = f'''<!DOCTYPE html>
 
 <div class="mv-details" id="details"></div>
 
-<div class="disclaimer-full" id="disclaimer">
-  <strong>Inoffizielle, selbst erstellte Übersicht ohne Rechtsverbindlichkeit.</strong>
-  Alle Angaben wurden nach bestem Wissen aus dem Modulhandbuch übertragen, Fehler sind aber nicht
-  ausgeschlossen. Maßgeblich ist ausschließlich das
-  <a href="https://www.eh-ludwigsburg.de/fileadmin/user_upload/Studium/Studienangebot/Bachelorstudiengaenge/Soziale_Arbeit/BA_Soziale_Arbeit_MHB_2025_Stand_03.2026.pdf" target="_blank">offizielle Modulhandbuch der EH Ludwigsburg</a>
-  (Modulhandbuch 2025, Stand: 27.03.2026).
-</div>
-
 <div class="contact-section" id="kontakt">
-  <strong>Fehler gefunden oder Feedback?</strong> Über Hinweise zu Fehlern oder Ergänzungen freuen wir uns:
-  <a href="mailto:info@peppermięta.de">info@peppermięta.de</a><br><br>
-  Kontaktdaten der Modulverantwortlichen entnommen aus dem
-  <a href="https://www.eh-ludwigsburg.de/hochschule/personenverzeichnis" target="_blank">Personenverzeichnis der EH Ludwigsburg</a>,
-  alle übrigen Angaben aus dem oben verlinkten Modulhandbuch.
+  <strong>Fehler gefunden oder Feedback?</strong>
+  <a href="mailto:info@peppermięta.de">info@peppermięta.de</a>
 </div>
 
-<footer>
+<footer id="disclaimer">
+  Diese inoffizielle, selbst erstellte Übersicht ist rechtlich nicht bindend – maßgeblich ist
+  ausschließlich das offizielle
+  <a href="https://www.eh-ludwigsburg.de/fileadmin/user_upload/Studium/Studienangebot/Bachelorstudiengaenge/Soziale_Arbeit/BA_Soziale_Arbeit_MHB_2025_Stand_03.2026.pdf" target="_blank">Modulhandbuch der EH Ludwigsburg</a>
+  (Version 2025, Stand: 27.03.2026). Kontaktdaten der Modulverantwortlichen entnommen aus dem
+  <a href="https://www.eh-ludwigsburg.de/hochschule/personenverzeichnis" target="_blank">Personenverzeichnis der EH Ludwigsburg</a>,
+  alle übrigen Angaben aus dem verlinkten Modulhandbuch.<br>
   Der Quellcode dieser Seite ist unter der <strong>MIT-Lizenz</strong> frei nutzbar und veränderbar –
   Repository auf <a href="https://github.com/peppermieta/Modulverzeichnis" target="_blank">GitHub</a>.
   Die Inhalte (Modulhandbuch-Daten) gehören der EH Ludwigsburg und sind davon ausgenommen.
