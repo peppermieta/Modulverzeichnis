@@ -3,6 +3,19 @@
 Alle nennenswerten Änderungen an diesem Projekt werden hier dokumentiert.
 Format angelehnt an [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
+## [1.3.1] - 2026-08-05
+
+### Changed
+- **Disclaimer/Kontakt/Footer nochmal geschärft**: Oberer Hinweis jetzt ein
+  echter Kurztext (Studiengang, Modulhandbuch-Version 2025, Stand
+  27.03.2026) mit Sprunglink zur ausführlichen Box unten statt eigenem
+  Handbuch-Link. Quellenangabe zu den Modulverantwortlichen-Kontaktdaten
+  aus dem Footer in die Kontakt-Box verschoben (thematisch passender).
+  "Diese Seite wird ehrenamtlich von Studierenden für Studierende
+  gepflegt." aus der Kontakt-Box entfernt. Verweis "siehe Disclaimer oben"
+  im Footer entfernt (nicht mehr nötig, da die Lizenzangabe jetzt für sich
+  steht).
+
 ## [1.3.0] - 2026-08-05
 
 ### Fixed

@@ -56,7 +56,7 @@ html = f'''<!DOCTYPE html>
 
   /* ── DISCLAIMER, unten: ausführliche Version bei Kontakt/Footer ── */
   .disclaimer-full {{
-    max-width: 1100px; margin: 32px auto 0; padding: 16px 20px;
+    max-width: 1100px; margin: 32px auto 0; padding: 16px 20px; scroll-margin-top: var(--header-h);
     background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
     font-size: 12.5px; color: var(--muted); line-height: 1.6;
   }}
@@ -201,8 +201,8 @@ html = f'''<!DOCTYPE html>
 <body>
 
 <div class="disclaimer-mini">
-  Inoffizielle Studierenden-Seite, keine Rechtsverbindlichkeit ·
-  <a href="https://www.eh-ludwigsburg.de/fileadmin/user_upload/Studium/Studienangebot/Bachelorstudiengaenge/Soziale_Arbeit/BA_Soziale_Arbeit_MHB_2025_Stand_03.2026.pdf" target="_blank">offizielles Modulhandbuch</a> ·
+  Inoffizielle Seite nach dem Studiengang Soziale Arbeit, Bachelor of Arts (B.A.) – Modulhandbuch 2025, Stand: 27.03.2026 ·
+  <a href="#disclaimer">mehr dazu</a> ·
   <a href="#kontakt">Kontakt</a>
 </div>
 
@@ -241,7 +241,7 @@ html = f'''<!DOCTYPE html>
 
 <div class="mv-details" id="details"></div>
 
-<div class="disclaimer-full">
+<div class="disclaimer-full" id="disclaimer">
   <strong>Inoffizielle, selbst erstellte Übersicht ohne Rechtsverbindlichkeit.</strong>
   Alle Angaben wurden nach bestem Wissen aus dem Modulhandbuch übertragen, Fehler sind aber nicht
   ausgeschlossen. Maßgeblich ist ausschließlich das
@@ -249,18 +249,17 @@ html = f'''<!DOCTYPE html>
 </div>
 
 <div class="contact-section" id="kontakt">
-  <strong>Fehler gefunden oder Feedback?</strong> Diese Seite wird ehrenamtlich von Studierenden für
-  Studierende gepflegt. Über Hinweise zu Fehlern oder Ergänzungen freuen wir uns:
-  <a href="mailto:info@peppermięta.de">info@peppermięta.de</a>
+  <strong>Fehler gefunden oder Feedback?</strong> Über Hinweise zu Fehlern oder Ergänzungen freuen wir uns:
+  <a href="mailto:info@peppermięta.de">info@peppermięta.de</a><br><br>
+  Kontaktdaten der Modulverantwortlichen entnommen aus dem
+  <a href="https://www.eh-ludwigsburg.de/hochschule/personenverzeichnis" target="_blank">Personenverzeichnis der EH Ludwigsburg</a>,
+  alle übrigen Angaben aus dem oben verlinkten Modulhandbuch.
 </div>
 
 <footer>
-  Kontaktdaten der Modulverantwortlichen entnommen aus dem
-  <a href="https://www.eh-ludwigsburg.de/hochschule/personenverzeichnis" target="_blank">Personenverzeichnis der EH Ludwigsburg</a>,
-  alle übrigen Angaben aus dem oben verlinkten Modulhandbuch.<br>
   Der Quellcode dieser Seite ist unter der <strong>MIT-Lizenz</strong> frei nutzbar und veränderbar –
   Repository auf <a href="https://github.com/peppermieta/Modulverzeichnis" target="_blank">GitHub</a>.
-  Die Inhalte (Modulhandbuch-Daten) gehören der EH Ludwigsburg und sind davon ausgenommen, siehe Disclaimer oben.
+  Die Inhalte (Modulhandbuch-Daten) gehören der EH Ludwigsburg und sind davon ausgenommen.
 </footer>
 
 <script>
