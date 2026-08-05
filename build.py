@@ -172,6 +172,11 @@ html = f'''<!DOCTYPE html>
     scroll-margin-top: var(--header-h);
   }}
   footer a {{ color: var(--muted); }}
+  footer:target {{ animation: footer-highlight 2.5s ease-out; }}
+  @keyframes footer-highlight {{
+    from {{ background: rgba(223, 187, 234, .35); }}
+    to   {{ background: transparent; }}
+  }}
 
   @media (max-width: 700px) {{
     header {{ padding: 14px 16px; }}
@@ -231,12 +236,13 @@ html = f'''<!DOCTYPE html>
 <div class="mv-details" id="details"></div>
 
 <div class="contact-section" id="kontakt">
-  <strong>Fehler gefunden oder Feedback?</strong>
+  <strong>Fehler gefunden oder Feedback?</strong> Über Hinweise zu Fehlern oder Ergänzungen freuen wir uns:
   <a href="mailto:info@peppermięta.de">info@peppermięta.de</a>
 </div>
 
 <footer id="disclaimer">
-  Diese inoffizielle, selbst erstellte Übersicht ist rechtlich nicht bindend – maßgeblich ist
+  Diese inoffizielle, selbst erstellte Übersicht ist rechtlich nicht bindend. Alle Angaben wurden
+  nach bestem Wissen übertragen, Fehler sind aber nicht ausgeschlossen – maßgeblich ist
   ausschließlich das offizielle
   <a href="https://www.eh-ludwigsburg.de/fileadmin/user_upload/Studium/Studienangebot/Bachelorstudiengaenge/Soziale_Arbeit/BA_Soziale_Arbeit_MHB_2025_Stand_03.2026.pdf" target="_blank">Modulhandbuch der EH Ludwigsburg</a>
   (Version 2025, Stand: 27.03.2026). Kontaktdaten der Modulverantwortlichen entnommen aus dem

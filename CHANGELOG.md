@@ -3,6 +3,23 @@
 Alle nennenswerten Änderungen an diesem Projekt werden hier dokumentiert.
 Format angelehnt an [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
+## [1.4.1] - 2026-08-05
+
+### Added
+- **Footer-Highlight beim Sprung von "mehr dazu"**: Per CSS `:target` blendet
+  der Footer kurz in Pink Orchid ein und wieder aus (2,5s, keine JS nötig).
+  Löst das Problem, dass man nach dem Sprung durch die große Modul-28-Karte
+  direkt darüber nicht erkannt hat, dass der (kleingedruckte) Footer das
+  eigentliche Ziel ist.
+
+### Changed
+- Kontakt-Box: Satz "Über Hinweise zu Fehlern oder Ergänzungen freuen wir
+  uns" wieder ergänzt (bei der letzten Umstrukturierung gekürzt worden,
+  auf Wunsch zurückgeholt).
+- Footer: Hinweis "Alle Angaben wurden nach bestem Wissen übertragen,
+  Fehler sind aber nicht ausgeschlossen" wieder ergänzt (ebenfalls bei der
+  letzten Umstrukturierung gestrichen worden, auf Wunsch zurückgeholt).
+
 ## [1.4.0] - 2026-08-05
 
 ### Changed
