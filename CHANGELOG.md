@@ -3,6 +3,18 @@
 Alle nennenswerten Änderungen an diesem Projekt werden hier dokumentiert.
 Format angelehnt an [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
+## [1.3.2] - 2026-08-05
+
+### Changed
+- Intro-Text: Verlinkung/Erwähnung des Modulhandbuchs entfernt (redundant,
+  steht bereits im Disclaimer oben und unten).
+- Untere Disclaimer-Box: Modulhandbuch-Version/Stand ("Modulhandbuch 2025,
+  Stand: 27.03.2026") als reiner Text ergänzt (ohne eigenen Link, der
+  bestehende Link auf das Handbuch bleibt unverändert).
+- Obere Mini-Disclaimer-Leiste farblich hervorgehoben: Hintergrund jetzt
+  Pink Orchid (`#dfbbea`) mit Gunmetal-Text (`#403f4c`), beides aus der
+  bevorzugten Farbpalette.
+
 ## [1.3.1] - 2026-08-05
 
 ### Changed

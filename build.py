@@ -49,10 +49,10 @@ html = f'''<!DOCTYPE html>
 
   /* ── DISCLAIMER, oben: kurzer dezenter Hinweis ── */
   .disclaimer-mini {{
-    background: var(--bg); border-bottom: 1px solid var(--border);
-    padding: 9px 24px; font-size: 12px; color: var(--muted); line-height: 1.5; text-align: center;
+    background: #dfbbea; color: #403f4c;
+    padding: 9px 24px; font-size: 12px; line-height: 1.5; text-align: center;
   }}
-  .disclaimer-mini a {{ color: var(--muted); font-weight: 600; text-decoration: underline; }}
+  .disclaimer-mini a {{ color: #403f4c; font-weight: 600; text-decoration: underline; }}
 
   /* ── DISCLAIMER, unten: ausführliche Version bei Kontakt/Footer ── */
   .disclaimer-full {{
@@ -229,9 +229,8 @@ html = f'''<!DOCTYPE html>
 
 <div class="intro">
   Übersicht aller Module des Studiengangs mit Bausteinen, Modulprüfungen, Modulverantwortlichen,
-  Workload-Aufteilung und Voraussetzungen – basierend auf dem
-  <a href="https://www.eh-ludwigsburg.de/fileadmin/user_upload/Studium/Studienangebot/Bachelorstudiengaenge/Soziale_Arbeit/BA_Soziale_Arbeit_MHB_2025_Stand_03.2026.pdf" target="_blank">offiziellen Modulhandbuch (Stand 03/2026)</a>.
-  Wähle oben dein aktuelles Semester, um zu sehen, wie die Module aufeinander aufbauen.
+  Workload-Aufteilung und Voraussetzungen. Wähle oben dein aktuelles Semester, um zu sehen, wie die
+  Module aufeinander aufbauen.
 </div>
 
 <p style="max-width:1100px;margin:0 auto;padding:0 24px 6px;font-size:11.5px;color:var(--muted);">Farblegende der Studienbereiche:</p>
@@ -245,7 +244,8 @@ html = f'''<!DOCTYPE html>
   <strong>Inoffizielle, selbst erstellte Übersicht ohne Rechtsverbindlichkeit.</strong>
   Alle Angaben wurden nach bestem Wissen aus dem Modulhandbuch übertragen, Fehler sind aber nicht
   ausgeschlossen. Maßgeblich ist ausschließlich das
-  <a href="https://www.eh-ludwigsburg.de/fileadmin/user_upload/Studium/Studienangebot/Bachelorstudiengaenge/Soziale_Arbeit/BA_Soziale_Arbeit_MHB_2025_Stand_03.2026.pdf" target="_blank">offizielle Modulhandbuch der EH Ludwigsburg</a>.
+  <a href="https://www.eh-ludwigsburg.de/fileadmin/user_upload/Studium/Studienangebot/Bachelorstudiengaenge/Soziale_Arbeit/BA_Soziale_Arbeit_MHB_2025_Stand_03.2026.pdf" target="_blank">offizielle Modulhandbuch der EH Ludwigsburg</a>
+  (Modulhandbuch 2025, Stand: 27.03.2026).
 </div>
 
 <div class="contact-section" id="kontakt">
