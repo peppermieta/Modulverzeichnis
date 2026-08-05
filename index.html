@@ -17,6 +17,7 @@
     --shadow:   0 2px 8px rgba(0,0,0,.07);
     --radius:   10px;
     --accent:   #5B3FC8;
+    --header-h: 90px;
   }
   * { box-sizing: border-box; }
   body {
@@ -24,13 +25,22 @@
     font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased;
   }
 
-  /* ── DISCLAIMER (ganz oben, prominent) ── */
-  .disclaimer {
-    background: #FEF3E2; border-bottom: 2px solid #F5CC80;
-    padding: 14px 24px; font-size: 12.5px; color: #7A5500; line-height: 1.55;
+  /* ── DISCLAIMER, oben: kurzer dezenter Hinweis ── */
+  .disclaimer-mini {
+    background: var(--bg); border-bottom: 1px solid var(--border);
+    padding: 9px 24px; font-size: 12px; color: var(--muted); line-height: 1.5; text-align: center;
   }
-  .disclaimer strong { font-weight: 700; }
-  .disclaimer a { color: #7A5500; text-decoration: underline; }
+  .disclaimer-mini a { color: var(--muted); font-weight: 600; text-decoration: underline; }
+
+  /* ── DISCLAIMER, unten: ausführliche Version bei Kontakt/Footer ── */
+  .disclaimer-full {
+    max-width: 1100px; margin: 32px auto 0; padding: 16px 20px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    font-size: 12.5px; color: var(--muted); line-height: 1.6;
+  }
+  .disclaimer-full strong { color: var(--text); font-weight: 700; }
+  .disclaimer-full a { color: var(--accent); font-weight: 600; text-decoration: none; }
+  .disclaimer-full a:hover { text-decoration: underline; }
 
   header {
     background: var(--surface); border-bottom: 1px solid var(--border);
@@ -92,7 +102,7 @@
   .mv-details > h2:first-child { border-top: none; margin-top: 0; }
   .mv-detail {
     background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-    box-shadow: var(--shadow); padding: 18px 20px; margin-bottom: 14px; scroll-margin-top: 90px;
+    box-shadow: var(--shadow); padding: 18px 20px; margin-bottom: 14px; scroll-margin-top: var(--header-h);
   }
   .mv-detail-head {
     display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; flex-wrap: wrap;
@@ -161,18 +171,17 @@
     .mv-details { padding: 0 16px; }
     .mv-detail-body { grid-template-columns: 1fr; }
     .mv-card { min-width: 0; max-width: none; flex: 1 1 45%; }
-    .contact-section, footer { margin-left: 16px; margin-right: 16px; padding-left: 0; padding-right: 0; }
+    .disclaimer-full, .contact-section { margin-left: 16px; margin-right: 16px; padding: 16px; }
+    footer { margin-left: 16px; margin-right: 16px; padding-left: 0; padding-right: 0; }
   }
 </style>
 </head>
 <body>
 
-<div class="disclaimer">
-  <strong>Inoffizielle, selbst erstellte Übersicht ohne Rechtsverbindlichkeit.</strong>
-  Alle Angaben nach bestem Wissen aus dem Modulhandbuch übertragen, Fehler aber nicht ausgeschlossen.
-  Maßgeblich ist ausschließlich das
-  <a href="https://www.eh-ludwigsburg.de/fileadmin/user_upload/Studium/Studienangebot/Bachelorstudiengaenge/Soziale_Arbeit/BA_Soziale_Arbeit_MHB_2025_Stand_03.2026.pdf" target="_blank">offizielle Modulhandbuch der EH Ludwigsburg</a> –
-  <a href="#kontakt">Fehler gefunden? Kontakt siehe unten</a>.
+<div class="disclaimer-mini">
+  Inoffizielle Studierenden-Seite, keine Rechtsverbindlichkeit ·
+  <a href="https://www.eh-ludwigsburg.de/fileadmin/user_upload/Studium/Studienangebot/Bachelorstudiengaenge/Soziale_Arbeit/BA_Soziale_Arbeit_MHB_2025_Stand_03.2026.pdf" target="_blank">offizielles Modulhandbuch</a> ·
+  <a href="#kontakt">Kontakt</a>
 </div>
 
 <header>
@@ -209,6 +218,13 @@
 <div class="mv-plan" id="plan"></div>
 
 <div class="mv-details" id="details"></div>
+
+<div class="disclaimer-full">
+  <strong>Inoffizielle, selbst erstellte Übersicht ohne Rechtsverbindlichkeit.</strong>
+  Alle Angaben wurden nach bestem Wissen aus dem Modulhandbuch übertragen, Fehler sind aber nicht
+  ausgeschlossen. Maßgeblich ist ausschließlich das
+  <a href="https://www.eh-ludwigsburg.de/fileadmin/user_upload/Studium/Studienangebot/Bachelorstudiengaenge/Soziale_Arbeit/BA_Soziale_Arbeit_MHB_2025_Stand_03.2026.pdf" target="_blank">offizielle Modulhandbuch der EH Ludwigsburg</a>.
+</div>
 
 <div class="contact-section" id="kontakt">
   <strong>Fehler gefunden oder Feedback?</strong> Diese Seite wird ehrenamtlich von Studierenden für
@@ -373,6 +389,27 @@ renderDetails();
 const saved = Number(localStorage.getItem(CURRENT_KEY)) || null;
 if (saved) document.getElementById('semSelect').value = String(saved);
 applySemester(saved);
+
+// ── Header-Höhe dynamisch messen (variiert je nach Viewport-Breite, da das
+//    Semester-Dropdown auf schmalen Bildschirmen umbricht) und als
+//    scroll-margin-top für die Modulkarten nutzen, statt eines festen Werts.
+const headerEl = document.querySelector('header');
+function updateHeaderHeight() {
+  const h = Math.ceil(headerEl.getBoundingClientRect().height) + 14;
+  document.documentElement.style.setProperty('--header-h', h + 'px');
+}
+updateHeaderHeight();
+if ('ResizeObserver' in window) {
+  new ResizeObserver(updateHeaderHeight).observe(headerEl);
+} else {
+  window.addEventListener('resize', updateHeaderHeight);
+}
+// Falls die Seite direkt mit einem #modul-Anker geöffnet wurde, könnte der
+// Browser schon vor der Höhenmessung gescrollt haben – einmal korrigieren.
+if (location.hash) {
+  const target = document.querySelector(location.hash);
+  if (target) requestAnimationFrame(() => target.scrollIntoView({block: 'start'}));
+}
 </script>
 </body>
 </html>

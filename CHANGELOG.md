@@ -3,9 +3,26 @@
 Alle nennenswerten Änderungen an diesem Projekt werden hier dokumentiert.
 Format angelehnt an [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
-## [Unreleased]
+## [1.3.0] - 2026-08-05
 
-_Noch keine offenen Änderungen._
+### Fixed
+- **Mobiler Anker-Sprung zu Modulen** (`#modul-N`): Auf schmalen Viewports
+  bricht das Semester-Dropdown im Header in eine zweite Zeile um, wodurch
+  der Header deutlich höher wird (bis zu 131px statt 81px am Desktop). Der
+  bisher feste `scroll-margin-top: 90px` war dafür nicht ausreichend, sodass
+  der Header den oberen Teil der Zielkarte verdeckte. Jetzt wird die
+  tatsächliche Header-Höhe per `ResizeObserver` laufend gemessen und als
+  CSS-Variable `--header-h` gesetzt – inkl. Korrektur-Scroll beim direkten
+  Öffnen eines Anker-Links, bevor die Messung greift.
+- **Feedback-Box auf Mobil**: Der horizontale Innenabstand wurde durch eine
+  fehlerhafte Media-Query-Regel auf 0 gesetzt, wodurch der Text direkt am
+  Kartenrand klebte. Jetzt konsistentes Padding wie am Desktop.
+
+### Changed
+- **Disclaimer neu aufgeteilt**: Oben nur noch ein kurzer, dezenter Hinweis
+  (kein grelles Gelb mehr, sondern dezente Farben passend zum restlichen
+  Seitendesign) mit Links zu Handbuch und Kontakt. Der ausführliche Text
+  steht jetzt unten direkt vor der Kontakt-Box.
 
 ## [1.2.1] - 2026-08-04
 
