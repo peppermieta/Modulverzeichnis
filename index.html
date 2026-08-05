@@ -3,6 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+  try {
+    if (localStorage.getItem('mv_theme') === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  } catch (e) {}
+</script>
 <title>Modulverzeichnis – B.A. Soziale Arbeit</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0ODAgNDgwIj4KICA8Y2lyY2xlIGN4PSIyNDAiIGN5PSIyNDAiIHI9IjIyMCIgZmlsbD0iI2RmYmJlYSIvPgogIDxyZWN0IHg9IjE3NCIgeT0iMTU1IiB3aWR0aD0iMTYiIGhlaWdodD0iMzAiIHJ4PSI4IiBmaWxsPSIjNDAzZjRjIi8+CiAgPHJlY3QgeD0iMjkwIiB5PSIxNTUiIHdpZHRoPSIxNiIgaGVpZ2h0PSIzMCIgcng9IjgiIGZpbGw9IiM0MDNmNGMiLz4KICA8cmVjdCB4PSIxNjAiIHk9IjE3NSIgd2lkdGg9IjE2MCIgaGVpZ2h0PSIxNTAiIHJ4PSIyOCIgZmlsbD0iIzQwM2Y0YyIvPgogIDxyZWN0IHg9IjE4MCIgeT0iMTkyIiB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEwIiByeD0iNSIgZmlsbD0iI2RmYmJlYSIvPgogIDxyZWN0IHg9IjE4NiIgeT0iMjIyIiB3aWR0aD0iMjgiIGhlaWdodD0iMjIiIHJ4PSI2IiBmaWxsPSIjZGZiYmVhIi8+CiAgPHJlY3QgeD0iMjI2IiB5PSIyMjIiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyMiIgcng9IjYiIGZpbGw9IiNkZmJiZWEiLz4KICA8cmVjdCB4PSIyNjYiIHk9IjIyMiIgd2lkdGg9IjI4IiBoZWlnaHQ9IjIyIiByeD0iNiIgZmlsbD0iI2RmYmJlYSIvPgogIDxyZWN0IHg9IjE4NiIgeT0iMjU0IiB3aWR0aD0iMjgiIGhlaWdodD0iMjIiIHJ4PSI2IiBmaWxsPSIjZGZiYmVhIi8+CiAgPHJlY3QgeD0iMjI2IiB5PSIyNTQiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyMiIgcng9IjYiIGZpbGw9IiNkZmJiZWEiLz4KICA8cmVjdCB4PSIyNjYiIHk9IjI1NCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjIyIiByeD0iNiIgZmlsbD0iI2RmYmJlYSIvPgo8L3N2Zz4=">
 <style>
@@ -19,10 +26,22 @@
     --accent:   #5B3FC8;
     --header-h: 90px;
   }
+  html { color-scheme: light; }
+  html[data-theme="dark"] {
+    color-scheme: dark;
+    --bg:       #18171A;
+    --surface:  #221F24;
+    --border:   #383540;
+    --text:     #EDEBE8;
+    --muted:    #A6A29E;
+    --shadow:   0 2px 10px rgba(0,0,0,.4);
+    --accent:   #A692F0;
+  }
   * { box-sizing: border-box; }
   body {
     margin: 0; background: var(--bg); color: var(--text);
     font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased;
+    transition: background .2s, color .2s;
   }
 
   /* ── DISCLAIMER, oben: kurzer dezenter Hinweis ── */
@@ -31,6 +50,8 @@
     padding: 9px 24px; font-size: 12px; line-height: 1.5; text-align: center;
   }
   .disclaimer-mini a { color: #403f4c; font-weight: 600; text-decoration: underline; }
+  html[data-theme="dark"] .disclaimer-mini { background: #362A3E; color: #EFD6F4; }
+  html[data-theme="dark"] .disclaimer-mini a { color: #EFD6F4; }
 
   header {
     background: var(--surface); border-bottom: 1px solid var(--border);
@@ -39,6 +60,22 @@
   }
   header h1 { font-size: 20px; font-weight: 700; margin: 0; letter-spacing: -.3px; }
   header p { font-size: 13px; color: var(--muted); margin: 2px 0 0; }
+
+  .header-right { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+
+  .theme-toggle { background: none; border: none; padding: 0; cursor: pointer; display: flex; align-items: center; flex-shrink: 0; }
+  .theme-toggle-track {
+    width: 40px; height: 22px; border-radius: 20px; background: var(--border);
+    position: relative; display: inline-block; transition: background .2s;
+  }
+  .theme-toggle-thumb {
+    position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%;
+    background: var(--surface); box-shadow: 0 1px 2px rgba(0,0,0,.25);
+    display: flex; align-items: center; justify-content: center; font-size: 10px; line-height: 1;
+    transition: transform .2s;
+  }
+  .theme-toggle[aria-checked="true"] .theme-toggle-track { background: var(--accent); }
+  .theme-toggle[aria-checked="true"] .theme-toggle-thumb { transform: translateX(18px); }
 
   .sem-select-wrap { display: flex; align-items: center; gap: 8px; font-size: 13px; }
   .sem-select-wrap label { color: var(--muted); font-weight: 500; }
@@ -64,6 +101,7 @@
     width: fit-content; text-transform: uppercase; letter-spacing: .3px;
   }
   .status-done { background: #EEEEEC; color: #777775; }
+  html[data-theme="dark"] .status-done { background: #2E2C29; color: #A6A29E; }
   .status-current { background: var(--accent); color: #fff; }
   .status-upcoming { background: var(--bg); color: var(--muted); border: 1px solid var(--border); }
   .mv-row-cards { display: flex; flex-wrap: wrap; gap: 8px; flex: 1; }
@@ -102,10 +140,31 @@
   .mv-detail-head h3 { font-size: 16px; margin: 2px 0 0; line-height: 1.35; }
   .mv-detail-meta { font-size: 12px; color: var(--muted); white-space: nowrap; padding-top: 4px; }
   .mv-sb-tag { display: inline-block; margin-top: 6px; font-size: 10px; font-weight: 700; border-radius: 20px; padding: 2px 9px; }
+
+  /* ── STUDIENBEREICHS-FARBEN (Karten, Legende, Detail-Tags) ──
+     Eigene Dark-Varianten statt reiner Invertierung, damit Kontrast/
+     Lesbarkeit erhalten bleibt. */
+  .sb-1  { background:#E8F5ED; color:#1A5C34; border-color:#A8D5B5; }
+  .sb-2  { background:#EDE8FF; color:#3B1D8C; border-color:#B8A8F0; }
+  .sb-3  { background:#E0F4EF; color:#0D5A4A; border-color:#8DD4C2; }
+  .sb-4  { background:#FEF3E2; color:#7A5500; border-color:#F5CC80; }
+  .sb-5  { background:#E0EEFF; color:#1A3A8C; border-color:#A0BCEA; }
+  .sb-6  { background:#FCE9E0; color:#8A4526; border-color:#EFC0A8; }
+  .sb-7  { background:#FCE8EF; color:#7A1038; border-color:#F0A0BC; }
+  .sb-0  { background:#EEEEEC; color:#444440; border-color:#BBBBBA; }
+  html[data-theme="dark"] .sb-1 { background:#182C1F; color:#8FD9A8; border-color:#2E5C3C; }
+  html[data-theme="dark"] .sb-2 { background:#251C44; color:#C3B4F5; border-color:#4A3B7A; }
+  html[data-theme="dark"] .sb-3 { background:#12322A; color:#7FD9BE; border-color:#2B5C4D; }
+  html[data-theme="dark"] .sb-4 { background:#3B2D0B; color:#F0C767; border-color:#6B5218; }
+  html[data-theme="dark"] .sb-5 { background:#182541; color:#9DB8ED; border-color:#2E4670; }
+  html[data-theme="dark"] .sb-6 { background:#3B2114; color:#EFB08D; border-color:#6B4128; }
+  html[data-theme="dark"] .sb-7 { background:#3B1320; color:#F0A0BC; border-color:#6B2B42; }
+  html[data-theme="dark"] .sb-0 { background:#2C2C2A; color:#C4C4C0; border-color:#55554F; }
   .mv-tag {
     display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 700;
     background: #FEF3E2; color: #7A5500; border: 1px solid #F5CC80; border-radius: 20px; padding: 1px 7px;
   }
+  html[data-theme="dark"] .mv-tag { background: #3B2D0B; color: #F0C767; border-color: #6B5218; }
   .mv-detail-body { display: grid; grid-template-columns: 1.5fr 1fr; gap: 22px; }
   .mv-label {
     font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px;
@@ -116,6 +175,7 @@
   .mv-baustein-name { flex: 1; }
   .mv-baustein-art { font-size: 11px; color: var(--muted); white-space: nowrap; }
   .mv-pl-badge { font-size: 10px; font-weight: 700; background: #FCE8EF; color: #7A1038; border-radius: 5px; padding: 1px 6px; white-space: nowrap; }
+  html[data-theme="dark"] .mv-pl-badge { background: #3B1320; color: #F0A0BC; }
   .mv-pruefung { font-size: 13px; font-weight: 600; }
   .mv-pruefung-note { font-weight: 400; color: var(--muted); }
   .mv-voraus { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -150,7 +210,7 @@
     scroll-margin-top: var(--header-h);
   }
   footer a { color: var(--muted); }
-  footer:target { animation: footer-highlight 2.5s ease-out; }
+  footer:target { animation: footer-highlight 3.5s ease-out; }
   @keyframes footer-highlight {
     from { background: rgba(223, 187, 234, .35); }
     to   { background: transparent; }
@@ -185,18 +245,23 @@
     <p>Bachelor Soziale Arbeit · EH Ludwigsburg · alle 28 Module im Überblick ·
        <a href="https://kalender.xn--peppermita-lnb.de/" target="_blank" style="color:var(--accent);font-weight:600;text-decoration:none;">Vorlesungskalender ↗</a></p>
   </div>
-  <div class="sem-select-wrap">
-    <label for="semSelect">Mein aktuelles Semester:</label>
-    <select id="semSelect">
-      <option value="0">– auswählen –</option>
-      <option value="1">1. Semester</option>
-      <option value="2">2. Semester</option>
-      <option value="3">3. Semester</option>
-      <option value="4">4. Semester</option>
-      <option value="5">5. Semester</option>
-      <option value="6">6. Semester</option>
-      <option value="7">7. Semester</option>
-    </select>
+  <div class="header-right">
+    <button type="button" class="theme-toggle" id="themeToggle" role="switch" aria-checked="false" aria-label="Dunkles Farbschema">
+      <span class="theme-toggle-track"><span class="theme-toggle-thumb" id="themeToggleThumb">☀</span></span>
+    </button>
+    <div class="sem-select-wrap">
+      <label for="semSelect">Mein aktuelles Semester:</label>
+      <select id="semSelect">
+        <option value="0">– auswählen –</option>
+        <option value="1">1. Semester</option>
+        <option value="2">2. Semester</option>
+        <option value="3">3. Semester</option>
+        <option value="4">4. Semester</option>
+        <option value="5">5. Semester</option>
+        <option value="6">6. Semester</option>
+        <option value="7">7. Semester</option>
+      </select>
+    </div>
   </div>
 </header>
 
@@ -243,18 +308,16 @@ function esc(s) {
 function renderLegend() {
   const el = document.getElementById('sbLegend');
   el.innerHTML = Object.entries(STUDIENBEREICHE).filter(([k]) => k !== '0').map(([k, sb]) => `
-    <span class="sb-legend-item" style="background:${sb.bg};color:${sb.tx};border-color:${sb.bd}">
+    <span class="sb-legend-item sb-${k}">
       <span class="sb-legend-dot" style="background:${sb.dot}"></span>${esc(sb.name)}
     </span>`).join('');
 }
 
 function moduleCardHtml(m, currentSem) {
-  const sb = STUDIENBEREICHE[m.sb];
-  let cls = 'mv-card';
-  let style = `style="background:${sb.bg};color:${sb.tx};border-color:${sb.bd}"`;
+  let cls = `mv-card sb-${m.sb}`;
   if (currentSem && m.sem[0] < currentSem && !m.sem.includes(currentSem)) cls += ' mv-card-done';
   const span = m.sem.length > 1 ? `<div class="mv-card-span">${m.sem[0]}.–${m.sem[m.sem.length-1]}. Sem.</div>` : '';
-  return `<a href="#modul-${m.nr}" class="${cls}" ${style}>
+  return `<a href="#modul-${m.nr}" class="${cls}">
     <div class="mv-card-nr">M${String(m.nr).padStart(2,'0')}</div>
     <div class="mv-card-name">${esc(m.name)}</div>
     ${span}
@@ -331,7 +394,7 @@ function renderDetails() {
         <div>
           <div class="mv-detail-nr">MODUL ${String(m.nr).padStart(2,'0')}</div>
           <h3>${esc(m.name)}</h3>
-          <span class="mv-sb-tag" style="background:${sb.bg};color:${sb.tx}">${esc(sb.name)}</span>
+          <span class="mv-sb-tag sb-${m.sb}">${esc(sb.name)}</span>
         </div>
         <div class="mv-detail-meta">${semLabel} · ${m.cp} CP · ${m.sws} SWS ${modart}</div>
       </div>
@@ -372,6 +435,23 @@ function applySemester(sem) {
 document.getElementById('semSelect').addEventListener('change', e => {
   applySemester(Number(e.target.value) || null);
 });
+
+// ── DARK MODE ────────────────────────────────────────────────────────────────
+// data-theme wird schon ganz am Anfang von <head> synchron aus localStorage
+// gesetzt (verhindert Aufblitzen des hellen Modus beim Laden). Hier nur noch
+// Klick-Handler + UI-Zustand (Schalterstellung, Icon) synchron halten.
+const themeToggle = document.getElementById('themeToggle');
+const themeToggleThumb = document.getElementById('themeToggleThumb');
+function applyTheme(dark) {
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+  themeToggle.setAttribute('aria-checked', String(dark));
+  themeToggleThumb.textContent = dark ? '☾' : '☀';
+  try { localStorage.setItem('mv_theme', dark ? 'dark' : 'light'); } catch (e) {}
+}
+themeToggle.addEventListener('click', () => {
+  applyTheme(document.documentElement.getAttribute('data-theme') !== 'dark');
+});
+applyTheme(document.documentElement.getAttribute('data-theme') === 'dark');
 
 // Init
 renderLegend();

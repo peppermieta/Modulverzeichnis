@@ -3,6 +3,18 @@
 Alle nennenswerten Änderungen an diesem Projekt werden hier dokumentiert.
 Format angelehnt an [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
+## [1.5.0] - 2026-08-05
+
+### Added
+- **Dark Mode**: Schalter links neben der Semesterauswahl im Header, schaltet
+  das komplette Farbschema um (inkl. aller 8 Studienbereichs-Farben mit
+  eigens abgestimmten Dunkel-Varianten statt reiner Invertierung, Disclaimer-
+  Leiste, Wahlpflicht-/PL-Badges, Semester-Status-Pills). Einstellung wird in
+  `localStorage` gespeichert und bleibt über Besuche hinweg erhalten; ein
+  kleines Inline-Script ganz am Anfang von `<head>` verhindert das Aufblitzen
+  des hellen Modus beim Laden. `color-scheme` wird mitgesetzt, damit auch
+  native Elemente (Semester-Dropdown, Scrollbar) dunkel gerendert werden.
+
 ## [1.4.1] - 2026-08-05
 
 ### Added
