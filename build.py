@@ -172,7 +172,7 @@ html = f'''<!DOCTYPE html>
     scroll-margin-top: var(--header-h);
   }}
   footer a {{ color: var(--muted); }}
-  footer:target {{ animation: footer-highlight 2.5s ease-out; }}
+  footer:target {{ animation: footer-highlight 3.5s ease-out; }}
   @keyframes footer-highlight {{
     from {{ background: rgba(223, 187, 234, .35); }}
     to   {{ background: transparent; }}
