@@ -3,6 +3,19 @@
 Alle nennenswerten Änderungen an diesem Projekt werden hier dokumentiert.
 Format angelehnt an [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
+## [1.6.0] - 2026-08-05
+
+### Added
+- **Suchfunktion**: Suchfeld unter dem Intro-Text, durchsucht Modulname,
+  Modulnummer (z. B. "M07" oder "7") und Modulverantwortliche live während
+  der Eingabe. Dropdown mit bis zu 8 Treffern (Nummer, Name, Studienbereich),
+  Klick springt zum passenden Modul.
+- **Ankunfts-Hervorhebung bei Modulkarten**: Jede Detailkarte blendet beim
+  Ansteuern per Anker (Suche, Voraussetzungs-Verlinkung oder direkter Link)
+  kurz einen Akzent-Rahmen ein und wieder aus (`:target`, gleiches Muster
+  wie das Footer-Highlight) – macht sichtbar, welche Karte gemeint ist,
+  statt dass man sie erst suchen muss.
+
 ## [1.5.0] - 2026-08-05
 
 ### Added

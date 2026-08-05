@@ -146,6 +146,38 @@ html = f'''<!DOCTYPE html>
   }}
   .sb-legend-dot {{ width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }}
 
+  /* ── SUCHE ── */
+  .search-wrap {{ max-width: 1100px; margin: 0 auto; padding: 4px 24px 4px; position: relative; }}
+  .search-inner {{ position: relative; max-width: 360px; }}
+  .search-icon {{
+    position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+    font-size: 13px; opacity: .5; pointer-events: none;
+  }}
+  #searchInput {{
+    width: 100%; box-sizing: border-box; padding: 8px 12px 8px 34px;
+    border: 1px solid var(--border); border-radius: 8px; font-family: 'Inter', sans-serif;
+    font-size: 13px; background: var(--surface); color: var(--text);
+  }}
+  #searchInput:focus {{ outline: none; border-color: var(--accent); }}
+  .search-results {{
+    display: none; position: absolute; top: calc(100% + 6px); left: 0; right: 0;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    box-shadow: var(--shadow); max-height: 340px; overflow-y: auto; z-index: 60;
+  }}
+  .search-result {{
+    display: flex; align-items: center; gap: 9px; padding: 9px 12px; cursor: pointer;
+    font-size: 12.5px; border-bottom: 1px solid var(--border);
+  }}
+  .search-result:last-child {{ border-bottom: none; }}
+  .search-result:hover {{ background: var(--bg); }}
+  .search-result-nr {{
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
+    color: var(--accent); flex-shrink: 0; white-space: nowrap;
+  }}
+  .search-result-name {{ color: var(--text); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }}
+  .search-result-meta {{ font-size: 10.5px; color: var(--muted); flex-shrink: 0; white-space: nowrap; }}
+  .search-empty {{ padding: 12px; font-size: 12.5px; color: var(--muted); text-align: center; }}
+
   /* ── DETAILKARTEN ── */
   .mv-details {{ max-width: 1100px; margin: 0 auto 40px; padding: 0 24px; }}
   .mv-details > h2 {{ font-size: 15px; margin: 36px 0 14px; padding-top: 20px; border-top: 1px solid var(--border); }}
@@ -153,6 +185,11 @@ html = f'''<!DOCTYPE html>
   .mv-detail {{
     background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
     box-shadow: var(--shadow); padding: 18px 20px; margin-bottom: 14px; scroll-margin-top: var(--header-h);
+  }}
+  .mv-detail:target {{ animation: detail-highlight 3.5s ease-out; }}
+  @keyframes detail-highlight {{
+    from {{ box-shadow: 0 0 0 3px rgba(91,63,200,.25); }}
+    to   {{ box-shadow: var(--shadow); }}
   }}
   .mv-detail-head {{
     display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; flex-wrap: wrap;
@@ -242,6 +279,8 @@ html = f'''<!DOCTYPE html>
     header {{ padding: 14px 16px; }}
     .disclaimer-mini {{ padding: 9px 16px; }}
     .intro {{ padding: 14px 16px 4px; }}
+    .search-wrap {{ padding: 4px 16px; }}
+    .search-inner {{ max-width: none; }}
     .mv-plan {{ padding: 0 16px; }}
     .sb-legend {{ padding: 0 16px 8px; }}
     .mv-row {{ flex-direction: column; gap: 8px; }}
@@ -291,6 +330,14 @@ html = f'''<!DOCTYPE html>
   Übersicht aller Module des Studiengangs mit Bausteinen, Modulprüfungen, Modulverantwortlichen,
   Workload-Aufteilung und Voraussetzungen. Wähle oben dein aktuelles Semester, um zu sehen, wie die
   Module aufeinander aufbauen.
+</div>
+
+<div class="search-wrap">
+  <div class="search-inner">
+    <span class="search-icon">🔍</span>
+    <input id="searchInput" type="text" placeholder="Modul, Nummer oder Verantwortliche suchen…" autocomplete="off" />
+    <div id="searchResults" class="search-results"></div>
+  </div>
 </div>
 
 <p style="max-width:1100px;margin:0 auto;padding:0 24px 6px;font-size:11.5px;color:var(--muted);">Farblegende der Studienbereiche:</p>
@@ -456,6 +503,71 @@ function applySemester(sem) {{
 
 document.getElementById('semSelect').addEventListener('change', e => {{
   applySemester(Number(e.target.value) || null);
+}});
+
+// ── SUCHE ────────────────────────────────────────────────────────────────────
+// Durchsucht Modulname, Modulnummer (M07 wie auch 7) und Modulverantwortliche.
+function moduleMatchesQuery(m, query) {{
+  const q = query.toLowerCase();
+  const nrStr = 'm' + String(m.nr).padStart(2, '0');
+  const haystack = [m.name, nrStr, String(m.nr), m.verantwortung || ''];
+  return haystack.some(f => f.toLowerCase().includes(q));
+}}
+
+function jumpToModule(m) {{
+  const target = document.getElementById('modul-' + m.nr);
+  if (!target) return;
+  if (location.hash === '#modul-' + m.nr) target.scrollIntoView({{block: 'start'}});
+  else location.hash = 'modul-' + m.nr;
+}}
+
+const searchInput = document.getElementById('searchInput');
+const searchResultsEl = document.getElementById('searchResults');
+
+function renderSearchResults(query) {{
+  if (!query.trim()) {{
+    searchResultsEl.style.display = 'none';
+    searchResultsEl.innerHTML = '';
+    return;
+  }}
+  const matches = MODULES.filter(m => moduleMatchesQuery(m, query)).slice(0, 8);
+
+  if (!matches.length) {{
+    searchResultsEl.innerHTML = `<div class="search-empty">Keine Treffer</div>`;
+    searchResultsEl.style.display = 'block';
+    return;
+  }}
+
+  searchResultsEl.innerHTML = matches.map((m, i) => {{
+    const sb = STUDIENBEREICHE[m.sb];
+    return `<div class="search-result" data-i="${{i}}">
+      <span class="search-result-nr">M${{String(m.nr).padStart(2,'0')}}</span>
+      <span class="search-result-name">${{esc(m.name)}}</span>
+      <span class="search-result-meta">${{esc(sb.name)}}</span>
+    </div>`;
+  }}).join('');
+  searchResultsEl.style.display = 'block';
+
+  searchResultsEl.querySelectorAll('.search-result').forEach(el => {{
+    el.addEventListener('click', () => {{
+      const m = matches[Number(el.dataset.i)];
+      searchResultsEl.style.display = 'none';
+      searchInput.value = '';
+      jumpToModule(m);
+    }});
+  }});
+}}
+
+searchInput.addEventListener('input', () => renderSearchResults(searchInput.value));
+searchInput.addEventListener('focus', () => {{ if (searchInput.value.trim()) renderSearchResults(searchInput.value); }});
+document.addEventListener('click', e => {{
+  if (!e.target.closest('.search-wrap')) searchResultsEl.style.display = 'none';
+}});
+document.addEventListener('keydown', e => {{
+  if (e.key === 'Escape') {{
+    searchResultsEl.style.display = 'none';
+    searchInput.blur();
+  }}
 }});
 
 // ── DARK MODE ────────────────────────────────────────────────────────────────
