@@ -50,7 +50,7 @@ Fehler gefunden oder Feedback? `info@peppermięta.de`
 
 ## Versionshistorie
 
-Alle Änderungen werden in [CHANGELOG.md](CHANGELOG.md) dokumentiert (aktuelle Version: **1.7.0**).
+Alle Änderungen werden in [CHANGELOG.md](CHANGELOG.md) dokumentiert (aktuelle Version: **1.7.1**).
 
 ## Farbpalette
 

@@ -341,7 +341,9 @@
 <div class="intro">
   Übersicht aller Module des Studiengangs mit Bausteinen, Modulprüfungen, Modulverantwortlichen,
   Workload-Aufteilung und Voraussetzungen. Wähle oben dein aktuelles Semester, um zu sehen, wie die
-  Module aufeinander aufbauen.
+  Module aufeinander aufbauen. Zusätzlich lässt sich jedes Modul einzeln in seiner Detailkarte als
+  vorgemerkt, abgeschlossen oder offen markieren – unabhängig von der Semesterauswahl und nur lokal
+  auf diesem Gerät gespeichert.
 </div>
 
 <div class="search-wrap">
@@ -649,10 +651,17 @@ function ensureModuleVisible(nr) {
 
 function jumpToModule(m) {
   ensureModuleVisible(m.nr);
-  const target = document.getElementById('modul-' + m.nr);
-  if (!target) return;
-  if (location.hash === '#modul-' + m.nr) target.scrollIntoView({block: 'start'});
-  else location.hash = 'modul-' + m.nr;
+  // Sucheingabefeld verliert den Fokus, damit auf Mobilgeräten die virtuelle
+  // Tastatur zuklappt, BEVOR gesprungen wird. Sonst wird die Zielposition auf
+  // Basis des durch die Tastatur verkleinerten Viewports berechnet und
+  // verrutscht, sobald die Tastatur danach verschwindet.
+  searchInput.blur();
+  setTimeout(() => {
+    const target = document.getElementById('modul-' + m.nr);
+    if (!target) return;
+    if (location.hash === '#modul-' + m.nr) target.scrollIntoView({block: 'start'});
+    else location.hash = 'modul-' + m.nr;
+  }, 150);
 }
 
 // Gleiche Absicherung für Voraussetzungs-Verlinkungen (echte <a href="#modul-…">-Links)

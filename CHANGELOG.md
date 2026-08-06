@@ -3,6 +3,22 @@
 Alle nennenswerten Änderungen an diesem Projekt werden hier dokumentiert.
 Format angelehnt an [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
+## [1.7.1] - 2026-08-05
+
+### Fixed
+- **Mobiler Sprung über die Suche landete verrutscht**: Das Suchfeld blieb
+  nach dem Klick auf ein Ergebnis fokussiert, wodurch die virtuelle
+  Tastatur offen blieb. Der Sprung wurde dann auf Basis des durch die
+  Tastatur verkleinerten Viewports berechnet – klappte die Tastatur kurz
+  danach zu, verschob sich die Position. Suchfeld wird jetzt vor dem Sprung
+  geblurred, mit kurzer Verzögerung (150ms), damit die Tastatur zugeklappt
+  ist, bevor gesprungen wird. Kartenklicks waren nie betroffen (kein
+  Eingabefeld involviert).
+
+### Added
+- Kurze Erklärung zur Status-Funktion im Intro-Text ergänzt, direkt nach
+  der Aufforderung, das Semester zu wählen.
+
 ## [1.7.0] - 2026-08-05
 
 ### Added
