@@ -3,6 +3,23 @@
 Alle nennenswerten Änderungen an diesem Projekt werden hier dokumentiert.
 Format angelehnt an [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
+## [1.8.0] - 2026-08-05
+
+### Added
+- **PL/UPL-Legende** unter der Studienbereichs-Farblegende ("PL – Benotete
+  Prüfungsleistung", "UPL – Unbenotete Prüfungsleistung", Definitionen aus
+  dem offiziellen Abkürzungsverzeichnis des Modulhandbuchs). Zusätzlich
+  Tooltip auf den einzelnen PL/UPL-Badges bei den Bausteinen.
+- **Voraussetzungen blinken rot auf**, wenn ein Modul mit Voraussetzungen
+  manuell auf "vorgemerkt" oder "offen" gesetzt wird – als kurzer Hinweis,
+  was davor noch nötig ist. Bei "abgeschlossen" oder Modulen ohne
+  Voraussetzungen passiert nichts.
+- **Suche findet Modul 28 jetzt auch über "Ahlrichs"**: Die
+  Modulverantwortung zeigt dort korrekt den Rollentitel
+  "Studiengangsleitung" (so auch im Handbuch), die aktuell verantwortliche
+  Person (Prof. Dr. Rolf Ahlrichs) ist jetzt zusätzlich als Suchbegriff
+  hinterlegt, ohne die angezeigte Bezeichnung zu ändern.
+
 ## [1.7.2] - 2026-08-05
 
 ### Fixed

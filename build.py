@@ -254,6 +254,11 @@ html = f'''<!DOCTYPE html>
   .mv-pruefung {{ font-size: 13px; font-weight: 600; }}
   .mv-pruefung-note {{ font-weight: 400; color: var(--muted); }}
   .mv-voraus {{ display: flex; flex-wrap: wrap; gap: 6px; }}
+  .mv-voraus-flash {{ animation: voraus-flash 2.2s ease-out; border-radius: 8px; }}
+  @keyframes voraus-flash {{
+    from {{ background: rgba(220, 38, 38, .22); }}
+    to   {{ background: transparent; }}
+  }}
   .mv-chip {{ font-size: 11px; padding: 4px 9px; border-radius: 20px; background: var(--bg); border: 1px solid var(--border); color: var(--text); }}
   .mv-voraus-link {{ text-decoration: none; cursor: pointer; }}
   .mv-voraus-link:hover {{ border-color: var(--accent); color: var(--accent); }}
@@ -371,6 +376,11 @@ html = f'''<!DOCTYPE html>
 <p style="max-width:1100px;margin:0 auto;padding:0 24px 6px;font-size:11.5px;color:var(--muted);">Farblegende der Studienbereiche:</p>
 <div class="sb-legend" id="sbLegend"></div>
 
+<p style="max-width:1100px;margin:0 auto;padding:0 24px 12px;font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+  <span class="mv-pl-badge">PL</span> Benotete Prüfungsleistung
+  <span style="margin-left:8px;"><span class="mv-pl-badge">UPL</span> Unbenotete Prüfungsleistung</span>
+</p>
+
 <div class="mv-plan" id="plan"></div>
 
 <div class="mv-details" id="details"></div>
@@ -486,7 +496,8 @@ function renderPlan(currentSem, merklisteOnly) {{
 
 function baustein(b) {{
   const [name, art, pl] = b;
-  const plHtml = pl ? `<span class="mv-pl-badge">${{pl}}</span>` : '';
+  const plTitle = pl === 'PL' ? 'Benotete Prüfungsleistung' : pl === 'UPL' ? 'Unbenotete Prüfungsleistung' : '';
+  const plHtml = pl ? `<span class="mv-pl-badge" title="${{plTitle}}">${{pl}}</span>` : '';
   return `<div class="mv-baustein"><span class="mv-baustein-name">${{esc(name)}}</span><span class="mv-baustein-art">${{esc(art)}}</span>${{plHtml}}</div>`;
 }}
 
@@ -592,8 +603,19 @@ function renderDetails(currentSem, merklisteOnly) {{
 
   el.querySelectorAll('.mv-status-select').forEach(sel => {{
     sel.addEventListener('change', e => {{
-      setOverride(Number(e.target.dataset.nr), e.target.value || null);
+      const nr = Number(e.target.dataset.nr);
+      const val = e.target.value || null;
+      setOverride(nr, val);
       refreshAll();
+      // Bei "offen"/"vorgemerkt" kurz an die Voraussetzungen erinnern, falls
+      // das Modul welche hat – neu gerenderte Karte, daher erst NACH refreshAll() greifen.
+      if (val === 'offen' || val === 'vorgemerkt') {{
+        const mod = MODULES.find(x => x.nr === nr);
+        if (mod && mod.voraus.length) {{
+          const voorEl = document.querySelector('#modul-' + nr + ' .mv-voraus');
+          if (voorEl) voorEl.classList.add('mv-voraus-flash');
+        }}
+      }}
     }});
   }});
 }}
@@ -638,10 +660,15 @@ document.getElementById('semSelect').addEventListener('change', e => {{
 
 // ── SUCHE ────────────────────────────────────────────────────────────────────
 // Durchsucht Modulname, Modulnummer (M07 wie auch 7) und Modulverantwortliche.
+// Bei Rollentiteln statt Personennamen (aktuell nur Modul 28: "Studiengangsleitung")
+// zusätzlicher Suchbegriff für die aktuell verantwortliche Person, ohne die
+// angezeigte Bezeichnung selbst zu ändern (die bleibt korrekt der Rollentitel).
+const SEARCH_ALIASES = {{28: 'Rolf Ahlrichs'}};
+
 function moduleMatchesQuery(m, query) {{
   const q = query.toLowerCase();
   const nrStr = 'm' + String(m.nr).padStart(2, '0');
-  const haystack = [m.name, nrStr, String(m.nr), m.verantwortung || ''];
+  const haystack = [m.name, nrStr, String(m.nr), m.verantwortung || '', SEARCH_ALIASES[m.nr] || ''];
   return haystack.some(f => f.toLowerCase().includes(q));
 }}
 
