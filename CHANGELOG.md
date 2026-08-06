@@ -3,6 +3,23 @@
 Alle nennenswerten Änderungen an diesem Projekt werden hier dokumentiert.
 Format angelehnt an [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
+## [1.9.0] - 2026-08-06
+
+### Added
+- **"↺ Auswahl zurücksetzen"-Button** neben "Nur Merkliste zeigen": löscht
+  alle manuell gesetzten Status (vorgemerkt/abgeschlossen/offen) auf einmal,
+  Module folgen danach wieder vollständig der automatischen
+  Semester-Einschätzung. Mit Sicherheitsabfrage (nicht rückgängig machbar)
+  und No-Op, falls ohnehin nichts manuell gesetzt ist.
+
+### Removed
+- **Lila Ankunfts-Hervorhebung bei Modulkarten** entfernt (galt beim
+  Ansteuern per Suche oder Voraussetzungs-Link) – nicht nötig, da die
+  Modulnummer bereits eindeutig zeigt, um welches Modul es sich handelt.
+  Der rote Voraussetzungen-Hinweis beim Setzen von "offen"/"vorgemerkt"
+  bleibt unverändert bestehen, das ist ein eigenständiges Feature mit
+  anderem Zweck.
+
 ## [1.8.0] - 2026-08-05
 
 ### Added
