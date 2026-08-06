@@ -1,24 +1,8 @@
-import sys, json
-sys.path.insert(0, '/home/claude/modverz_v2')
+import json
 from modules_data import MODULES, STUDIENBEREICHE
 
-def esc(s):
-    return str(s).replace('&','&amp;').replace('<','&lt;').replace('>','&gt;')
-
-# ─── JS-Datenobjekt bauen (fürs Client-seitige Rendering der Semesterauswahl) ─
-js_modules = []
-for m in MODULES:
-    js_modules.append({
-        "nr": m["nr"], "name": m["name"], "sem": m["sem"], "cp": m["cp"], "sws": m["sws"],
-        "sb": m["sb"], "verantwortung": m["verantwortung"], "email": m.get("email"),
-        "bausteine": m["bausteine"], "pruefung": m["pruefung"], "voraus": m["voraus"],
-        "workload": m["workload"], "verwendbarkeit": m["verwendbarkeit"],
-        "modulart": m.get("modulart"),
-    })
-js_sb = {str(k): v for k, v in STUDIENBEREICHE.items()}
-
-MODULES_JSON = json.dumps(js_modules, ensure_ascii=False)
-SB_JSON = json.dumps(js_sb, ensure_ascii=False)
+MODULES_JSON = json.dumps(MODULES, ensure_ascii=False)
+SB_JSON = json.dumps(STUDIENBEREICHE, ensure_ascii=False)
 
 html = f'''<!DOCTYPE html>
 <html lang="de">
@@ -137,6 +121,15 @@ html = f'''<!DOCTYPE html>
   .mv-card-name {{ font-size: 12px; font-weight: 600; line-height: 1.3; margin-top: 2px; }}
   .mv-card-span {{ font-size: 10px; opacity: .65; margin-top: 3px; }}
   .mv-card-done {{ opacity: .55; }}
+  .mv-card {{ position: relative; }}
+  .mv-card-badge {{
+    position: absolute; top: -6px; right: -6px; width: 18px; height: 18px; border-radius: 50%;
+    background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: center; font-size: 10px; line-height: 1;
+  }}
+  .mv-card-badge.badge-vorgemerkt {{ color: #C48A00; }}
+  .mv-card-badge.badge-abgeschlossen {{ color: #1A8C70; }}
+  .mv-card-badge.badge-offen {{ color: var(--muted); }}
 
   /* ── LEGENDE STUDIENBEREICHE ── */
   .sb-legend {{ display: flex; flex-wrap: wrap; gap: 7px; max-width: 1100px; margin: 0 auto; padding: 0 24px 8px; }}
@@ -147,6 +140,21 @@ html = f'''<!DOCTYPE html>
   .sb-legend-dot {{ width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }}
 
   /* ── SUCHE ── */
+  /* ── CP-FORTSCHRITT & MERKLISTE-FILTER ── */
+  .progress-wrap {{ max-width: 1100px; margin: 0 auto; padding: 4px 24px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }}
+  .cp-progress {{ display: none; align-items: center; gap: 10px; max-width: 420px; }}
+  .cp-progress.visible {{ display: flex; }}
+  .cp-progress-bar {{ flex: 1; height: 6px; border-radius: 4px; background: var(--border); overflow: hidden; }}
+  .cp-progress-fill {{ height: 100%; background: var(--accent); border-radius: 4px; transition: width .3s; }}
+  .cp-progress-label {{ font-size: 11.5px; color: var(--muted); white-space: nowrap; }}
+  .merkliste-toggle {{
+    display: inline-flex; align-items: center; gap: 6px; font-family: 'Inter', sans-serif;
+    font-size: 12px; padding: 5px 11px; border-radius: 20px; border: 1px solid var(--border);
+    background: var(--surface); color: var(--muted); cursor: pointer;
+  }}
+  .merkliste-toggle.active {{ background: var(--accent); color: #fff; border-color: var(--accent); }}
+  .mv-plan-empty {{ padding: 20px 0; font-size: 12.5px; color: var(--muted); text-align: center; }}
+
   .search-wrap {{ max-width: 1100px; margin: 0 auto; padding: 4px 24px 4px; position: relative; }}
   .search-inner {{ position: relative; max-width: 360px; }}
   .search-icon {{
@@ -200,6 +208,14 @@ html = f'''<!DOCTYPE html>
   .mv-detail-meta {{ font-size: 12px; color: var(--muted); white-space: nowrap; padding-top: 4px; }}
   .mv-sb-tag {{ display: inline-block; margin-top: 6px; font-size: 10px; font-weight: 700; border-radius: 20px; padding: 2px 9px; }}
 
+  .mv-status-bar {{
+    display: flex; align-items: center; gap: 8px; margin: -4px 0 14px; font-size: 12px; color: var(--muted);
+  }}
+  .mv-status-select {{
+    font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; color: var(--text);
+    border: 1px solid var(--border); border-radius: 7px; padding: 5px 8px; background: var(--bg); cursor: pointer;
+  }}
+
   /* ── STUDIENBEREICHS-FARBEN (Karten, Legende, Detail-Tags) ──
      Eigene Dark-Varianten statt reiner Invertierung, damit Kontrast/
      Lesbarkeit erhalten bleibt. */
@@ -238,7 +254,7 @@ html = f'''<!DOCTYPE html>
   .mv-pruefung {{ font-size: 13px; font-weight: 600; }}
   .mv-pruefung-note {{ font-weight: 400; color: var(--muted); }}
   .mv-voraus {{ display: flex; flex-wrap: wrap; gap: 6px; }}
-  .mv-voraus-chip {{ font-size: 11px; padding: 4px 9px; border-radius: 20px; background: var(--bg); border: 1px solid var(--border); color: var(--text); }}
+  .mv-chip {{ font-size: 11px; padding: 4px 9px; border-radius: 20px; background: var(--bg); border: 1px solid var(--border); color: var(--text); }}
   .mv-voraus-link {{ text-decoration: none; cursor: pointer; }}
   .mv-voraus-link:hover {{ border-color: var(--accent); color: var(--accent); }}
   .mv-voraus-none {{ font-size: 12px; color: var(--muted); font-style: italic; }}
@@ -252,7 +268,7 @@ html = f'''<!DOCTYPE html>
   .mv-workload-val {{ font-weight: 700; font-size: 14px; }}
   .mv-workload-label {{ color: var(--muted); font-size: 10.5px; }}
   .mv-verwendbarkeit {{ display: flex; flex-wrap: wrap; gap: 5px; }}
-  .mv-verwendbarkeit-chip {{ font-size: 10.5px; padding: 3px 8px; border-radius: 20px; background: var(--bg); border: 1px solid var(--border); color: var(--muted); }}
+  .mv-verwendbarkeit-chip {{ font-size: 10.5px; padding: 3px 8px; color: var(--muted); }}
   .mv-verwendbarkeit-none {{ font-size: 12px; color: var(--muted); font-style: italic; }}
 
   /* ── KONTAKT / FOOTER ── */
@@ -281,6 +297,8 @@ html = f'''<!DOCTYPE html>
     .intro {{ padding: 14px 16px 4px; }}
     .search-wrap {{ padding: 4px 16px; }}
     .search-inner {{ max-width: none; }}
+    .progress-wrap {{ padding: 4px 16px; }}
+    .cp-progress {{ max-width: none; }}
     .mv-plan {{ padding: 0 16px; }}
     .sb-legend {{ padding: 0 16px 8px; }}
     .mv-row {{ flex-direction: column; gap: 8px; }}
@@ -340,6 +358,14 @@ html = f'''<!DOCTYPE html>
   </div>
 </div>
 
+<div class="progress-wrap" id="progressWrap">
+  <div class="cp-progress" id="cpProgress">
+    <div class="cp-progress-bar"><div class="cp-progress-fill" id="cpProgressFill"></div></div>
+    <span class="cp-progress-label" id="cpProgressLabel"></span>
+  </div>
+  <button type="button" class="merkliste-toggle" id="merklisteToggle">★ Nur Merkliste zeigen</button>
+</div>
+
 <p style="max-width:1100px;margin:0 auto;padding:0 24px 6px;font-size:11.5px;color:var(--muted);">Farblegende der Studienbereiche:</p>
 <div class="sb-legend" id="sbLegend"></div>
 
@@ -369,9 +395,42 @@ html = f'''<!DOCTYPE html>
 const MODULES = {MODULES_JSON};
 const STUDIENBEREICHE = {SB_JSON};
 const CURRENT_KEY = 'mv_current_semester';
+const OVERRIDE_KEY = 'mv_status_overrides';
 
 function esc(s) {{
   return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}}
+
+// ── PERSÖNLICHER STATUS (Merkliste + Fortschritts-Tracker) ──────────────────
+// Zwei-Schicht-Modell: die Semesterauswahl setzt automatisch einen
+// Ausgangsstatus pro Modul (done/current/upcoming). Jedes Modul lässt sich
+// davon unabhängig einzeln überschreiben (vorgemerkt/abgeschlossen/offen) –
+// das "entkoppelt" es von der Automatik, bis der Override wieder entfernt wird.
+function getOverrides() {{
+  try {{ return JSON.parse(localStorage.getItem(OVERRIDE_KEY) || '{{}}'); }}
+  catch (e) {{ return {{}}; }}
+}}
+function setOverride(nr, status) {{
+  const overrides = getOverrides();
+  if (status) overrides[nr] = status;
+  else delete overrides[nr];
+  try {{ localStorage.setItem(OVERRIDE_KEY, JSON.stringify(overrides)); }} catch (e) {{}}
+}}
+
+// Automatischer Status rein aus der Semesterauswahl, ohne Overrides.
+function automaticStatus(m, currentSem) {{
+  if (!currentSem) return null;
+  if (m.sem.includes(currentSem)) return 'current';
+  return m.sem[0] < currentSem ? 'done' : 'upcoming';
+}}
+
+// Ob ein Modul im Sinne der CP-Anzeige/Kartenabblendung als "erledigt" zählt:
+// manueller Override hat Vorrang vor der Automatik.
+function isEffectivelyDone(m, currentSem, overrides) {{
+  const o = overrides[m.nr];
+  if (o === 'abgeschlossen') return true;
+  if (o === 'offen' || o === 'vorgemerkt') return false;
+  return automaticStatus(m, currentSem) === 'done';
 }}
 
 function renderLegend() {{
@@ -382,22 +441,30 @@ function renderLegend() {{
     </span>`).join('');
 }}
 
-function moduleCardHtml(m, currentSem) {{
+function moduleCardHtml(m, currentSem, overrides) {{
   let cls = `mv-card sb-${{m.sb}}`;
-  if (currentSem && m.sem[0] < currentSem && !m.sem.includes(currentSem)) cls += ' mv-card-done';
+  if (isEffectivelyDone(m, currentSem, overrides)) cls += ' mv-card-done';
+  const override = overrides[m.nr];
+  const badgeIcon = {{vorgemerkt: '★', abgeschlossen: '✓', offen: '○'}}[override];
+  const badgeHtml = badgeIcon
+    ? `<span class="mv-card-badge badge-${{override}}" title="Manuell: ${{override}}">${{badgeIcon}}</span>` : '';
   const span = m.sem.length > 1 ? `<div class="mv-card-span">${{m.sem[0]}}.–${{m.sem[m.sem.length-1]}}. Sem.</div>` : '';
   return `<a href="#modul-${{m.nr}}" class="${{cls}}">
+    ${{badgeHtml}}
     <div class="mv-card-nr">M${{String(m.nr).padStart(2,'0')}}</div>
     <div class="mv-card-name">${{esc(m.name)}}</div>
     ${{span}}
   </a>`;
 }}
 
-function renderPlan(currentSem) {{
+function renderPlan(currentSem, merklisteOnly) {{
+  const overrides = getOverrides();
   const el = document.getElementById('plan');
   let html = '';
   for (let sem = 1; sem <= 7; sem++) {{
-    const modsInSem = MODULES.filter(m => m.sem.includes(sem));
+    let modsInSem = MODULES.filter(m => m.sem.includes(sem));
+    if (merklisteOnly) modsInSem = modsInSem.filter(m => overrides[m.nr] === 'vorgemerkt');
+    if (merklisteOnly && !modsInSem.length) continue;
     let status, statusCls;
     if (!currentSem) {{ status = ''; statusCls = ''; }}
     else if (sem < currentSem) {{ status = 'abgeschlossen'; statusCls = 'status-done'; }}
@@ -406,8 +473,11 @@ function renderPlan(currentSem) {{
     const statusHtml = status ? `<span class="mv-row-status ${{statusCls}}">${{status}}</span>` : '';
     html += `<div class="mv-row">
       <div class="mv-row-label"><span class="mv-row-sem">${{sem}}. Sem.</span>${{statusHtml}}</div>
-      <div class="mv-row-cards">${{modsInSem.map(m => moduleCardHtml(m, currentSem)).join('')}}</div>
+      <div class="mv-row-cards">${{modsInSem.map(m => moduleCardHtml(m, currentSem, overrides)).join('')}}</div>
     </div>`;
+  }}
+  if (merklisteOnly && !html.trim()) {{
+    html = `<div class="mv-plan-empty">Noch keine Module vorgemerkt – öffne ein Modul unten und setze den Status auf "★ Vorgemerkt".</div>`;
   }}
   el.innerHTML = html;
 }}
@@ -421,15 +491,15 @@ function baustein(b) {{
 function voraus(v) {{
   if (!v.length) return '<span class="mv-voraus-none">keine</span>';
   return v.map(x => {{
-    if (typeof x === 'string') return `<span class="mv-voraus-chip">${{esc(x)}}</span>`;
+    if (typeof x === 'string') return `<span class="mv-chip mv-voraus-chip">${{esc(x)}}</span>`;
     const target = MODULES.find(m => m.nr === x);
-    return `<a href="#modul-${{x}}" class="mv-voraus-chip mv-voraus-link">M${{String(x).padStart(2,'0')}} – ${{esc(target.name)}}</a>`;
+    return `<a href="#modul-${{x}}" class="mv-chip mv-voraus-chip mv-voraus-link">M${{String(x).padStart(2,'0')}} – ${{esc(target.name)}}</a>`;
   }}).join(' ');
 }}
 
 function verwendbarkeit(v) {{
   if (!v.length) return '<span class="mv-verwendbarkeit-none">keine bekannte Verwendung in anderen Studiengängen</span>';
-  return v.map(x => `<span class="mv-verwendbarkeit-chip">${{esc(x)}}</span>`).join('');
+  return v.map(x => `<span class="mv-chip mv-verwendbarkeit-chip">${{esc(x)}}</span>`).join('');
 }}
 
 function renderVerantwortung(names, emails) {{
@@ -442,11 +512,17 @@ function renderVerantwortung(names, emails) {{
   }}).join('') + '</div>';
 }}
 
-function renderDetails() {{
+const AUTO_STATUS_LABELS = {{done: 'abgeschlossen', current: 'aktuelles Semester', upcoming: 'kommend'}};
+
+function renderDetails(currentSem, merklisteOnly) {{
+  const overrides = getOverrides();
   const el = document.getElementById('details');
   let html = '';
   let lastSem = null;
+  let shown = 0;
   for (const m of MODULES) {{
+    if (merklisteOnly && overrides[m.nr] !== 'vorgemerkt') continue;
+    shown++;
     const firstSem = m.sem[0];
     if (firstSem !== lastSem) {{ html += `<h2>${{firstSem}}. Semester</h2>`; lastSem = firstSem; }}
     const sb = STUDIENBEREICHE[m.sb];
@@ -457,6 +533,20 @@ function renderDetails() {{
       ? renderVerantwortung(m.verantwortung, m.email)
       : `<div class="mv-verantwortung placeholder">wird nachgetragen</div>`;
     const w = m.workload;
+    const auto = automaticStatus(m, currentSem);
+    const autoLabel = auto ? AUTO_STATUS_LABELS[auto] : 'kein Semester gewählt';
+    const ov = overrides[m.nr] || '';
+    const opt = (val, label) => `<option value="${{val}}"${{ov === val ? ' selected' : ''}}>${{label}}</option>`;
+    const statusBar = `
+      <div class="mv-status-bar">
+        Mein Status:
+        <select class="mv-status-select" data-nr="${{m.nr}}">
+          ${{opt('', `Automatisch (${{autoLabel}})`)}}
+          ${{opt('vorgemerkt', '★ Vorgemerkt')}}
+          ${{opt('abgeschlossen', '✓ Abgeschlossen')}}
+          ${{opt('offen', '○ Offen')}}
+        </select>
+      </div>`;
     html += `
     <div class="mv-detail" id="modul-${{m.nr}}">
       <div class="mv-detail-head">
@@ -467,6 +557,7 @@ function renderDetails() {{
         </div>
         <div class="mv-detail-meta">${{semLabel}} · ${{m.cp}} CP · ${{m.sws}} SWS ${{modart}}</div>
       </div>
+      ${{statusBar}}
       <div class="mv-detail-body">
         <div class="mv-col">
           <div class="mv-label">Bausteine</div>
@@ -492,14 +583,52 @@ function renderDetails() {{
       </div>
     </div>`;
   }}
+  if (merklisteOnly && !shown) {{
+    html = '';
+  }}
   el.innerHTML = html;
+
+  el.querySelectorAll('.mv-status-select').forEach(sel => {{
+    sel.addEventListener('change', e => {{
+      setOverride(Number(e.target.dataset.nr), e.target.value || null);
+      refreshAll();
+    }});
+  }});
+}}
+
+function renderCPProgress(currentSem, overrides) {{
+  const cpEl = document.getElementById('cpProgress');
+  const hasData = currentSem || Object.keys(overrides).length > 0;
+  cpEl.classList.toggle('visible', !!hasData);
+  if (!hasData) return;
+  const totalCP = MODULES.reduce((sum, m) => sum + m.cp, 0);
+  const doneCP = MODULES.filter(m => isEffectivelyDone(m, currentSem, overrides)).reduce((sum, m) => sum + m.cp, 0);
+  const pct = totalCP ? Math.round(doneCP / totalCP * 100) : 0;
+  document.getElementById('cpProgressFill').style.width = pct + '%';
+  document.getElementById('cpProgressLabel').textContent = `${{doneCP}} von ${{totalCP}} CP absolviert (${{pct}}%)`;
+}}
+
+let merklisteOnly = false;
+
+function refreshAll() {{
+  const currentSem = Number(localStorage.getItem(CURRENT_KEY)) || null;
+  const overrides = getOverrides();
+  renderPlan(currentSem, merklisteOnly);
+  renderDetails(currentSem, merklisteOnly);
+  renderCPProgress(currentSem, overrides);
 }}
 
 function applySemester(sem) {{
-  renderPlan(sem || null);
   if (sem) localStorage.setItem(CURRENT_KEY, sem);
   else localStorage.removeItem(CURRENT_KEY);
+  refreshAll();
 }}
+
+document.getElementById('merklisteToggle').addEventListener('click', () => {{
+  merklisteOnly = !merklisteOnly;
+  document.getElementById('merklisteToggle').classList.toggle('active', merklisteOnly);
+  refreshAll();
+}});
 
 document.getElementById('semSelect').addEventListener('change', e => {{
   applySemester(Number(e.target.value) || null);
@@ -514,12 +643,35 @@ function moduleMatchesQuery(m, query) {{
   return haystack.some(f => f.toLowerCase().includes(q));
 }}
 
+// Falls der Merkliste-Filter aktiv ist und das Ziel nicht "vorgemerkt" ist,
+// existiert das Zielelement gar nicht im DOM – Filter dann automatisch aus.
+function ensureModuleVisible(nr) {{
+  if (merklisteOnly && getOverrides()[nr] !== 'vorgemerkt') {{
+    merklisteOnly = false;
+    document.getElementById('merklisteToggle').classList.remove('active');
+    refreshAll();
+  }}
+}}
+
 function jumpToModule(m) {{
+  ensureModuleVisible(m.nr);
   const target = document.getElementById('modul-' + m.nr);
   if (!target) return;
   if (location.hash === '#modul-' + m.nr) target.scrollIntoView({{block: 'start'}});
   else location.hash = 'modul-' + m.nr;
 }}
+
+// Gleiche Absicherung für Voraussetzungs-Verlinkungen (echte <a href="#modul-…">-Links)
+document.addEventListener('click', e => {{
+  const link = e.target.closest('a[href^="#modul-"]');
+  if (!link) return;
+  const nr = Number(link.getAttribute('href').replace('#modul-', ''));
+  if (merklisteOnly && getOverrides()[nr] !== 'vorgemerkt') {{
+    e.preventDefault();
+    ensureModuleVisible(nr);
+    requestAnimationFrame(() => {{ location.hash = 'modul-' + nr; }});
+  }}
+}});
 
 const searchInput = document.getElementById('searchInput');
 const searchResultsEl = document.getElementById('searchResults');
@@ -589,7 +741,6 @@ applyTheme(document.documentElement.getAttribute('data-theme') === 'dark');
 
 // Init
 renderLegend();
-renderDetails();
 const saved = Number(localStorage.getItem(CURRENT_KEY)) || null;
 if (saved) document.getElementById('semSelect').value = String(saved);
 applySemester(saved);
@@ -619,6 +770,6 @@ if (location.hash) {{
 </html>
 '''
 
-with open('/home/claude/modverz_v2/index.html', 'w', encoding='utf-8') as f:
+with open('index.html', 'w', encoding='utf-8') as f:
     f.write(html)
 print("Fertig:", len(html), "Zeichen")

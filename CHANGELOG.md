@@ -3,6 +3,48 @@
 Alle nennenswerten Änderungen an diesem Projekt werden hier dokumentiert.
 Format angelehnt an [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
+## [1.7.0] - 2026-08-05
+
+### Added
+- **Persönlicher Status pro Modul** (Phase 1: Merkliste + Fortschritts-Tracker
+  zusammengeführt): Zwei-Schicht-Modell – die Semesterauswahl setzt weiterhin
+  automatisch einen Ausgangsstatus, jedes Modul lässt sich davon unabhängig
+  einzeln auf "★ Vorgemerkt" / "✓ Abgeschlossen" / "○ Offen" setzen (Auswahl
+  in der Detailkarte). Ein manuell gesetzter Status "entkoppelt" das Modul
+  von der Automatik, bis er wieder auf "Automatisch" zurückgesetzt wird.
+  Speicherung rein lokal (`localStorage`, additiv zur bestehenden
+  Semester-Speicherung).
+- **Kartenbadges**: Modulkarten in der Übersicht zeigen bei manuellem Status
+  ein kleines Symbol (★/✓/○) als Kennzeichnung, dass hier nicht die
+  Automatik gilt.
+- **"Nur Merkliste zeigen"-Filter**: blendet Übersicht und Detailkarten auf
+  die vorgemerkten Module ein. Springt man per Suche oder
+  Voraussetzungs-Verlinkung zu einem nicht vorgemerkten Modul, wird der
+  Filter automatisch deaktiviert, statt ins Leere zu laufen.
+- **CP-Fortschrittsanzeige (Phase 2)**: kompakter Balken mit "X von 210 CP
+  absolviert", zählt alle Module mit effektiv "abgeschlossenem" Status
+  zusammen (automatisch wie manuell) – baut direkt auf Phase 1 auf, daher
+  gleich mit umgesetzt. Erscheint erst, sobald ein Semester gewählt oder ein
+  Status manuell gesetzt wurde.
+
+### Fixed
+- **Inhaltsabgleich mit dem offiziellen Modulhandbuch**: Fehlende
+  baustein-spezifische Verwendbarkeit-Einträge bei M04, M05, M07, M09, M14,
+  M18, M23, M26 ergänzt (z. B. "Baustein 0758: BA RPGP 03" bei M07).
+  Voraussetzungstext bei M19 und M28 präzisiert (Handbuch nennt jeweils eine
+  Ausnahme, die bisher fehlte).
+- **Bug in `build.py`**: hartcodierter absoluter Ausgabepfad durch relativen
+  Pfad ersetzt – `python3 build.py` scheiterte bisher außerhalb einer ganz
+  bestimmten lokalen Umgebung.
+
+### Changed
+- **Code-Cleanup**: toter Sandbox-Pfad (`sys.path.insert`) und ungenutzte
+  Python-`esc()`-Funktion entfernt; redundanter `js_modules`/`js_sb`-Umbau
+  auf direktes `json.dumps(MODULES, ...)` vereinfacht (keine funktionale
+  Änderung, `MODULES` enthielt bereits exakt dieselben Felder);
+  `.mv-voraus-chip`/`.mv-verwendbarkeit-chip` auf gemeinsame Basisklasse
+  `.mv-chip` zusammengeführt.
+
 ## [1.6.0] - 2026-08-05
 
 ### Added

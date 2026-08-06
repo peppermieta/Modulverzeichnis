@@ -115,6 +115,15 @@
   .mv-card-name { font-size: 12px; font-weight: 600; line-height: 1.3; margin-top: 2px; }
   .mv-card-span { font-size: 10px; opacity: .65; margin-top: 3px; }
   .mv-card-done { opacity: .55; }
+  .mv-card { position: relative; }
+  .mv-card-badge {
+    position: absolute; top: -6px; right: -6px; width: 18px; height: 18px; border-radius: 50%;
+    background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: center; font-size: 10px; line-height: 1;
+  }
+  .mv-card-badge.badge-vorgemerkt { color: #C48A00; }
+  .mv-card-badge.badge-abgeschlossen { color: #1A8C70; }
+  .mv-card-badge.badge-offen { color: var(--muted); }
 
   /* ── LEGENDE STUDIENBEREICHE ── */
   .sb-legend { display: flex; flex-wrap: wrap; gap: 7px; max-width: 1100px; margin: 0 auto; padding: 0 24px 8px; }
@@ -125,6 +134,21 @@
   .sb-legend-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 
   /* ── SUCHE ── */
+  /* ── CP-FORTSCHRITT & MERKLISTE-FILTER ── */
+  .progress-wrap { max-width: 1100px; margin: 0 auto; padding: 4px 24px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .cp-progress { display: none; align-items: center; gap: 10px; max-width: 420px; }
+  .cp-progress.visible { display: flex; }
+  .cp-progress-bar { flex: 1; height: 6px; border-radius: 4px; background: var(--border); overflow: hidden; }
+  .cp-progress-fill { height: 100%; background: var(--accent); border-radius: 4px; transition: width .3s; }
+  .cp-progress-label { font-size: 11.5px; color: var(--muted); white-space: nowrap; }
+  .merkliste-toggle {
+    display: inline-flex; align-items: center; gap: 6px; font-family: 'Inter', sans-serif;
+    font-size: 12px; padding: 5px 11px; border-radius: 20px; border: 1px solid var(--border);
+    background: var(--surface); color: var(--muted); cursor: pointer;
+  }
+  .merkliste-toggle.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .mv-plan-empty { padding: 20px 0; font-size: 12.5px; color: var(--muted); text-align: center; }
+
   .search-wrap { max-width: 1100px; margin: 0 auto; padding: 4px 24px 4px; position: relative; }
   .search-inner { position: relative; max-width: 360px; }
   .search-icon {
@@ -178,6 +202,14 @@
   .mv-detail-meta { font-size: 12px; color: var(--muted); white-space: nowrap; padding-top: 4px; }
   .mv-sb-tag { display: inline-block; margin-top: 6px; font-size: 10px; font-weight: 700; border-radius: 20px; padding: 2px 9px; }
 
+  .mv-status-bar {
+    display: flex; align-items: center; gap: 8px; margin: -4px 0 14px; font-size: 12px; color: var(--muted);
+  }
+  .mv-status-select {
+    font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; color: var(--text);
+    border: 1px solid var(--border); border-radius: 7px; padding: 5px 8px; background: var(--bg); cursor: pointer;
+  }
+
   /* ── STUDIENBEREICHS-FARBEN (Karten, Legende, Detail-Tags) ──
      Eigene Dark-Varianten statt reiner Invertierung, damit Kontrast/
      Lesbarkeit erhalten bleibt. */
@@ -216,7 +248,7 @@
   .mv-pruefung { font-size: 13px; font-weight: 600; }
   .mv-pruefung-note { font-weight: 400; color: var(--muted); }
   .mv-voraus { display: flex; flex-wrap: wrap; gap: 6px; }
-  .mv-voraus-chip { font-size: 11px; padding: 4px 9px; border-radius: 20px; background: var(--bg); border: 1px solid var(--border); color: var(--text); }
+  .mv-chip { font-size: 11px; padding: 4px 9px; border-radius: 20px; background: var(--bg); border: 1px solid var(--border); color: var(--text); }
   .mv-voraus-link { text-decoration: none; cursor: pointer; }
   .mv-voraus-link:hover { border-color: var(--accent); color: var(--accent); }
   .mv-voraus-none { font-size: 12px; color: var(--muted); font-style: italic; }
@@ -230,7 +262,7 @@
   .mv-workload-val { font-weight: 700; font-size: 14px; }
   .mv-workload-label { color: var(--muted); font-size: 10.5px; }
   .mv-verwendbarkeit { display: flex; flex-wrap: wrap; gap: 5px; }
-  .mv-verwendbarkeit-chip { font-size: 10.5px; padding: 3px 8px; border-radius: 20px; background: var(--bg); border: 1px solid var(--border); color: var(--muted); }
+  .mv-verwendbarkeit-chip { font-size: 10.5px; padding: 3px 8px; color: var(--muted); }
   .mv-verwendbarkeit-none { font-size: 12px; color: var(--muted); font-style: italic; }
 
   /* ── KONTAKT / FOOTER ── */
@@ -259,6 +291,8 @@
     .intro { padding: 14px 16px 4px; }
     .search-wrap { padding: 4px 16px; }
     .search-inner { max-width: none; }
+    .progress-wrap { padding: 4px 16px; }
+    .cp-progress { max-width: none; }
     .mv-plan { padding: 0 16px; }
     .sb-legend { padding: 0 16px 8px; }
     .mv-row { flex-direction: column; gap: 8px; }
@@ -318,6 +352,14 @@
   </div>
 </div>
 
+<div class="progress-wrap" id="progressWrap">
+  <div class="cp-progress" id="cpProgress">
+    <div class="cp-progress-bar"><div class="cp-progress-fill" id="cpProgressFill"></div></div>
+    <span class="cp-progress-label" id="cpProgressLabel"></span>
+  </div>
+  <button type="button" class="merkliste-toggle" id="merklisteToggle">★ Nur Merkliste zeigen</button>
+</div>
+
 <p style="max-width:1100px;margin:0 auto;padding:0 24px 6px;font-size:11.5px;color:var(--muted);">Farblegende der Studienbereiche:</p>
 <div class="sb-legend" id="sbLegend"></div>
 
@@ -344,12 +386,45 @@
 </footer>
 
 <script>
-const MODULES = [{"nr": 1, "name": "Wissenschaftliches Arbeiten", "sem": [1], "cp": 6, "sws": 4, "sb": 5, "verantwortung": "Prof. Dr. Heike Stammer", "email": "h.stammer@eh-ludwigsburg.de", "bausteine": [["Einführung in das Wissenschaftliche Arbeiten", "Seminar", "UPL"]], "pruefung": ["0745", "MtA", "unbenotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 01", "BA DW 01", "BA RPGP 01"], "modulart": null}, {"nr": 2, "name": "Theorie und Methoden der Beratung in der Sozialen Arbeit", "sem": [1, 2], "cp": 6, "sws": 4, "sb": 5, "verantwortung": "Prof. Dr. Eva Maria Lohner", "email": "e.lohner@eh-ludwigsburg.de", "bausteine": [["Einführung in die Grundlagen der psychosozialen Beratung", "Vorlesung", "UPL"], ["Gesprächsführung und Kommunikationskompetenzen", "Übung", null]], "pruefung": ["0746", "MtA", "unbenotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 02", "BA DW 02", "BA RPGP 02"], "modulart": null}, {"nr": 3, "name": "Ethische und theologische Perspektiven", "sem": [1], "cp": 6, "sws": 4, "sb": 1, "verantwortung": "Prof. Dr. Björn Görder", "email": "b.goerder@eh-ludwigsburg.de", "bausteine": [["Grundlagen einer Ethik Sozialer Arbeit", "Seminar", "PL"], ["Ethische Konflikte und ethische Urteilsbildung", "Übung", null]], "pruefung": ["0747", "Klausur / Referat", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 03"], "modulart": null}, {"nr": 4, "name": "Genderperspektiven", "sem": [1], "cp": 6, "sws": 4, "sb": 5, "verantwortung": "Prof. Dr. Johanna Possinger", "email": "j.possinger@eh-ludwigsburg.de", "bausteine": [["Wie lese ich Daten sozialer Ungleichheit?", "Vorlesung", null], ["Wahlpflichtseminar zu aktuellen Themen", "Seminar", "PL"]], "pruefung": ["0750", "Hausarbeit / Referat", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 04"], "modulart": null}, {"nr": 5, "name": "Einführung in die Soziale Arbeit als Disziplin und Profession", "sem": [1], "cp": 6, "sws": 6, "sb": 1, "verantwortung": "Prof. Dr. Rolf Ahlrichs", "email": "r.ahlrichs@eh-ludwigsburg.de", "bausteine": [["Einführung in die Grundfragen und Grundlagen Sozialer Arbeit", "Seminar", "UPL"], ["Einführung in die politischen Bezüge Sozialer Arbeit", "Seminar", null], ["Einführung in die rechtlichen Bezüge Sozialer Arbeit", "Seminar", null]], "pruefung": ["0752", "MtA", "unbenotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 63, "selbst": 117, "praxis": 0}, "verwendbarkeit": ["BA ISA 05", "BA DW 05"], "modulart": null}, {"nr": 6, "name": "Inklusion und Exklusion", "sem": [2], "cp": 6, "sws": 4, "sb": 3, "verantwortung": "Prof. Dr. Philine Zölls-Kaser", "email": "p.zoells-kaser@eh-ludwigsburg.de", "bausteine": [["Inklusion – Exklusion im Kontext der Systemtheorie, Inklusionspädagogik und Theorien der Sozialen Arbeit", "Vorlesung", null], ["Wahlpflichtseminare", "Seminar", "PL"]], "pruefung": ["0756", "Hausarbeit / Referat", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 06", "BA DW 20", "BA IPHP 09"], "modulart": null}, {"nr": 7, "name": "Entwicklung und Sozialisation", "sem": [2], "cp": 6, "sws": 4, "sb": 4, "verantwortung": "Prof. Dr. Heike Stammer", "email": "h.stammer@eh-ludwigsburg.de", "bausteine": [["Entwicklungs- und Sozialisationstheorien unter Berücksichtigung von Verhaltensauffälligkeiten", "Vorlesung", "UPL"], ["Wahlpflichtseminare", "Seminar", null]], "pruefung": ["0757", "MtA", "unbenotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 07", "BA DW 07"], "modulart": null}, {"nr": 8, "name": "Rechtliche Grundlagen und Aufträge Sozialer Arbeit", "sem": [2], "cp": 6, "sws": 5, "sb": 4, "verantwortung": "Prof. Dr. Marc Sieper", "email": "m.sieper@eh-ludwigsburg.de", "bausteine": [["Grundlagen des Kinder- und Jugendhilfe- sowie Familienrechts", "Seminar", "PL"], ["Rechtliche Grundlagen und Einführung in das Grundsicherungsrecht", "Seminar", "PL"], ["Sozialverwaltungsrecht", "Seminar", "PL"], ["Arbeitsfelder und Aufträge Sozialer Arbeit", "Seminar", null]], "pruefung": ["0759", "Klausur", "benotet"], "voraus": [5], "workload": {"gesamt": 180, "kontakt": 53, "selbst": 127, "praxis": 0}, "verwendbarkeit": ["BA ISA 08", "BA DW 08", "BA RPGP 13"], "modulart": null}, {"nr": 9, "name": "Ästhetik, Kultur, Medien", "sem": [1, 2], "cp": 6, "sws": 5, "sb": 5, "verantwortung": "Prof. Dr. Corinna Schubert", "email": "c.schubert@eh-ludwigsburg.de", "bausteine": [["Theoretische Grundlagen (1. Sem.)", "Seminar", null], ["Workshop (1. Sem.)", "Workshop", null], ["Methodikworkshop (2. Sem.)", "Workshop", "PL"]], "pruefung": ["0760", "MtA", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 53, "selbst": 127, "praxis": 0}, "verwendbarkeit": ["BA ISA 09", "BA DW 09", "BA RPGP 07"], "modulart": null}, {"nr": 10, "name": "Forschung", "sem": [2], "cp": 6, "sws": 5, "sb": 7, "verantwortung": "Prof. Dr. Peter Höfflin", "email": "p.hoefflin@eh-ludwigsburg.de", "bausteine": [["Methoden der empirischen Sozialforschung", "Vorlesung", null], ["Der Einsatz von Forschungsmethoden in sozialen Arbeitsfeldern", "Seminar", "PL"]], "pruefung": ["0764", "MtA", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 53, "selbst": 127, "praxis": 0}, "verwendbarkeit": ["BA ISA 10", "BA DW 10"], "modulart": null}, {"nr": 11, "name": "Projektstudium I", "sem": [3], "cp": 12, "sws": 6, "sb": 2, "verantwortung": "Prof. Dr. Johanna Possinger / Prof. Dr. Stephanie Goeke", "email": "j.possinger@eh-ludwigsburg.de / s.goeke@eh-ludwigsburg.de", "bausteine": [["Projekt", "Praxis", null], ["Projektbegleitseminar (PBS)", "Seminar", "PL"], ["Theorie- / Praxisbezug", "Seminar", null], ["Präsentationstag inkl. Vorbereitung", "Workshop", null]], "pruefung": ["0766", "MtA", "benotet"], "voraus": [1, 4, 5, 8, 10], "workload": {"gesamt": 360, "kontakt": 63, "selbst": 147, "praxis": 150}, "verwendbarkeit": ["BA ISA 11", "BA DW 11"], "modulart": null}, {"nr": 12, "name": "Unterstützung bei der Lebensbewältigung: Beratung und Begleitung", "sem": [3], "cp": 6, "sws": 4, "sb": 6, "verantwortung": "Prof. Dr. Eva Maria Lohner", "email": "e.lohner@eh-ludwigsburg.de", "bausteine": [["Methoden zur Beratung Einzelner, von Familien und Gruppen", "Seminar", "UPL"], ["Professionelle Anforderungen in den Feldern der Sozialen Arbeit", "Übung", null]], "pruefung": ["0770", "MtA", "unbenotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 12", "BA DW 12", "BA RPGP 20"], "modulart": null}, {"nr": 13, "name": "Rechtliche Perspektiven und Organisationsgrundlagen Sozialer Arbeit", "sem": [3], "cp": 6, "sws": 4, "sb": 2, "verantwortung": "Prof. Dr. Tamara Bloch", "email": "t.bloch@eh-ludwigsburg.de", "bausteine": [["Vertiefung des Grundsicherungs- und Sozialhilferechts", "Seminar", "PL"], ["Vertiefung des Kinder- und Jugendhilfe- sowie Familienrechts / Prävention sexualisierter Gewalt", "Seminar", "PL"], ["Organisationsgrundlagen", "Seminar", null]], "pruefung": ["0771", "Klausur", "benotet"], "voraus": [8], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 13", "BA DW 18"], "modulart": null}, {"nr": 14, "name": "Internationale, interkulturelle und interreligiöse Perspektiven", "sem": [3], "cp": 6, "sws": 5, "sb": 5, "verantwortung": "Prof. Dr. Nadine Sylla", "email": "n.sylla@eh-ludwigsburg.de", "bausteine": [["Vielfalt und Unterschiedlichkeit in der Migrationsgesellschaft", "Vorlesung", null], ["Wahlpflichtseminare", "Seminar", "PL"], ["Interkulturelles und diversityorientiertes Training", "Workshop", null]], "pruefung": ["0772", "Referat / Hausarbeit", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 53, "selbst": 127, "praxis": 0}, "verwendbarkeit": ["BA ISA 14", "BA DW 14"], "modulart": null}, {"nr": 15, "name": "Projektstudium II", "sem": [4], "cp": 12, "sws": 6, "sb": 6, "verantwortung": "Prof. Dr. Johanna Possinger / Prof. Dr. Stephanie Goeke", "email": "j.possinger@eh-ludwigsburg.de / s.goeke@eh-ludwigsburg.de", "bausteine": [["Projekt", "Praxis", null], ["Projektbegleitseminar (PBS)", "Seminar", "PL"], ["Theorie- / Praxisbezug", "Seminar", null], ["Präsentationstag inkl. Vorbereitung", "Workshop", null]], "pruefung": ["0774", "MtA", "benotet"], "voraus": [1, 4, 5, 8, 10], "workload": {"gesamt": 360, "kontakt": 63, "selbst": 147, "praxis": 150}, "verwendbarkeit": ["BA ISA 15", "BA DW 15", "BA RPGP 15"], "modulart": null}, {"nr": 16, "name": "Kasuistik, Case-Management und Hilfeplanung", "sem": [4], "cp": 6, "sws": 5, "sb": 6, "verantwortung": "Prof. Dr. Elke Schierer", "email": "e.schierer@eh-ludwigsburg.de", "bausteine": [["Einführung in das theoriegeleitete, methodische Handeln / Case-Management", "Seminar", "PL"], ["Anwendungsformen in Arbeitsbereichen, Hilfeplanung", "Übung", null]], "pruefung": ["0778", "mündliche Prüfung", "benotet"], "voraus": [2, 5, 8, 12], "workload": {"gesamt": 180, "kontakt": 53, "selbst": 127, "praxis": 0}, "verwendbarkeit": ["BA ISA 16", "BA DW 16"], "modulart": null}, {"nr": 17, "name": "Unterstützung ausgewählter Zielgruppen in Rechtsfragen und betriebswirtschaftliche Aspekte", "sem": [4], "cp": 6, "sws": 4, "sb": 4, "verantwortung": "Prof. Dr. Annette Rabe", "email": "a.rabe@eh-ludwigsburg.de", "bausteine": [["Wahlpflichtseminare", "Seminar", "UPL"], ["Betriebswirtschaftliche Aspekte", "Seminar", "UPL"]], "pruefung": ["0779", "MtA", "unbenotet"], "voraus": [8], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 17"], "modulart": null}, {"nr": 18, "name": "Gesellschaftliche Strukturen und Prozesse", "sem": [4], "cp": 6, "sws": 5, "sb": 3, "verantwortung": "Prof. Dr. Peter Höfflin", "email": "p.hoefflin@eh-ludwigsburg.de", "bausteine": [["Einführung in grundlegende allgemeine Theorien und Schlüsselbegriffe der Soziologie", "Vorlesung", null], ["Soziologische Grundlagen in speziellen Arbeitsfeldern", "Seminar", "PL"]], "pruefung": ["0781", "Hausarbeit / Referat", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 53, "selbst": 127, "praxis": 0}, "verwendbarkeit": ["BA ISA 18", "BA DW 24"], "modulart": null}, {"nr": 19, "name": "Praxissemester", "sem": [5], "cp": 30, "sws": 3, "sb": 6, "verantwortung": "Beatrice Gerst", "email": "b.gerst@eh-ludwigsburg.de", "bausteine": [["Praxispräsenzzeit", "Praxis (800 h)", null], ["Praxisbegleitende Lehrveranstaltung (PBL)", "Seminar", "UPL"], ["Reflexionszeit zur Selbstevaluation / Dokumentationszeit", "Selbststudium (68 h)", null]], "pruefung": ["0783", "MtA", "unbenotet"], "voraus": ["Module 01–18 (gesamter 1. Studienabschnitt)"], "workload": {"gesamt": 900, "kontakt": 32, "selbst": 68, "praxis": 800}, "verwendbarkeit": ["BA ISA 19", "BA DW 19", "BA RPGP 19"], "modulart": null}, {"nr": 20, "name": "Rahmenbedingungen Sozialer Arbeit und Öffentlichkeitsbezug", "sem": [6], "cp": 6, "sws": 4, "sb": 6, "verantwortung": "Prof. Dr. Jens Müller", "email": "j.mueller@eh-ludwigsburg.de", "bausteine": [["Moderation und Kommunikation", "Seminar", "PL"], ["Marketing und Fundraising", "Übung", null]], "pruefung": ["0784", "Hausarbeit / Referat", "benotet"], "voraus": [13, 17], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 20"], "modulart": null}, {"nr": 21, "name": "Soziale Arbeit als Disziplin und Profession", "sem": [6], "cp": 6, "sws": 6, "sb": 7, "verantwortung": "Prof. Dr. Elke Schierer", "email": "e.schierer@eh-ludwigsburg.de", "bausteine": [["Theorien Sozialer Arbeit, disziplinäre Grundlagen und ihre Relevanz für methodische Konzepte und Handlungsherausforderungen", "Seminar", "PL"], ["Biografisch orientierte Kompetenzprofilierung / Projekt BA-Thesis", "Seminar", null]], "pruefung": ["0787", "MtA", "benotet"], "voraus": [5, 19], "workload": {"gesamt": 180, "kontakt": 63, "selbst": 117, "praxis": 0}, "verwendbarkeit": ["BA ISA 21", "BA DW 21"], "modulart": "Wahlpflichtmodul"}, {"nr": 22, "name": "Gemeinwesen und Sozialraum in pluralen Gesellschaften", "sem": [6], "cp": 6, "sws": 5, "sb": 2, "verantwortung": "Prof. Dr. Nadine Sylla", "email": "n.sylla@eh-ludwigsburg.de", "bausteine": [["Von der Gemeinwesenarbeit über das Quartiersmanagement zur Sozialraumorientierung und zurück?", "Vorlesung", null], ["Wahlpflichtseminare", "Seminar", "PL"], ["Das Allgemeine Gleichbehandlungsgesetz (AGG)", "Seminar", null], ["Methoden der Gemeinwesenarbeit und der Sozialraumanalyse", "Workshop", null]], "pruefung": ["0789", "Referat / Hausarbeit", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 53, "selbst": 127, "praxis": 0}, "verwendbarkeit": ["BA ISA 22", "BA DW 22", "BA RPGP 25"], "modulart": null}, {"nr": 23, "name": "Diakonie und weltanschauliche Organisationen im sozialen Wandel: religiöse und ethische Perspektiven", "sem": [6], "cp": 6, "sws": 4, "sb": 4, "verantwortung": "Prof. Dr. Björn Görder", "email": "b.goerder@eh-ludwigsburg.de", "bausteine": [["Wertebasiertes soziales Handeln im Kontext von Sozialstaat, Subsidiarität und Freier Wohlfahrtspflege", "Vorlesung", null], ["Diakonische und ethische Fragestellungen in Organisationen der Sozialwirtschaft", "Seminar", "PL"]], "pruefung": ["0794", "MtA", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 23", "BA DW 23"], "modulart": null}, {"nr": 24, "name": "Gesundheit und Soziale Arbeit / Gesundheitsförderung", "sem": [6], "cp": 6, "sws": 4, "sb": 4, "verantwortung": "Prof. Dr. Simone Ries", "email": "s.ries@eh-ludwigsburg.de", "bausteine": [["Einführung in Theorie und Praxis der gesundheitsbezogenen Sozialen Arbeit", "Vorlesung", "UPL"], ["Wahlpflichtseminare", "Seminar", null]], "pruefung": ["0796", "MtA", "unbenotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 24"], "modulart": null}, {"nr": 25, "name": "Organisation und Management sozialer Einrichtungen", "sem": [7], "cp": 6, "sws": 4, "sb": 6, "verantwortung": "Prof. Dr. Jens Müller", "email": "j.mueller@eh-ludwigsburg.de", "bausteine": [["Sozialmanagement", "Seminar", "PL"], ["Arbeitsrecht", "Seminar", null]], "pruefung": ["0799", "Klausur", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 25", "BA RPGP 21"], "modulart": null}, {"nr": 26, "name": "Gestaltung von Lern- und Bildungsprozessen", "sem": [7], "cp": 6, "sws": 4, "sb": 4, "verantwortung": "Prof. Dr. Elke Reichmann", "email": "e.reichmann@eh-ludwigsburg.de", "bausteine": [["Erziehungswissenschaftliche Grundlagen von Lern- und Bildungsprozessen", "Vorlesung", "UPL"], ["Wahlpflichtseminare", "Seminar", null]], "pruefung": ["0802", "MtA", "unbenotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 26"], "modulart": null}, {"nr": 27, "name": "Sozialpolitik und transnationale Bezüge Sozialer Arbeit", "sem": [7], "cp": 6, "sws": 4, "sb": 3, "verantwortung": "Prof. Bettina Heinrich", "email": "b.heinrich@eh-ludwigsburg.de", "bausteine": [["Allgemeine politische, volkswirtschaftliche und geopolitische Rahmenbedingungen Sozialer Arbeit", "Seminar", "UPL"], ["Politische Handlungsfelder Sozialer Arbeit", "Seminar", "UPL"]], "pruefung": ["0803", "MtA", "unbenotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 27"], "modulart": null}, {"nr": 28, "name": "Bachelor-Thesis / Bachelor-Kolloquium", "sem": [7], "cp": 12, "sws": 0, "sb": 0, "verantwortung": "Studiengangsleitung", "email": "r.ahlrichs@eh-ludwigsburg.de", "bausteine": [["Bachelor-Thesis", "Thesis", null], ["Bachelor-Kolloquium", "Kolloquium", null]], "pruefung": ["8900 / 8905", "Thesis + Kolloquium", "benotet"], "voraus": ["Bestehen des Praxissemesters (Modul 19)"], "workload": {"gesamt": 360, "kontakt": 0, "selbst": 360, "praxis": 0}, "verwendbarkeit": [], "modulart": null}];
+const MODULES = [{"nr": 1, "name": "Wissenschaftliches Arbeiten", "sem": [1], "cp": 6, "sws": 4, "sb": 5, "verantwortung": "Prof. Dr. Heike Stammer", "email": "h.stammer@eh-ludwigsburg.de", "bausteine": [["Einführung in das Wissenschaftliche Arbeiten", "Seminar", "UPL"]], "pruefung": ["0745", "MtA", "unbenotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 01", "BA DW 01", "BA RPGP 01"]}, {"nr": 2, "name": "Theorie und Methoden der Beratung in der Sozialen Arbeit", "sem": [1, 2], "cp": 6, "sws": 4, "sb": 5, "verantwortung": "Prof. Dr. Eva Maria Lohner", "email": "e.lohner@eh-ludwigsburg.de", "bausteine": [["Einführung in die Grundlagen der psychosozialen Beratung", "Vorlesung", "UPL"], ["Gesprächsführung und Kommunikationskompetenzen", "Übung", null]], "pruefung": ["0746", "MtA", "unbenotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 02", "BA DW 02", "BA RPGP 02"]}, {"nr": 3, "name": "Ethische und theologische Perspektiven", "sem": [1], "cp": 6, "sws": 4, "sb": 1, "verantwortung": "Prof. Dr. Björn Görder", "email": "b.goerder@eh-ludwigsburg.de", "bausteine": [["Grundlagen einer Ethik Sozialer Arbeit", "Seminar", "PL"], ["Ethische Konflikte und ethische Urteilsbildung", "Übung", null]], "pruefung": ["0747", "Klausur / Referat", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 03"]}, {"nr": 4, "name": "Genderperspektiven", "sem": [1], "cp": 6, "sws": 4, "sb": 5, "verantwortung": "Prof. Dr. Johanna Possinger", "email": "j.possinger@eh-ludwigsburg.de", "bausteine": [["Wie lese ich Daten sozialer Ungleichheit?", "Vorlesung", null], ["Wahlpflichtseminar zu aktuellen Themen", "Seminar", "PL"]], "pruefung": ["0750", "Hausarbeit / Referat", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 04", "Baustein 0012: BA DW 01", "Baustein 0012: BA RPGP 01"]}, {"nr": 5, "name": "Einführung in die Soziale Arbeit als Disziplin und Profession", "sem": [1], "cp": 6, "sws": 6, "sb": 1, "verantwortung": "Prof. Dr. Rolf Ahlrichs", "email": "r.ahlrichs@eh-ludwigsburg.de", "bausteine": [["Einführung in die Grundfragen und Grundlagen Sozialer Arbeit", "Seminar", "UPL"], ["Einführung in die politischen Bezüge Sozialer Arbeit", "Seminar", null], ["Einführung in die rechtlichen Bezüge Sozialer Arbeit", "Seminar", null]], "pruefung": ["0752", "MtA", "unbenotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 63, "selbst": 117, "praxis": 0}, "verwendbarkeit": ["BA ISA 05", "BA DW 05", "Baustein 0755: BA RPGP 08"]}, {"nr": 6, "name": "Inklusion und Exklusion", "sem": [2], "cp": 6, "sws": 4, "sb": 3, "verantwortung": "Prof. Dr. Philine Zölls-Kaser", "email": "p.zoells-kaser@eh-ludwigsburg.de", "bausteine": [["Inklusion – Exklusion im Kontext der Systemtheorie, Inklusionspädagogik und Theorien der Sozialen Arbeit", "Vorlesung", null], ["Wahlpflichtseminare", "Seminar", "PL"]], "pruefung": ["0756", "Hausarbeit / Referat", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 06", "BA DW 20", "BA IPHP 09"]}, {"nr": 7, "name": "Entwicklung und Sozialisation", "sem": [2], "cp": 6, "sws": 4, "sb": 4, "verantwortung": "Prof. Dr. Heike Stammer", "email": "h.stammer@eh-ludwigsburg.de", "bausteine": [["Entwicklungs- und Sozialisationstheorien unter Berücksichtigung von Verhaltensauffälligkeiten", "Vorlesung", "UPL"], ["Wahlpflichtseminare", "Seminar", null]], "pruefung": ["0757", "MtA", "unbenotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 07", "BA DW 07", "Baustein 0758: BA RPGP 03", "Baustein 0758: BA IPHP 03", "Baustein 0025: BA Pflege 05"]}, {"nr": 8, "name": "Rechtliche Grundlagen und Aufträge Sozialer Arbeit", "sem": [2], "cp": 6, "sws": 5, "sb": 4, "verantwortung": "Prof. Dr. Marc Sieper", "email": "m.sieper@eh-ludwigsburg.de", "bausteine": [["Grundlagen des Kinder- und Jugendhilfe- sowie Familienrechts", "Seminar", "PL"], ["Rechtliche Grundlagen und Einführung in das Grundsicherungsrecht", "Seminar", "PL"], ["Sozialverwaltungsrecht", "Seminar", "PL"], ["Arbeitsfelder und Aufträge Sozialer Arbeit", "Seminar", null]], "pruefung": ["0759", "Klausur", "benotet"], "voraus": [5], "workload": {"gesamt": 180, "kontakt": 53, "selbst": 127, "praxis": 0}, "verwendbarkeit": ["BA ISA 08", "BA DW 08", "BA RPGP 13"]}, {"nr": 9, "name": "Ästhetik, Kultur, Medien", "sem": [1, 2], "cp": 6, "sws": 5, "sb": 5, "verantwortung": "Prof. Dr. Corinna Schubert", "email": "c.schubert@eh-ludwigsburg.de", "bausteine": [["Theoretische Grundlagen (1. Sem.)", "Seminar", null], ["Workshop (1. Sem.)", "Workshop", null], ["Methodikworkshop (2. Sem.)", "Workshop", "PL"]], "pruefung": ["0760", "MtA", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 53, "selbst": 127, "praxis": 0}, "verwendbarkeit": ["BA ISA 09", "BA DW 09", "BA RPGP 07", "Baustein 0761: BA IPHP 04", "Baustein 0762: BA IPHP 04"]}, {"nr": 10, "name": "Forschung", "sem": [2], "cp": 6, "sws": 5, "sb": 7, "verantwortung": "Prof. Dr. Peter Höfflin", "email": "p.hoefflin@eh-ludwigsburg.de", "bausteine": [["Methoden der empirischen Sozialforschung", "Vorlesung", null], ["Der Einsatz von Forschungsmethoden in sozialen Arbeitsfeldern", "Seminar", "PL"]], "pruefung": ["0764", "MtA", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 53, "selbst": 127, "praxis": 0}, "verwendbarkeit": ["BA ISA 10", "BA DW 10"]}, {"nr": 11, "name": "Projektstudium I", "sem": [3], "cp": 12, "sws": 6, "sb": 2, "verantwortung": "Prof. Dr. Johanna Possinger / Prof. Dr. Stephanie Goeke", "email": "j.possinger@eh-ludwigsburg.de / s.goeke@eh-ludwigsburg.de", "bausteine": [["Projekt", "Praxis", null], ["Projektbegleitseminar (PBS)", "Seminar", "PL"], ["Theorie- / Praxisbezug", "Seminar", null], ["Präsentationstag inkl. Vorbereitung", "Workshop", null]], "pruefung": ["0766", "MtA", "benotet"], "voraus": [1, 4, 5, 8, 10], "workload": {"gesamt": 360, "kontakt": 63, "selbst": 147, "praxis": 150}, "verwendbarkeit": ["BA ISA 11", "BA DW 11"]}, {"nr": 12, "name": "Unterstützung bei der Lebensbewältigung: Beratung und Begleitung", "sem": [3], "cp": 6, "sws": 4, "sb": 6, "verantwortung": "Prof. Dr. Eva Maria Lohner", "email": "e.lohner@eh-ludwigsburg.de", "bausteine": [["Methoden zur Beratung Einzelner, von Familien und Gruppen", "Seminar", "UPL"], ["Professionelle Anforderungen in den Feldern der Sozialen Arbeit", "Übung", null]], "pruefung": ["0770", "MtA", "unbenotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 12", "BA DW 12", "BA RPGP 20"]}, {"nr": 13, "name": "Rechtliche Perspektiven und Organisationsgrundlagen Sozialer Arbeit", "sem": [3], "cp": 6, "sws": 4, "sb": 2, "verantwortung": "Prof. Dr. Tamara Bloch", "email": "t.bloch@eh-ludwigsburg.de", "bausteine": [["Vertiefung des Grundsicherungs- und Sozialhilferechts", "Seminar", "PL"], ["Vertiefung des Kinder- und Jugendhilfe- sowie Familienrechts / Prävention sexualisierter Gewalt", "Seminar", "PL"], ["Organisationsgrundlagen", "Seminar", null]], "pruefung": ["0771", "Klausur", "benotet"], "voraus": [8], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 13", "BA DW 18"]}, {"nr": 14, "name": "Internationale, interkulturelle und interreligiöse Perspektiven", "sem": [3], "cp": 6, "sws": 5, "sb": 5, "verantwortung": "Prof. Dr. Nadine Sylla", "email": "n.sylla@eh-ludwigsburg.de", "bausteine": [["Vielfalt und Unterschiedlichkeit in der Migrationsgesellschaft", "Vorlesung", null], ["Wahlpflichtseminare", "Seminar", "PL"], ["Interkulturelles und diversityorientiertes Training", "Workshop", null]], "pruefung": ["0772", "Referat / Hausarbeit", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 53, "selbst": 127, "praxis": 0}, "verwendbarkeit": ["BA ISA 14", "BA DW 14", "Baustein 0049: BA RPGP 17", "Baustein 0050: BA RPGP 17"]}, {"nr": 15, "name": "Projektstudium II", "sem": [4], "cp": 12, "sws": 6, "sb": 6, "verantwortung": "Prof. Dr. Johanna Possinger / Prof. Dr. Stephanie Goeke", "email": "j.possinger@eh-ludwigsburg.de / s.goeke@eh-ludwigsburg.de", "bausteine": [["Projekt", "Praxis", null], ["Projektbegleitseminar (PBS)", "Seminar", "PL"], ["Theorie- / Praxisbezug", "Seminar", null], ["Präsentationstag inkl. Vorbereitung", "Workshop", null]], "pruefung": ["0774", "MtA", "benotet"], "voraus": [1, 4, 5, 8, 10], "workload": {"gesamt": 360, "kontakt": 63, "selbst": 147, "praxis": 150}, "verwendbarkeit": ["BA ISA 15", "BA DW 15", "BA RPGP 15"]}, {"nr": 16, "name": "Kasuistik, Case-Management und Hilfeplanung", "sem": [4], "cp": 6, "sws": 5, "sb": 6, "verantwortung": "Prof. Dr. Elke Schierer", "email": "e.schierer@eh-ludwigsburg.de", "bausteine": [["Einführung in das theoriegeleitete, methodische Handeln / Case-Management", "Seminar", "PL"], ["Anwendungsformen in Arbeitsbereichen, Hilfeplanung", "Übung", null]], "pruefung": ["0778", "mündliche Prüfung", "benotet"], "voraus": [2, 5, 8, 12], "workload": {"gesamt": 180, "kontakt": 53, "selbst": 127, "praxis": 0}, "verwendbarkeit": ["BA ISA 16", "BA DW 16"]}, {"nr": 17, "name": "Unterstützung ausgewählter Zielgruppen in Rechtsfragen und betriebswirtschaftliche Aspekte", "sem": [4], "cp": 6, "sws": 4, "sb": 4, "verantwortung": "Prof. Dr. Annette Rabe", "email": "a.rabe@eh-ludwigsburg.de", "bausteine": [["Wahlpflichtseminare", "Seminar", "UPL"], ["Betriebswirtschaftliche Aspekte", "Seminar", "UPL"]], "pruefung": ["0779", "MtA", "unbenotet"], "voraus": [8], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 17"]}, {"nr": 18, "name": "Gesellschaftliche Strukturen und Prozesse", "sem": [4], "cp": 6, "sws": 5, "sb": 3, "verantwortung": "Prof. Dr. Peter Höfflin", "email": "p.hoefflin@eh-ludwigsburg.de", "bausteine": [["Einführung in grundlegende allgemeine Theorien und Schlüsselbegriffe der Soziologie", "Vorlesung", null], ["Soziologische Grundlagen in speziellen Arbeitsfeldern", "Seminar", "PL"]], "pruefung": ["0781", "Hausarbeit / Referat", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 53, "selbst": 127, "praxis": 0}, "verwendbarkeit": ["BA ISA 18", "BA DW 24", "Baustein 0064: BA IPHP 02"]}, {"nr": 19, "name": "Praxissemester", "sem": [5], "cp": 30, "sws": 3, "sb": 6, "verantwortung": "Beatrice Gerst", "email": "b.gerst@eh-ludwigsburg.de", "bausteine": [["Praxispräsenzzeit", "Praxis (800 h)", null], ["Praxisbegleitende Lehrveranstaltung (PBL)", "Seminar", "UPL"], ["Reflexionszeit zur Selbstevaluation / Dokumentationszeit", "Selbststudium (68 h)", null]], "pruefung": ["0783", "MtA", "unbenotet"], "voraus": ["Module 01–18 (gesamter 1. Studienabschnitt) sollen absolviert sein"], "workload": {"gesamt": 900, "kontakt": 32, "selbst": 68, "praxis": 800}, "verwendbarkeit": ["BA ISA 19", "BA DW 19", "BA RPGP 19"]}, {"nr": 20, "name": "Rahmenbedingungen Sozialer Arbeit und Öffentlichkeitsbezug", "sem": [6], "cp": 6, "sws": 4, "sb": 6, "verantwortung": "Prof. Dr. Jens Müller", "email": "j.mueller@eh-ludwigsburg.de", "bausteine": [["Moderation und Kommunikation", "Seminar", "PL"], ["Marketing und Fundraising", "Übung", null]], "pruefung": ["0784", "Hausarbeit / Referat", "benotet"], "voraus": [13, 17], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 20"]}, {"nr": 21, "name": "Soziale Arbeit als Disziplin und Profession", "sem": [6], "cp": 6, "sws": 6, "sb": 7, "verantwortung": "Prof. Dr. Elke Schierer", "email": "e.schierer@eh-ludwigsburg.de", "bausteine": [["Theorien Sozialer Arbeit, disziplinäre Grundlagen und ihre Relevanz für methodische Konzepte und Handlungsherausforderungen", "Seminar", "PL"], ["Biografisch orientierte Kompetenzprofilierung / Projekt BA-Thesis", "Seminar", null]], "pruefung": ["0787", "MtA", "benotet"], "voraus": [5, 19], "workload": {"gesamt": 180, "kontakt": 63, "selbst": 117, "praxis": 0}, "verwendbarkeit": ["BA ISA 21", "BA DW 21"], "modulart": "Wahlpflichtmodul"}, {"nr": 22, "name": "Gemeinwesen und Sozialraum in pluralen Gesellschaften", "sem": [6], "cp": 6, "sws": 5, "sb": 2, "verantwortung": "Prof. Dr. Nadine Sylla", "email": "n.sylla@eh-ludwigsburg.de", "bausteine": [["Von der Gemeinwesenarbeit über das Quartiersmanagement zur Sozialraumorientierung und zurück?", "Vorlesung", null], ["Wahlpflichtseminare", "Seminar", "PL"], ["Das Allgemeine Gleichbehandlungsgesetz (AGG)", "Seminar", null], ["Methoden der Gemeinwesenarbeit und der Sozialraumanalyse", "Workshop", null]], "pruefung": ["0789", "Referat / Hausarbeit", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 53, "selbst": 127, "praxis": 0}, "verwendbarkeit": ["BA ISA 22", "BA DW 22", "BA RPGP 25"]}, {"nr": 23, "name": "Diakonie und weltanschauliche Organisationen im sozialen Wandel: religiöse und ethische Perspektiven", "sem": [6], "cp": 6, "sws": 4, "sb": 4, "verantwortung": "Prof. Dr. Björn Görder", "email": "b.goerder@eh-ludwigsburg.de", "bausteine": [["Wertebasiertes soziales Handeln im Kontext von Sozialstaat, Subsidiarität und Freier Wohlfahrtspflege", "Vorlesung", null], ["Diakonische und ethische Fragestellungen in Organisationen der Sozialwirtschaft", "Seminar", "PL"]], "pruefung": ["0794", "MtA", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 23", "BA DW 23", "Baustein 0744: BA IPHP 07"]}, {"nr": 24, "name": "Gesundheit und Soziale Arbeit / Gesundheitsförderung", "sem": [6], "cp": 6, "sws": 4, "sb": 4, "verantwortung": "Prof. Dr. Simone Ries", "email": "s.ries@eh-ludwigsburg.de", "bausteine": [["Einführung in Theorie und Praxis der gesundheitsbezogenen Sozialen Arbeit", "Vorlesung", "UPL"], ["Wahlpflichtseminare", "Seminar", null]], "pruefung": ["0796", "MtA", "unbenotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 24"]}, {"nr": 25, "name": "Organisation und Management sozialer Einrichtungen", "sem": [7], "cp": 6, "sws": 4, "sb": 6, "verantwortung": "Prof. Dr. Jens Müller", "email": "j.mueller@eh-ludwigsburg.de", "bausteine": [["Sozialmanagement", "Seminar", "PL"], ["Arbeitsrecht", "Seminar", null]], "pruefung": ["0799", "Klausur", "benotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 25", "BA RPGP 21"]}, {"nr": 26, "name": "Gestaltung von Lern- und Bildungsprozessen", "sem": [7], "cp": 6, "sws": 4, "sb": 4, "verantwortung": "Prof. Dr. Elke Reichmann", "email": "e.reichmann@eh-ludwigsburg.de", "bausteine": [["Erziehungswissenschaftliche Grundlagen von Lern- und Bildungsprozessen", "Vorlesung", "UPL"], ["Wahlpflichtseminare", "Seminar", null]], "pruefung": ["0802", "MtA", "unbenotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 26", "Baustein 0089: BA RPGP 11"]}, {"nr": 27, "name": "Sozialpolitik und transnationale Bezüge Sozialer Arbeit", "sem": [7], "cp": 6, "sws": 4, "sb": 3, "verantwortung": "Prof. Bettina Heinrich", "email": "b.heinrich@eh-ludwigsburg.de", "bausteine": [["Allgemeine politische, volkswirtschaftliche und geopolitische Rahmenbedingungen Sozialer Arbeit", "Seminar", "UPL"], ["Politische Handlungsfelder Sozialer Arbeit", "Seminar", "UPL"]], "pruefung": ["0803", "MtA", "unbenotet"], "voraus": [], "workload": {"gesamt": 180, "kontakt": 42, "selbst": 138, "praxis": 0}, "verwendbarkeit": ["BA ISA 27"]}, {"nr": 28, "name": "Bachelor-Thesis / Bachelor-Kolloquium", "sem": [7], "cp": 12, "sws": 0, "sb": 0, "verantwortung": "Studiengangsleitung", "email": "r.ahlrichs@eh-ludwigsburg.de", "bausteine": [["Bachelor-Thesis", "Thesis", null], ["Bachelor-Kolloquium", "Kolloquium", null]], "pruefung": ["8900 / 8905", "Thesis + Kolloquium", "benotet"], "voraus": ["Bestehen des Praxissemesters bzw. zumindest dessen erfolgreicher Antritt (Modul 19)"], "workload": {"gesamt": 360, "kontakt": 0, "selbst": 360, "praxis": 0}, "verwendbarkeit": []}];
 const STUDIENBEREICHE = {"1": {"name": "Grundlagen der Sozialen Arbeit als Disziplin und Profession", "bg": "#E8F5ED", "tx": "#1A5C34", "bd": "#A8D5B5", "dot": "#2E8B57"}, "2": {"name": "Zielgruppen und Arbeitsfelder der Sozialen Arbeit", "bg": "#EDE8FF", "tx": "#3B1D8C", "bd": "#B8A8F0", "dot": "#5B3FC8"}, "3": {"name": "Gesellschaftliche Rahmenbedingungen", "bg": "#E0F4EF", "tx": "#0D5A4A", "bd": "#8DD4C2", "dot": "#1A8C70"}, "4": {"name": "Bezugsdisziplinen", "bg": "#FEF3E2", "tx": "#7A5500", "bd": "#F5CC80", "dot": "#C48A00"}, "5": {"name": "Schlüsselqualifikationen", "bg": "#E0EEFF", "tx": "#1A3A8C", "bd": "#A0BCEA", "dot": "#2050C8"}, "6": {"name": "Sozialarbeiterische Handlungskompetenzen", "bg": "#FCE9E0", "tx": "#8A4526", "bd": "#EFC0A8", "dot": "#CC6B3F"}, "7": {"name": "Reflexion und Evaluation der Sozialen Arbeit", "bg": "#FCE8EF", "tx": "#7A1038", "bd": "#F0A0BC", "dot": "#C41A50"}, "0": {"name": "Ohne spezifische Zuordnung", "bg": "#EEEEEC", "tx": "#444440", "bd": "#BBBBBA", "dot": "#777775"}};
 const CURRENT_KEY = 'mv_current_semester';
+const OVERRIDE_KEY = 'mv_status_overrides';
 
 function esc(s) {
   return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ── PERSÖNLICHER STATUS (Merkliste + Fortschritts-Tracker) ──────────────────
+// Zwei-Schicht-Modell: die Semesterauswahl setzt automatisch einen
+// Ausgangsstatus pro Modul (done/current/upcoming). Jedes Modul lässt sich
+// davon unabhängig einzeln überschreiben (vorgemerkt/abgeschlossen/offen) –
+// das "entkoppelt" es von der Automatik, bis der Override wieder entfernt wird.
+function getOverrides() {
+  try { return JSON.parse(localStorage.getItem(OVERRIDE_KEY) || '{}'); }
+  catch (e) { return {}; }
+}
+function setOverride(nr, status) {
+  const overrides = getOverrides();
+  if (status) overrides[nr] = status;
+  else delete overrides[nr];
+  try { localStorage.setItem(OVERRIDE_KEY, JSON.stringify(overrides)); } catch (e) {}
+}
+
+// Automatischer Status rein aus der Semesterauswahl, ohne Overrides.
+function automaticStatus(m, currentSem) {
+  if (!currentSem) return null;
+  if (m.sem.includes(currentSem)) return 'current';
+  return m.sem[0] < currentSem ? 'done' : 'upcoming';
+}
+
+// Ob ein Modul im Sinne der CP-Anzeige/Kartenabblendung als "erledigt" zählt:
+// manueller Override hat Vorrang vor der Automatik.
+function isEffectivelyDone(m, currentSem, overrides) {
+  const o = overrides[m.nr];
+  if (o === 'abgeschlossen') return true;
+  if (o === 'offen' || o === 'vorgemerkt') return false;
+  return automaticStatus(m, currentSem) === 'done';
 }
 
 function renderLegend() {
@@ -360,22 +435,30 @@ function renderLegend() {
     </span>`).join('');
 }
 
-function moduleCardHtml(m, currentSem) {
+function moduleCardHtml(m, currentSem, overrides) {
   let cls = `mv-card sb-${m.sb}`;
-  if (currentSem && m.sem[0] < currentSem && !m.sem.includes(currentSem)) cls += ' mv-card-done';
+  if (isEffectivelyDone(m, currentSem, overrides)) cls += ' mv-card-done';
+  const override = overrides[m.nr];
+  const badgeIcon = {vorgemerkt: '★', abgeschlossen: '✓', offen: '○'}[override];
+  const badgeHtml = badgeIcon
+    ? `<span class="mv-card-badge badge-${override}" title="Manuell: ${override}">${badgeIcon}</span>` : '';
   const span = m.sem.length > 1 ? `<div class="mv-card-span">${m.sem[0]}.–${m.sem[m.sem.length-1]}. Sem.</div>` : '';
   return `<a href="#modul-${m.nr}" class="${cls}">
+    ${badgeHtml}
     <div class="mv-card-nr">M${String(m.nr).padStart(2,'0')}</div>
     <div class="mv-card-name">${esc(m.name)}</div>
     ${span}
   </a>`;
 }
 
-function renderPlan(currentSem) {
+function renderPlan(currentSem, merklisteOnly) {
+  const overrides = getOverrides();
   const el = document.getElementById('plan');
   let html = '';
   for (let sem = 1; sem <= 7; sem++) {
-    const modsInSem = MODULES.filter(m => m.sem.includes(sem));
+    let modsInSem = MODULES.filter(m => m.sem.includes(sem));
+    if (merklisteOnly) modsInSem = modsInSem.filter(m => overrides[m.nr] === 'vorgemerkt');
+    if (merklisteOnly && !modsInSem.length) continue;
     let status, statusCls;
     if (!currentSem) { status = ''; statusCls = ''; }
     else if (sem < currentSem) { status = 'abgeschlossen'; statusCls = 'status-done'; }
@@ -384,8 +467,11 @@ function renderPlan(currentSem) {
     const statusHtml = status ? `<span class="mv-row-status ${statusCls}">${status}</span>` : '';
     html += `<div class="mv-row">
       <div class="mv-row-label"><span class="mv-row-sem">${sem}. Sem.</span>${statusHtml}</div>
-      <div class="mv-row-cards">${modsInSem.map(m => moduleCardHtml(m, currentSem)).join('')}</div>
+      <div class="mv-row-cards">${modsInSem.map(m => moduleCardHtml(m, currentSem, overrides)).join('')}</div>
     </div>`;
+  }
+  if (merklisteOnly && !html.trim()) {
+    html = `<div class="mv-plan-empty">Noch keine Module vorgemerkt – öffne ein Modul unten und setze den Status auf "★ Vorgemerkt".</div>`;
   }
   el.innerHTML = html;
 }
@@ -399,15 +485,15 @@ function baustein(b) {
 function voraus(v) {
   if (!v.length) return '<span class="mv-voraus-none">keine</span>';
   return v.map(x => {
-    if (typeof x === 'string') return `<span class="mv-voraus-chip">${esc(x)}</span>`;
+    if (typeof x === 'string') return `<span class="mv-chip mv-voraus-chip">${esc(x)}</span>`;
     const target = MODULES.find(m => m.nr === x);
-    return `<a href="#modul-${x}" class="mv-voraus-chip mv-voraus-link">M${String(x).padStart(2,'0')} – ${esc(target.name)}</a>`;
+    return `<a href="#modul-${x}" class="mv-chip mv-voraus-chip mv-voraus-link">M${String(x).padStart(2,'0')} – ${esc(target.name)}</a>`;
   }).join(' ');
 }
 
 function verwendbarkeit(v) {
   if (!v.length) return '<span class="mv-verwendbarkeit-none">keine bekannte Verwendung in anderen Studiengängen</span>';
-  return v.map(x => `<span class="mv-verwendbarkeit-chip">${esc(x)}</span>`).join('');
+  return v.map(x => `<span class="mv-chip mv-verwendbarkeit-chip">${esc(x)}</span>`).join('');
 }
 
 function renderVerantwortung(names, emails) {
@@ -420,11 +506,17 @@ function renderVerantwortung(names, emails) {
   }).join('') + '</div>';
 }
 
-function renderDetails() {
+const AUTO_STATUS_LABELS = {done: 'abgeschlossen', current: 'aktuelles Semester', upcoming: 'kommend'};
+
+function renderDetails(currentSem, merklisteOnly) {
+  const overrides = getOverrides();
   const el = document.getElementById('details');
   let html = '';
   let lastSem = null;
+  let shown = 0;
   for (const m of MODULES) {
+    if (merklisteOnly && overrides[m.nr] !== 'vorgemerkt') continue;
+    shown++;
     const firstSem = m.sem[0];
     if (firstSem !== lastSem) { html += `<h2>${firstSem}. Semester</h2>`; lastSem = firstSem; }
     const sb = STUDIENBEREICHE[m.sb];
@@ -435,6 +527,20 @@ function renderDetails() {
       ? renderVerantwortung(m.verantwortung, m.email)
       : `<div class="mv-verantwortung placeholder">wird nachgetragen</div>`;
     const w = m.workload;
+    const auto = automaticStatus(m, currentSem);
+    const autoLabel = auto ? AUTO_STATUS_LABELS[auto] : 'kein Semester gewählt';
+    const ov = overrides[m.nr] || '';
+    const opt = (val, label) => `<option value="${val}"${ov === val ? ' selected' : ''}>${label}</option>`;
+    const statusBar = `
+      <div class="mv-status-bar">
+        Mein Status:
+        <select class="mv-status-select" data-nr="${m.nr}">
+          ${opt('', `Automatisch (${autoLabel})`)}
+          ${opt('vorgemerkt', '★ Vorgemerkt')}
+          ${opt('abgeschlossen', '✓ Abgeschlossen')}
+          ${opt('offen', '○ Offen')}
+        </select>
+      </div>`;
     html += `
     <div class="mv-detail" id="modul-${m.nr}">
       <div class="mv-detail-head">
@@ -445,6 +551,7 @@ function renderDetails() {
         </div>
         <div class="mv-detail-meta">${semLabel} · ${m.cp} CP · ${m.sws} SWS ${modart}</div>
       </div>
+      ${statusBar}
       <div class="mv-detail-body">
         <div class="mv-col">
           <div class="mv-label">Bausteine</div>
@@ -470,14 +577,52 @@ function renderDetails() {
       </div>
     </div>`;
   }
+  if (merklisteOnly && !shown) {
+    html = '';
+  }
   el.innerHTML = html;
+
+  el.querySelectorAll('.mv-status-select').forEach(sel => {
+    sel.addEventListener('change', e => {
+      setOverride(Number(e.target.dataset.nr), e.target.value || null);
+      refreshAll();
+    });
+  });
+}
+
+function renderCPProgress(currentSem, overrides) {
+  const cpEl = document.getElementById('cpProgress');
+  const hasData = currentSem || Object.keys(overrides).length > 0;
+  cpEl.classList.toggle('visible', !!hasData);
+  if (!hasData) return;
+  const totalCP = MODULES.reduce((sum, m) => sum + m.cp, 0);
+  const doneCP = MODULES.filter(m => isEffectivelyDone(m, currentSem, overrides)).reduce((sum, m) => sum + m.cp, 0);
+  const pct = totalCP ? Math.round(doneCP / totalCP * 100) : 0;
+  document.getElementById('cpProgressFill').style.width = pct + '%';
+  document.getElementById('cpProgressLabel').textContent = `${doneCP} von ${totalCP} CP absolviert (${pct}%)`;
+}
+
+let merklisteOnly = false;
+
+function refreshAll() {
+  const currentSem = Number(localStorage.getItem(CURRENT_KEY)) || null;
+  const overrides = getOverrides();
+  renderPlan(currentSem, merklisteOnly);
+  renderDetails(currentSem, merklisteOnly);
+  renderCPProgress(currentSem, overrides);
 }
 
 function applySemester(sem) {
-  renderPlan(sem || null);
   if (sem) localStorage.setItem(CURRENT_KEY, sem);
   else localStorage.removeItem(CURRENT_KEY);
+  refreshAll();
 }
+
+document.getElementById('merklisteToggle').addEventListener('click', () => {
+  merklisteOnly = !merklisteOnly;
+  document.getElementById('merklisteToggle').classList.toggle('active', merklisteOnly);
+  refreshAll();
+});
 
 document.getElementById('semSelect').addEventListener('change', e => {
   applySemester(Number(e.target.value) || null);
@@ -492,12 +637,35 @@ function moduleMatchesQuery(m, query) {
   return haystack.some(f => f.toLowerCase().includes(q));
 }
 
+// Falls der Merkliste-Filter aktiv ist und das Ziel nicht "vorgemerkt" ist,
+// existiert das Zielelement gar nicht im DOM – Filter dann automatisch aus.
+function ensureModuleVisible(nr) {
+  if (merklisteOnly && getOverrides()[nr] !== 'vorgemerkt') {
+    merklisteOnly = false;
+    document.getElementById('merklisteToggle').classList.remove('active');
+    refreshAll();
+  }
+}
+
 function jumpToModule(m) {
+  ensureModuleVisible(m.nr);
   const target = document.getElementById('modul-' + m.nr);
   if (!target) return;
   if (location.hash === '#modul-' + m.nr) target.scrollIntoView({block: 'start'});
   else location.hash = 'modul-' + m.nr;
 }
+
+// Gleiche Absicherung für Voraussetzungs-Verlinkungen (echte <a href="#modul-…">-Links)
+document.addEventListener('click', e => {
+  const link = e.target.closest('a[href^="#modul-"]');
+  if (!link) return;
+  const nr = Number(link.getAttribute('href').replace('#modul-', ''));
+  if (merklisteOnly && getOverrides()[nr] !== 'vorgemerkt') {
+    e.preventDefault();
+    ensureModuleVisible(nr);
+    requestAnimationFrame(() => { location.hash = 'modul-' + nr; });
+  }
+});
 
 const searchInput = document.getElementById('searchInput');
 const searchResultsEl = document.getElementById('searchResults');
@@ -567,7 +735,6 @@ applyTheme(document.documentElement.getAttribute('data-theme') === 'dark');
 
 // Init
 renderLegend();
-renderDetails();
 const saved = Number(localStorage.getItem(CURRENT_KEY)) || null;
 if (saved) document.getElementById('semSelect').value = String(saved);
 applySemester(saved);
