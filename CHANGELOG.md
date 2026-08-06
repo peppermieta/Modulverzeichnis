@@ -3,6 +3,20 @@
 Alle nennenswerten Änderungen an diesem Projekt werden hier dokumentiert.
 Format angelehnt an [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
+## [1.7.2] - 2026-08-05
+
+### Fixed
+- **Verwirrende doppelte Semester-Überschriften bei Modul 9 und 10**: Modul
+  09 (Semester 1+2) steht an neunter Stelle der Liste, direkt nach den
+  Semester-2-Modulen 06–08. Die bisherige Logik erzeugte deshalb eine
+  überflüssige "1. Semester"-Überschrift direkt vor Modul 09 und eine
+  "2. Semester"-Überschrift direkt vor Modul 10. Überschriften erscheinen
+  jetzt nur noch beim jeweils ersten Auftreten eines Semesters (nicht mehr
+  bei jeder Änderung zum Vorgänger) – Module 06–10 laufen dadurch
+  durchgängig unter der einen "2. Semester"-Überschrift. Die
+  Semesterzuordnung selbst (Anzeige "1.–2. Semester" in der Modulkarte)
+  bleibt unverändert.
+
 ## [1.7.1] - 2026-08-05
 
 ### Fixed

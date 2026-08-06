@@ -514,13 +514,13 @@ function renderDetails(currentSem, merklisteOnly) {
   const overrides = getOverrides();
   const el = document.getElementById('details');
   let html = '';
-  let lastSem = null;
+  const seenSemesters = new Set();
   let shown = 0;
   for (const m of MODULES) {
     if (merklisteOnly && overrides[m.nr] !== 'vorgemerkt') continue;
     shown++;
     const firstSem = m.sem[0];
-    if (firstSem !== lastSem) { html += `<h2>${firstSem}. Semester</h2>`; lastSem = firstSem; }
+    if (!seenSemesters.has(firstSem)) { html += `<h2>${firstSem}. Semester</h2>`; seenSemesters.add(firstSem); }
     const sb = STUDIENBEREICHE[m.sb];
     const semLabel = m.sem.length > 1 ? `${m.sem[0]}.–${m.sem[m.sem.length-1]}. Semester` : `${m.sem[0]}. Semester`;
     const [pnr, part, pben] = m.pruefung;
