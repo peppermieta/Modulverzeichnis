@@ -2,23 +2,23 @@
 
 - CSV
 
-f7f6f3,ffffff,e2e0d8,1a1a18,7a7870,5b3fc8,2e8b57,1a8c70,c48a00,2050c8,cc6b3f,c41a50,777775
+f7f6f3,ffffff,e2e0d8,1a1a18,7a7870,18171a,221f24,383540,edebe8,a6a29e,5b3fc8,a692f0,dfbbea,403f4c,362a3e,efd6f4,2e8b57,1a8c70,c48a00,2050c8,cc6b3f,c41a50,777775,dc2626
 
 - With #
 
-#f7f6f3, #ffffff, #e2e0d8, #1a1a18, #7a7870, #5b3fc8, #2e8b57, #1a8c70, #c48a00, #2050c8, #cc6b3f, #c41a50, #777775
+#f7f6f3, #ffffff, #e2e0d8, #1a1a18, #7a7870, #18171a, #221f24, #383540, #edebe8, #a6a29e, #5b3fc8, #a692f0, #dfbbea, #403f4c, #362a3e, #efd6f4, #2e8b57, #1a8c70, #c48a00, #2050c8, #cc6b3f, #c41a50, #777775, #dc2626
 
 - Array
 
-["f7f6f3", "ffffff", "e2e0d8", "1a1a18", "7a7870", "5b3fc8", "2e8b57", "1a8c70", "c48a00", "2050c8", "cc6b3f", "c41a50", "777775"]
+["f7f6f3", "ffffff", "e2e0d8", "1a1a18", "7a7870", "18171a", "221f24", "383540", "edebe8", "a6a29e", "5b3fc8", "a692f0", "dfbbea", "403f4c", "362a3e", "efd6f4", "2e8b57", "1a8c70", "c48a00", "2050c8", "cc6b3f", "c41a50", "777775", "dc2626"]
 
 - Object
 
-{"Hintergrund": "f7f6f3", "Flaeche": "ffffff", "Rahmen": "e2e0d8", "Text": "1a1a18", "Gedaempft": "7a7870", "Akzent-Lila / SB 2": "5b3fc8", "SB 1 - Grundlagen": "2e8b57", "SB 3 - Rahmenbed.": "1a8c70", "SB 4 - Bezugsdisz.": "c48a00", "SB 5 - Schluesselq.": "2050c8", "SB 6 - Handl.komp.": "cc6b3f", "SB 7 - Reflexion": "c41a50", "Ohne Zuordnung": "777775"}
+{"Hintergrund": "f7f6f3", "Flaeche": "ffffff", "Rahmen": "e2e0d8", "Text": "1a1a18", "Gedaempft": "7a7870", "Hintergrund Dunkel": "18171a", "Flaeche Dunkel": "221f24", "Rahmen Dunkel": "383540", "Text Dunkel": "edebe8", "Gedaempft Dunkel": "a6a29e", "Akzent-Lila Hell / SB 2": "5b3fc8", "Akzent-Lila Dunkel": "a692f0", "Header Hell (Pink Orchid)": "dfbbea", "Header Hell-Text": "403f4c", "Header Dunkel": "362a3e", "Header Dunkel-Text": "efd6f4", "SB 1 - Grundlagen": "2e8b57", "SB 3 - Rahmenbed.": "1a8c70", "SB 4 - Bezugsdisz.": "c48a00", "SB 5 - Schluesselq.": "2050c8", "SB 6 - Handl.komp.": "cc6b3f", "SB 7 - Reflexion": "c41a50", "Ohne Zuordnung": "777775", "Warnrot (Voraussetzungen)": "dc2626"}
 
 - Extended Array
 
-[{"name": "Hintergrund", "hex": "f7f6f3", "rgb": [247, 246, 243], "cmyk": [0, 0, 2, 3], "hsb": [45, 2, 97], "hsl": [45, 20, 96], "lab": [97, 0, 2]}, {"name": "Flaeche", "hex": "ffffff", "rgb": [255, 255, 255], "cmyk": [0, 0, 0, 0], "hsb": [0, 0, 100], "hsl": [0, 0, 100], "lab": [100, 0, 0]}, {"name": "Rahmen", "hex": "e2e0d8", "rgb": [226, 224, 216], "cmyk": [0, 1, 4, 11], "hsb": [48, 4, 89], "hsl": [48, 15, 87], "lab": [89, -1, 4]}, {"name": "Text", "hex": "1a1a18", "rgb": [26, 26, 24], "cmyk": [0, 0, 8, 90], "hsb": [60, 8, 10], "hsl": [60, 4, 10], "lab": [9, 0, 1]}, {"name": "Gedaempft", "hex": "7a7870", "rgb": [122, 120, 112], "cmyk": [0, 2, 8, 52], "hsb": [48, 8, 48], "hsl": [48, 4, 46], "lab": [50, -1, 5]}, {"name": "Akzent-Lila / SB 2", "hex": "5b3fc8", "rgb": [91, 63, 200], "cmyk": [54, 68, 0, 22], "hsb": [252, 68, 78], "hsl": [252, 55, 52], "lab": [38, 47, -67]}, {"name": "SB 1 - Grundlagen", "hex": "2e8b57", "rgb": [46, 139, 87], "cmyk": [67, 0, 37, 45], "hsb": [146, 67, 55], "hsl": [146, 50, 36], "lab": [52, -40, 20]}, {"name": "SB 3 - Rahmenbed.", "hex": "1a8c70", "rgb": [26, 140, 112], "cmyk": [81, 0, 20, 45], "hsb": [165, 81, 55], "hsl": [165, 69, 33], "lab": [52, -37, 6]}, {"name": "SB 4 - Bezugsdisz.", "hex": "c48a00", "rgb": [196, 138, 0], "cmyk": [0, 30, 100, 23], "hsb": [42, 100, 77], "hsl": [42, 100, 38], "lab": [62, 13, 67]}, {"name": "SB 5 - Schluesselq.", "hex": "2050c8", "rgb": [32, 80, 200], "cmyk": [84, 60, 0, 22], "hsb": [223, 84, 78], "hsl": [223, 72, 45], "lab": [38, 30, -67]}, {"name": "SB 6 - Handl.komp.", "hex": "cc6b3f", "rgb": [204, 107, 63], "cmyk": [0, 48, 69, 20], "hsb": [19, 69, 80], "hsl": [19, 58, 52], "lab": [56, 35, 41]}, {"name": "SB 7 - Reflexion", "hex": "c41a50", "rgb": [196, 26, 80], "cmyk": [0, 87, 59, 23], "hsb": [341, 87, 77], "hsl": [341, 77, 44], "lab": [43, 65, 15]}, {"name": "Ohne Zuordnung", "hex": "777775", "rgb": [119, 119, 117], "cmyk": [0, 0, 2, 53], "hsb": [60, 2, 47], "hsl": [60, 1, 46], "lab": [50, 0, 1]}]
+[{"name": "Hintergrund", "hex": "f7f6f3", "rgb": [247, 246, 243], "cmyk": [0, 0, 2, 3], "hsb": [45, 2, 97], "hsl": [45, 20, 96], "lab": [97, 0, 2]}, {"name": "Flaeche", "hex": "ffffff", "rgb": [255, 255, 255], "cmyk": [0, 0, 0, 0], "hsb": [0, 0, 100], "hsl": [0, 0, 100], "lab": [100, 0, 0]}, {"name": "Rahmen", "hex": "e2e0d8", "rgb": [226, 224, 216], "cmyk": [0, 1, 4, 11], "hsb": [48, 4, 89], "hsl": [48, 15, 87], "lab": [89, -1, 4]}, {"name": "Text", "hex": "1a1a18", "rgb": [26, 26, 24], "cmyk": [0, 0, 8, 90], "hsb": [60, 8, 10], "hsl": [60, 4, 10], "lab": [9, 0, 1]}, {"name": "Gedaempft", "hex": "7a7870", "rgb": [122, 120, 112], "cmyk": [0, 2, 8, 52], "hsb": [48, 8, 48], "hsl": [48, 4, 46], "lab": [50, -1, 5]}, {"name": "Hintergrund Dunkel", "hex": "18171a", "rgb": [24, 23, 26], "cmyk": [8, 12, 0, 90], "hsb": [260, 12, 10], "hsl": [260, 6, 10], "lab": [8, 1, -2]}, {"name": "Flaeche Dunkel", "hex": "221f24", "rgb": [34, 31, 36], "cmyk": [6, 14, 0, 86], "hsb": [276, 14, 14], "hsl": [276, 7, 13], "lab": [12, 3, -3]}, {"name": "Rahmen Dunkel", "hex": "383540", "rgb": [56, 53, 64], "cmyk": [12, 17, 0, 75], "hsb": [256, 17, 25], "hsl": [256, 9, 23], "lab": [23, 4, -6]}, {"name": "Text Dunkel", "hex": "edebe8", "rgb": [237, 235, 232], "cmyk": [0, 1, 2, 7], "hsb": [36, 2, 93], "hsl": [36, 12, 92], "lab": [93, 0, 2]}, {"name": "Gedaempft Dunkel", "hex": "a6a29e", "rgb": [166, 162, 158], "cmyk": [0, 2, 5, 35], "hsb": [30, 5, 65], "hsl": [30, 4, 64], "lab": [67, 1, 3]}, {"name": "Akzent-Lila Hell / SB 2", "hex": "5b3fc8", "rgb": [91, 63, 200], "cmyk": [54, 68, 0, 22], "hsb": [252, 68, 78], "hsl": [252, 55, 52], "lab": [38, 47, -67]}, {"name": "Akzent-Lila Dunkel", "hex": "a692f0", "rgb": [166, 146, 240], "cmyk": [31, 39, 0, 6], "hsb": [253, 39, 94], "hsl": [253, 76, 76], "lab": [66, 28, -45]}, {"name": "Header Hell (Pink Orchid)", "hex": "dfbbea", "rgb": [223, 187, 234], "cmyk": [5, 20, 0, 8], "hsb": [286, 20, 92], "hsl": [286, 53, 83], "lab": [80, 21, -19]}, {"name": "Header Hell-Text", "hex": "403f4c", "rgb": [64, 63, 76], "cmyk": [16, 17, 0, 70], "hsb": [245, 17, 30], "hsl": [245, 9, 27], "lab": [27, 4, -8]}, {"name": "Header Dunkel", "hex": "362a3e", "rgb": [54, 42, 62], "cmyk": [13, 32, 0, 76], "hsb": [276, 32, 24], "hsl": [276, 19, 20], "lab": [19, 10, -11]}, {"name": "Header Dunkel-Text", "hex": "efd6f4", "rgb": [239, 214, 244], "cmyk": [2, 12, 0, 4], "hsb": [290, 12, 96], "hsl": [290, 58, 90], "lab": [88, 14, -11]}, {"name": "SB 1 - Grundlagen", "hex": "2e8b57", "rgb": [46, 139, 87], "cmyk": [67, 0, 37, 45], "hsb": [146, 67, 55], "hsl": [146, 50, 36], "lab": [52, -40, 20]}, {"name": "SB 3 - Rahmenbed.", "hex": "1a8c70", "rgb": [26, 140, 112], "cmyk": [81, 0, 20, 45], "hsb": [165, 81, 55], "hsl": [165, 69, 33], "lab": [52, -37, 6]}, {"name": "SB 4 - Bezugsdisz.", "hex": "c48a00", "rgb": [196, 138, 0], "cmyk": [0, 30, 100, 23], "hsb": [42, 100, 77], "hsl": [42, 100, 38], "lab": [62, 13, 67]}, {"name": "SB 5 - Schluesselq.", "hex": "2050c8", "rgb": [32, 80, 200], "cmyk": [84, 60, 0, 22], "hsb": [223, 84, 78], "hsl": [223, 72, 45], "lab": [38, 30, -67]}, {"name": "SB 6 - Handl.komp.", "hex": "cc6b3f", "rgb": [204, 107, 63], "cmyk": [0, 48, 69, 20], "hsb": [19, 69, 80], "hsl": [19, 58, 52], "lab": [56, 35, 41]}, {"name": "SB 7 - Reflexion", "hex": "c41a50", "rgb": [196, 26, 80], "cmyk": [0, 87, 59, 23], "hsb": [341, 87, 77], "hsl": [341, 77, 44], "lab": [43, 65, 15]}, {"name": "Ohne Zuordnung", "hex": "777775", "rgb": [119, 119, 117], "cmyk": [0, 0, 2, 53], "hsb": [60, 2, 47], "hsl": [60, 1, 46], "lab": [50, 0, 1]}, {"name": "Warnrot (Voraussetzungen)", "hex": "dc2626", "rgb": [220, 38, 38], "cmyk": [0, 83, 83, 14], "hsb": [0, 83, 86], "hsl": [0, 72, 51], "lab": [48, 67, 47]}]
 
 - XML
 
@@ -28,7 +28,17 @@ f7f6f3,ffffff,e2e0d8,1a1a18,7a7870,5b3fc8,2e8b57,1a8c70,c48a00,2050c8,cc6b3f,c41
   <color name="Rahmen" hex="e2e0d8" r="226" g="224" b="216" />
   <color name="Text" hex="1a1a18" r="26" g="26" b="24" />
   <color name="Gedaempft" hex="7a7870" r="122" g="120" b="112" />
-  <color name="Akzent-Lila / SB 2" hex="5b3fc8" r="91" g="63" b="200" />
+  <color name="Hintergrund Dunkel" hex="18171a" r="24" g="23" b="26" />
+  <color name="Flaeche Dunkel" hex="221f24" r="34" g="31" b="36" />
+  <color name="Rahmen Dunkel" hex="383540" r="56" g="53" b="64" />
+  <color name="Text Dunkel" hex="edebe8" r="237" g="235" b="232" />
+  <color name="Gedaempft Dunkel" hex="a6a29e" r="166" g="162" b="158" />
+  <color name="Akzent-Lila Hell / SB 2" hex="5b3fc8" r="91" g="63" b="200" />
+  <color name="Akzent-Lila Dunkel" hex="a692f0" r="166" g="146" b="240" />
+  <color name="Header Hell (Pink Orchid)" hex="dfbbea" r="223" g="187" b="234" />
+  <color name="Header Hell-Text" hex="403f4c" r="64" g="63" b="76" />
+  <color name="Header Dunkel" hex="362a3e" r="54" g="42" b="62" />
+  <color name="Header Dunkel-Text" hex="efd6f4" r="239" g="214" b="244" />
   <color name="SB 1 - Grundlagen" hex="2e8b57" r="46" g="139" b="87" />
   <color name="SB 3 - Rahmenbed." hex="1a8c70" r="26" g="140" b="112" />
   <color name="SB 4 - Bezugsdisz." hex="c48a00" r="196" g="138" b="0" />
@@ -36,4 +46,5 @@ f7f6f3,ffffff,e2e0d8,1a1a18,7a7870,5b3fc8,2e8b57,1a8c70,c48a00,2050c8,cc6b3f,c41
   <color name="SB 6 - Handl.komp." hex="cc6b3f" r="204" g="107" b="63" />
   <color name="SB 7 - Reflexion" hex="c41a50" r="196" g="26" b="80" />
   <color name="Ohne Zuordnung" hex="777775" r="119" g="119" b="117" />
+  <color name="Warnrot (Voraussetzungen)" hex="dc2626" r="220" g="38" b="38" />
 </palette>

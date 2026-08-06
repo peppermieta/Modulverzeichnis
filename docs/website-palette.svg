@@ -1,42 +1,75 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" height="800" viewBox="0 0 880 800" font-family="Helvetica,Arial,sans-serif">
-<rect width="880" height="800" fill="#FFFFFF"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="1200" viewBox="0 0 880 1200" font-family="Helvetica,Arial,sans-serif">
+<rect width="880" height="1200" fill="#FFFFFF"/>
 <rect x="0" y="0" width="220" height="200" fill="#F7F6F3"/>
-<text x="18" y="154" font-size="14" font-weight="700" fill="#1A1A18">Hintergrund</text>
+<text x="18" y="154" font-size="13" font-weight="700" fill="#1A1A18">Hintergrund</text>
 <text x="18" y="178" font-size="13" font-family="monospace" fill="#1A1A18" opacity="0.85">#f7f6f3</text>
 <rect x="220" y="0" width="220" height="200" fill="#FFFFFF"/>
-<text x="238" y="154" font-size="14" font-weight="700" fill="#1A1A18">Flaeche</text>
+<text x="238" y="154" font-size="13" font-weight="700" fill="#1A1A18">Flaeche</text>
 <text x="238" y="178" font-size="13" font-family="monospace" fill="#1A1A18" opacity="0.85">#ffffff</text>
 <rect x="440" y="0" width="220" height="200" fill="#E2E0D8"/>
-<text x="458" y="154" font-size="14" font-weight="700" fill="#1A1A18">Rahmen</text>
+<text x="458" y="154" font-size="13" font-weight="700" fill="#1A1A18">Rahmen</text>
 <text x="458" y="178" font-size="13" font-family="monospace" fill="#1A1A18" opacity="0.85">#e2e0d8</text>
 <rect x="660" y="0" width="220" height="200" fill="#1A1A18"/>
-<text x="678" y="154" font-size="14" font-weight="700" fill="#FFFFFF">Text</text>
+<text x="678" y="154" font-size="13" font-weight="700" fill="#FFFFFF">Text</text>
 <text x="678" y="178" font-size="13" font-family="monospace" fill="#FFFFFF" opacity="0.85">#1a1a18</text>
 <rect x="0" y="200" width="220" height="200" fill="#7A7870"/>
-<text x="18" y="354" font-size="14" font-weight="700" fill="#FFFFFF">Gedaempft</text>
+<text x="18" y="354" font-size="13" font-weight="700" fill="#FFFFFF">Gedaempft</text>
 <text x="18" y="378" font-size="13" font-family="monospace" fill="#FFFFFF" opacity="0.85">#7a7870</text>
-<rect x="220" y="200" width="220" height="200" fill="#5B3FC8"/>
-<text x="238" y="354" font-size="14" font-weight="700" fill="#FFFFFF">Akzent-Lila / SB 2</text>
-<text x="238" y="378" font-size="13" font-family="monospace" fill="#FFFFFF" opacity="0.85">#5b3fc8</text>
-<rect x="440" y="200" width="220" height="200" fill="#2E8B57"/>
-<text x="458" y="354" font-size="14" font-weight="700" fill="#FFFFFF">SB 1 - Grundlagen</text>
-<text x="458" y="378" font-size="13" font-family="monospace" fill="#FFFFFF" opacity="0.85">#2e8b57</text>
-<rect x="660" y="200" width="220" height="200" fill="#1A8C70"/>
-<text x="678" y="354" font-size="14" font-weight="700" fill="#FFFFFF">SB 3 - Rahmenbed.</text>
-<text x="678" y="378" font-size="13" font-family="monospace" fill="#FFFFFF" opacity="0.85">#1a8c70</text>
-<rect x="0" y="400" width="220" height="200" fill="#C48A00"/>
-<text x="18" y="554" font-size="14" font-weight="700" fill="#FFFFFF">SB 4 - Bezugsdisz.</text>
-<text x="18" y="578" font-size="13" font-family="monospace" fill="#FFFFFF" opacity="0.85">#c48a00</text>
-<rect x="220" y="400" width="220" height="200" fill="#2050C8"/>
-<text x="238" y="554" font-size="14" font-weight="700" fill="#FFFFFF">SB 5 - Schluesselq.</text>
-<text x="238" y="578" font-size="13" font-family="monospace" fill="#FFFFFF" opacity="0.85">#2050c8</text>
-<rect x="440" y="400" width="220" height="200" fill="#CC6B3F"/>
-<text x="458" y="554" font-size="14" font-weight="700" fill="#FFFFFF">SB 6 - Handl.komp.</text>
-<text x="458" y="578" font-size="13" font-family="monospace" fill="#FFFFFF" opacity="0.85">#cc6b3f</text>
-<rect x="660" y="400" width="220" height="200" fill="#C41A50"/>
-<text x="678" y="554" font-size="14" font-weight="700" fill="#FFFFFF">SB 7 - Reflexion</text>
-<text x="678" y="578" font-size="13" font-family="monospace" fill="#FFFFFF" opacity="0.85">#c41a50</text>
-<rect x="0" y="600" width="220" height="200" fill="#777775"/>
-<text x="18" y="754" font-size="14" font-weight="700" fill="#FFFFFF">Ohne Zuordnung</text>
-<text x="18" y="778" font-size="13" font-family="monospace" fill="#FFFFFF" opacity="0.85">#777775</text>
+<rect x="220" y="200" width="220" height="200" fill="#18171A"/>
+<text x="238" y="354" font-size="13" font-weight="700" fill="#FFFFFF">Hintergrund Dunkel</text>
+<text x="238" y="378" font-size="13" font-family="monospace" fill="#FFFFFF" opacity="0.85">#18171a</text>
+<rect x="440" y="200" width="220" height="200" fill="#221F24"/>
+<text x="458" y="354" font-size="13" font-weight="700" fill="#FFFFFF">Flaeche Dunkel</text>
+<text x="458" y="378" font-size="13" font-family="monospace" fill="#FFFFFF" opacity="0.85">#221f24</text>
+<rect x="660" y="200" width="220" height="200" fill="#383540"/>
+<text x="678" y="354" font-size="13" font-weight="700" fill="#FFFFFF">Rahmen Dunkel</text>
+<text x="678" y="378" font-size="13" font-family="monospace" fill="#FFFFFF" opacity="0.85">#383540</text>
+<rect x="0" y="400" width="220" height="200" fill="#EDEBE8"/>
+<text x="18" y="554" font-size="13" font-weight="700" fill="#1A1A18">Text Dunkel</text>
+<text x="18" y="578" font-size="13" font-family="monospace" fill="#1A1A18" opacity="0.85">#edebe8</text>
+<rect x="220" y="400" width="220" height="200" fill="#A6A29E"/>
+<text x="238" y="554" font-size="13" font-weight="700" fill="#FFFFFF">Gedaempft Dunkel</text>
+<text x="238" y="578" font-size="13" font-family="monospace" fill="#FFFFFF" opacity="0.85">#a6a29e</text>
+<rect x="440" y="400" width="220" height="200" fill="#5B3FC8"/>
+<text x="458" y="554" font-size="13" font-weight="700" fill="#FFFFFF">Akzent-Lila Hell / SB 2</text>
+<text x="458" y="578" font-size="13" font-family="monospace" fill="#FFFFFF" opacity="0.85">#5b3fc8</text>
+<rect x="660" y="400" width="220" height="200" fill="#A692F0"/>
+<text x="678" y="554" font-size="13" font-weight="700" fill="#FFFFFF">Akzent-Lila Dunkel</text>
+<text x="678" y="578" font-size="13" font-family="monospace" fill="#FFFFFF" opacity="0.85">#a692f0</text>
+<rect x="0" y="600" width="220" height="200" fill="#DFBBEA"/>
+<text x="18" y="754" font-size="13" font-weight="700" fill="#1A1A18">Header Hell (Pink Orchid)</text>
+<text x="18" y="778" font-size="13" font-family="monospace" fill="#1A1A18" opacity="0.85">#dfbbea</text>
+<rect x="220" y="600" width="220" height="200" fill="#403F4C"/>
+<text x="238" y="754" font-size="13" font-weight="700" fill="#FFFFFF">Header Hell-Text</text>
+<text x="238" y="778" font-size="13" font-family="monospace" fill="#FFFFFF" opacity="0.85">#403f4c</text>
+<rect x="440" y="600" width="220" height="200" fill="#362A3E"/>
+<text x="458" y="754" font-size="13" font-weight="700" fill="#FFFFFF">Header Dunkel</text>
+<text x="458" y="778" font-size="13" font-family="monospace" fill="#FFFFFF" opacity="0.85">#362a3e</text>
+<rect x="660" y="600" width="220" height="200" fill="#EFD6F4"/>
+<text x="678" y="754" font-size="13" font-weight="700" fill="#1A1A18">Header Dunkel-Text</text>
+<text x="678" y="778" font-size="13" font-family="monospace" fill="#1A1A18" opacity="0.85">#efd6f4</text>
+<rect x="0" y="800" width="220" height="200" fill="#2E8B57"/>
+<text x="18" y="954" font-size="13" font-weight="700" fill="#FFFFFF">SB 1 - Grundlagen</text>
+<text x="18" y="978" font-size="13" font-family="monospace" fill="#FFFFFF" opacity="0.85">#2e8b57</text>
+<rect x="220" y="800" width="220" height="200" fill="#1A8C70"/>
+<text x="238" y="954" font-size="13" font-weight="700" fill="#FFFFFF">SB 3 - Rahmenbed.</text>
+<text x="238" y="978" font-size="13" font-family="monospace" fill="#FFFFFF" opacity="0.85">#1a8c70</text>
+<rect x="440" y="800" width="220" height="200" fill="#C48A00"/>
+<text x="458" y="954" font-size="13" font-weight="700" fill="#FFFFFF">SB 4 - Bezugsdisz.</text>
+<text x="458" y="978" font-size="13" font-family="monospace" fill="#FFFFFF" opacity="0.85">#c48a00</text>
+<rect x="660" y="800" width="220" height="200" fill="#2050C8"/>
+<text x="678" y="954" font-size="13" font-weight="700" fill="#FFFFFF">SB 5 - Schluesselq.</text>
+<text x="678" y="978" font-size="13" font-family="monospace" fill="#FFFFFF" opacity="0.85">#2050c8</text>
+<rect x="0" y="1000" width="220" height="200" fill="#CC6B3F"/>
+<text x="18" y="1154" font-size="13" font-weight="700" fill="#FFFFFF">SB 6 - Handl.komp.</text>
+<text x="18" y="1178" font-size="13" font-family="monospace" fill="#FFFFFF" opacity="0.85">#cc6b3f</text>
+<rect x="220" y="1000" width="220" height="200" fill="#C41A50"/>
+<text x="238" y="1154" font-size="13" font-weight="700" fill="#FFFFFF">SB 7 - Reflexion</text>
+<text x="238" y="1178" font-size="13" font-family="monospace" fill="#FFFFFF" opacity="0.85">#c41a50</text>
+<rect x="440" y="1000" width="220" height="200" fill="#777775"/>
+<text x="458" y="1154" font-size="13" font-weight="700" fill="#FFFFFF">Ohne Zuordnung</text>
+<text x="458" y="1178" font-size="13" font-family="monospace" fill="#FFFFFF" opacity="0.85">#777775</text>
+<rect x="660" y="1000" width="220" height="200" fill="#DC2626"/>
+<text x="678" y="1154" font-size="13" font-weight="700" fill="#FFFFFF">Warnrot (Voraussetzungen)</text>
+<text x="678" y="1178" font-size="13" font-family="monospace" fill="#FFFFFF" opacity="0.85">#dc2626</text>
 </svg>
