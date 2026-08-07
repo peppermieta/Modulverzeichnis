@@ -3,6 +3,23 @@
 Alle nennenswerten Änderungen an diesem Projekt werden hier dokumentiert.
 Format angelehnt an [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
+## [1.11.1] - 2026-08-07
+
+### Changed
+- **Code-Aufräumen**: `.mv-card`-CSS-Regel war versehentlich zweimal
+  definiert (historisch angewachsen, kein Dark-Mode-/Media-Query-Grund) –
+  zu einer Regel zusammengeführt. Zwei ungenutzte ID-Attribute entfernt:
+  `#progressWrap` (Rest der letzten CP-Anzeige-Umstellung, nicht mehr
+  gebraucht) und `#kontakt` (verwaist, kein Link verwies mehr darauf).
+  Klassen (`.progress-wrap`, `.contact-section`) fürs Styling bleiben
+  unverändert.
+- **Code-Kommentare ergänzt**: JS-Funktionen, die bisher ohne Erklärung
+  waren, haben jetzt kurze Kommentare. Drei Stellen ausführlicher
+  dokumentiert (als Kandidaten für die Projektdokumentation): das
+  Zwei-Schicht-Status-Modell, der CP-Fortschrittsring (SVG-`stroke-dasharray`-
+  Trick) und die dynamische Header-Höhenmessung per `ResizeObserver`.
+  Keine Verhaltensänderung, rein erklärend.
+
 ## [1.11.0] - 2026-08-07
 
 ### Changed

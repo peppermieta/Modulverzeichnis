@@ -118,13 +118,13 @@
     display: block; text-decoration: none; color: var(--text);
     background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
     padding: 8px 11px; min-width: 130px; max-width: 190px; transition: transform .1s, box-shadow .1s;
+    position: relative; /* Anker fuer die absolut positionierte Status-Badge (siehe .mv-card-badge) */
   }
   .mv-card:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
   .mv-card-nr { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 700; opacity: .7; }
   .mv-card-name { font-size: 12px; font-weight: 600; line-height: 1.3; margin-top: 2px; }
   .mv-card-span { font-size: 10px; opacity: .65; margin-top: 3px; }
   .mv-card-done { opacity: .55; }
-  .mv-card { position: relative; }
   .mv-card-badge {
     position: absolute; top: -6px; right: -6px; width: 18px; height: 18px; border-radius: 50%;
     background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow);
@@ -380,7 +380,7 @@
   </div>
 </div>
 
-<div class="progress-wrap" id="progressWrap">
+<div class="progress-wrap">
   <button type="button" class="merkliste-toggle" id="merklisteToggle">★ Nur Merkliste zeigen</button>
   <button type="button" class="merkliste-toggle" id="statusResetBtn">↺ Auswahl zurücksetzen</button>
 </div>
@@ -397,7 +397,7 @@
 
 <div class="mv-details" id="details"></div>
 
-<div class="contact-section" id="kontakt">
+<div class="contact-section">
   <strong>Fehler gefunden oder Feedback?</strong> Über Hinweise zu Fehlern oder Ergänzungen freuen wir uns:
   <a href="mailto:info@peppermięta.de">info@peppermięta.de</a>
 </div>
@@ -413,7 +413,7 @@
   Der Quellcode dieser Seite ist unter der <strong>MIT-Lizenz</strong> frei nutzbar und veränderbar –
   Repository auf <a href="https://github.com/peppermieta/Modulverzeichnis" target="_blank">GitHub</a>.
   Die Inhalte (Modulhandbuch-Daten) gehören der EH Ludwigsburg und sind davon ausgenommen.
-  <br><span style="opacity:.7;">Version 1.11.0</span>
+  <br><span style="opacity:.7;">Version 1.11.1</span>
 </footer>
 
 <script>
@@ -422,15 +422,23 @@ const STUDIENBEREICHE = {"1": {"name": "Grundlagen der Sozialen Arbeit als Diszi
 const CURRENT_KEY = 'mv_current_semester';
 const OVERRIDE_KEY = 'mv_status_overrides';
 
+// HTML-Sonderzeichen escapen, gegen Cross-Site-Scripting bei allen Werten,
+// die letztlich aus modules_data.py stammen und ungeprüft in Templates landen.
 function esc(s) {
   return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
 // ── PERSÖNLICHER STATUS (Merkliste + Fortschritts-Tracker) ──────────────────
 // Zwei-Schicht-Modell: die Semesterauswahl setzt automatisch einen
-// Ausgangsstatus pro Modul (done/current/upcoming). Jedes Modul lässt sich
-// davon unabhängig einzeln überschreiben (vorgemerkt/abgeschlossen/offen) –
-// das "entkoppelt" es von der Automatik, bis der Override wieder entfernt wird.
+// Ausgangsstatus pro Modul (done/current/upcoming, siehe automaticStatus()).
+// Jedes Modul lässt sich davon unabhängig einzeln überschreiben (vorgemerkt/
+// abgeschlossen/offen, siehe setOverride()) – das "entkoppelt" es von der
+// Automatik, bis der Override wieder auf "Automatisch" zurückgesetzt wird.
+// Beide Schichten laufen komplett getrennt im localStorage (CURRENT_KEY für
+// die Semesterauswahl, OVERRIDE_KEY für die Overrides) und werden erst beim
+// Rendern zusammengeführt (siehe isEffectivelyDone()) – so bleibt z.B. eine
+// Prüfung, die trotz vergangenem Semester noch offen ist, korrekt "offen",
+// ohne dass die Semesterauswahl selbst angetastet werden muss.
 function getOverrides() {
   try { return JSON.parse(localStorage.getItem(OVERRIDE_KEY) || '{}'); }
   catch (e) { return {}; }
@@ -458,6 +466,8 @@ function isEffectivelyDone(m, currentSem, overrides) {
   return automaticStatus(m, currentSem) === 'done';
 }
 
+// Baut die Farblegende der Studienbereiche neu auf (Bereich 0 "ohne
+// Zuordnung" wird hier bewusst nicht angezeigt, nur in den Karten genutzt).
 function renderLegend() {
   const el = document.getElementById('sbLegend');
   el.innerHTML = Object.entries(STUDIENBEREICHE).filter(([k]) => k !== '0').map(([k, sb]) => `
@@ -466,6 +476,8 @@ function renderLegend() {
     </span>`).join('');
 }
 
+// Rendert eine einzelne Modul-Kachel im Studienverlaufsplan oben
+// (Studienbereichsfarbe, Status-Badge falls manuell gesetzt, Kurzname).
 function moduleCardHtml(m, currentSem, overrides) {
   let cls = `mv-card sb-${m.sb}`;
   if (isEffectivelyDone(m, currentSem, overrides)) cls += ' mv-card-done';
@@ -482,6 +494,9 @@ function moduleCardHtml(m, currentSem, overrides) {
   </a>`;
 }
 
+// Baut den gesamten Studienverlaufsplan (eine Zeile pro Semester 1–7) aus den
+// Modul-Kacheln zusammen; blendet bei aktivem Merkliste-Filter leere
+// Semester-Zeilen komplett aus statt sie leer stehen zu lassen.
 function renderPlan(currentSem, merklisteOnly) {
   const overrides = getOverrides();
   const el = document.getElementById('plan');
@@ -507,6 +522,9 @@ function renderPlan(currentSem, merklisteOnly) {
   el.innerHTML = html;
 }
 
+// Die folgenden drei Funktionen rendern je einen Teilbereich einer
+// Detailkarte (Baustein-Zeile, Voraussetzungen-Chips, Verwendbarkeit-Chips) –
+// bewusst als kleine Einzel-Helfer statt alles in renderDetails() zu mischen.
 function baustein(b) {
   const [name, art, pl] = b;
   const plTitle = pl === 'PL' ? 'Benotete Prüfungsleistung' : pl === 'UPL' ? 'Unbenotete Prüfungsleistung' : '';
@@ -514,6 +532,9 @@ function baustein(b) {
   return `<div class="mv-baustein"><span class="mv-baustein-name">${esc(name)}</span><span class="mv-baustein-art">${esc(art)}</span>${plHtml}</div>`;
 }
 
+// Voraussetzungen: entweder ein reiner Text-Chip (z.B. "Zulassung zum
+// Studium") oder – falls es sich auf ein anderes Modul bezieht (Zahl statt
+// Text) – ein klickbarer Sprunglink zur jeweiligen Detailkarte.
 function voraus(v) {
   if (!v.length) return '<span class="mv-voraus-none">keine</span>';
   return v.map(x => {
@@ -528,6 +549,8 @@ function verwendbarkeit(v) {
   return v.map(x => `<span class="mv-chip mv-verwendbarkeit-chip">${esc(x)}</span>`).join('');
 }
 
+// Verantwortliche(r) mit Mail-Icon-Link; es können auch mehrere Personen
+// sein (" / "-getrennt in den Rohdaten), z.B. bei geteilter Modulleitung.
 function renderVerantwortung(names, emails) {
   const nameList = names.split(' / ');
   const emailList = (emails || '').split(' / ');
@@ -540,6 +563,11 @@ function renderVerantwortung(names, emails) {
 
 const AUTO_STATUS_LABELS = {done: 'abgeschlossen', current: 'aktuelles Semester', upcoming: 'kommend'};
 
+// Baut alle Detailkarten (Bausteine, Prüfung, Workload, Voraussetzungen,
+// Verwendbarkeit, persönlicher Status-Dropdown), gruppiert per Zwischen-
+// überschrift nach erstem Semester des Moduls. Größte Render-Funktion der
+// Seite, da hier alle Modul-Rohdaten in ihre finale Darstellung übersetzt
+// werden – die Detailarbeit ist bewusst in die obigen Helfer ausgelagert.
 function renderDetails(currentSem, merklisteOnly) {
   const overrides = getOverrides();
   const el = document.getElementById('details');
@@ -633,11 +661,31 @@ function renderDetails(currentSem, merklisteOnly) {
   });
 }
 
+// ── CP-FORTSCHRITTSRING ──────────────────────────────────────────────────────
+// Zeigt den Fortschritt (in Credit Points) als kleinen Ring im Header, statt
+// als Balken oder reinen Text. Der Trick dahinter braucht kein <canvas> und
+// kein SVG-Progress-Element (gibt's nicht) – nur zwei CSS-Eigenschaften auf
+// einem normalen SVG-<circle>:
+//
+//   stroke-dasharray  = Umfang des Kreises (z.B. 100.5px)
+//                       → macht aus der durchgehenden Linie EIN Strich-Segment,
+//                         das genau so lang ist wie der ganze Kreis. Sieht man
+//                         also (noch) nicht anders aus als ein normaler Kreis.
+//   stroke-dashoffset = wie weit dieses eine Segment "verschoben" gestartet wird
+//                       → verschiebt man um den vollen Umfang, ist das komplette
+//                         Segment "vor" dem sichtbaren Bereich – der Kreis wirkt
+//                         leer. Verschiebt man um 0, ist es exakt an seinem
+//                         Platz – der Kreis wirkt voll. Alles dazwischen ergibt
+//                         den passenden Teilbogen.
+//
+// Kurz: dashoffset = Umfang * (1 − Prozent/100). Bei 0 % ist der ganze Umfang
+// "Lücke" (nichts sichtbar), bei 100 % ist die Lücke 0 (ganzer Kreis sichtbar).
+// r=16 im SVG-<circle> (siehe HTML weiter unten) → Umfang = 2 * π * 16.
 function renderCPProgress(currentSem, overrides) {
   const headerEl = document.getElementById('cpProgressHeader');
   const hasData = currentSem || Object.keys(overrides).length > 0;
   headerEl.classList.toggle('visible', !!hasData);
-  if (!hasData) return;
+  if (!hasData) return; // noch kein Semester/Status gewählt: Ring bleibt versteckt statt 0% zu zeigen
   const totalCP = MODULES.reduce((sum, m) => sum + m.cp, 0);
   const doneCP = MODULES.filter(m => isEffectivelyDone(m, currentSem, overrides)).reduce((sum, m) => sum + m.cp, 0);
   const pct = totalCP ? Math.round(doneCP / totalCP * 100) : 0;
@@ -650,6 +698,9 @@ function renderCPProgress(currentSem, overrides) {
 
 let merklisteOnly = false;
 
+// Zentrale Neuzeichen-Funktion: wird nach jeder Zustandsänderung (Semester
+// gewechselt, Status überschrieben, Merkliste-Filter umgeschaltet, Reset)
+// aufgerufen und rendert Plan, Details und CP-Ring konsistent neu.
 function refreshAll() {
   const currentSem = Number(localStorage.getItem(CURRENT_KEY)) || null;
   const overrides = getOverrides();
@@ -658,6 +709,8 @@ function refreshAll() {
   renderCPProgress(currentSem, overrides);
 }
 
+// Semesterauswahl speichern (oder löschen, falls "– auswählen –") und
+// Neuzeichnen anstoßen.
 function applySemester(sem) {
   if (sem) localStorage.setItem(CURRENT_KEY, sem);
   else localStorage.removeItem(CURRENT_KEY);
@@ -742,6 +795,9 @@ document.addEventListener('click', e => {
 const searchInput = document.getElementById('searchInput');
 const searchResultsEl = document.getElementById('searchResults');
 
+// Rendert die Live-Trefferliste unterm Suchfeld (max. 8 Treffer) und
+// verdrahtet den Klick-Handler pro Treffer neu, da das HTML bei jeder
+// Eingabe komplett neu erzeugt wird.
 function renderSearchResults(query) {
   if (!query.trim()) {
     searchResultsEl.style.display = 'none';
@@ -811,9 +867,25 @@ const saved = Number(localStorage.getItem(CURRENT_KEY)) || null;
 if (saved) document.getElementById('semSelect').value = String(saved);
 applySemester(saved);
 
-// ── Header-Höhe dynamisch messen (variiert je nach Viewport-Breite, da das
-//    Semester-Dropdown auf schmalen Bildschirmen umbricht) und als
-//    scroll-margin-top für die Modulkarten nutzen, statt eines festen Werts.
+// ── DYNAMISCHE HEADER-HÖHE ───────────────────────────────────────────────────
+// Der Header ist sticky (bleibt beim Scrollen oben stehen) und Sprunglinks zu
+// Modulen (Suche, Voraussetzungs-Chips, #modul-Anker) müssen wissen, wie hoch
+// er gerade ist, damit die Zielkarte nicht darunter verschwindet – deshalb
+// scroll-margin-top: var(--header-h) auf den Detailkarten (siehe CSS oben).
+//
+// Ein fester Pixel-Wert würde hier nicht reichen: der Header ist zweizeilig
+// und die tatsächliche Höhe hängt vom Textumbruch ab – auf schmalen
+// Bildschirmen bricht z.B. das Semester-Dropdown in eine eigene Zeile um,
+// auf sehr schmalen sogar noch mehr. Die Höhe kann sich also allein durch
+// Fenster-Breite ändern, ganz ohne Zutun des Nutzers (Rotation, Browser-
+// Fenster verkleinert, Systemschrift geändert …).
+//
+// Lösung: die tatsächliche Höhe zur Laufzeit messen (getBoundingClientRect)
+// und als CSS-Variable schreiben statt sie zu raten. ResizeObserver beobachtet
+// den Header selbst und misst automatisch neu, sobald sich seine Höhe ändert
+// – zuverlässiger als ein resize-Event am window, das nur bei Fenstergrößen-
+// änderungen feuert, nicht bei Inhaltsumbrüchen. Browser ohne ResizeObserver
+// (praktisch nicht mehr relevant, aber schadet nicht) fallen auf Letzteres zurück.
 const headerEl = document.querySelector('header');
 function updateHeaderHeight() {
   const h = Math.ceil(headerEl.getBoundingClientRect().height) + 14;
