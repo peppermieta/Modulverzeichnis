@@ -3,6 +3,18 @@
 Alle nennenswerten Änderungen an diesem Projekt werden hier dokumentiert.
 Format angelehnt an [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
+## [1.10.0] - 2026-08-07
+
+### Changed
+- **CP-Fortschrittsanzeige jetzt als kleiner Ring statt Balken**: Die bisherige
+  Balkengrafik war durch einen Flexbox-Bug seit ihrer Einführung mit 0px Breite
+  unsichtbar (nur der Text war je zu sehen). Ersetzt durch einen kompakten
+  28px-Ring (SVG, gleiche Höhe wie die danebenstehenden Buttons), Text
+  entsprechend gekürzt auf "X% · Y/Z CP". Bleibt an derselben Stelle neben
+  "Nur Merkliste zeigen"/"Auswahl zurücksetzen", da alle drei auf denselben
+  lokalen Status-Daten aufbauen. Mit Playwright in hell/dunkel sowie im
+  Ausgangszustand (kein Semester gewählt, Ring unsichtbar) geprüft.
+
 ## [1.9.1] - 2026-08-07
 
 ### Changed

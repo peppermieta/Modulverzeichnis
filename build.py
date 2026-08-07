@@ -3,7 +3,7 @@ from modules_data import MODULES, STUDIENBEREICHE
 
 # Einzige Quelle der Wahrheit für die im Footer angezeigte Versionsnummer –
 # bei jedem Release hier UND in CHANGELOG.md aktualisieren.
-SITE_VERSION = "1.9.1"
+SITE_VERSION = "1.10.0"
 
 MODULES_JSON = json.dumps(MODULES, ensure_ascii=False)
 SB_JSON = json.dumps(STUDIENBEREICHE, ensure_ascii=False)
@@ -146,10 +146,11 @@ html = f'''<!DOCTYPE html>
   /* ── SUCHE ── */
   /* ── CP-FORTSCHRITT & MERKLISTE-FILTER ── */
   .progress-wrap {{ max-width: 1100px; margin: 0 auto; padding: 4px 24px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }}
-  .cp-progress {{ display: none; align-items: center; gap: 10px; max-width: 420px; }}
+  .cp-progress {{ display: none; align-items: center; gap: 8px; }}
   .cp-progress.visible {{ display: flex; }}
-  .cp-progress-bar {{ flex: 1; height: 6px; border-radius: 4px; background: var(--border); overflow: hidden; }}
-  .cp-progress-fill {{ height: 100%; background: var(--accent); border-radius: 4px; transition: width .3s; }}
+  .cp-ring {{ flex-shrink: 0; }}
+  .cp-ring-track {{ fill: none; stroke: var(--border); stroke-width: 3; }}
+  .cp-ring-fill {{ fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; transition: stroke-dashoffset .3s; }}
   .cp-progress-label {{ font-size: 11.5px; color: var(--muted); white-space: nowrap; }}
   .merkliste-toggle {{
     display: inline-flex; align-items: center; gap: 6px; font-family: 'Inter', sans-serif;
@@ -366,7 +367,10 @@ html = f'''<!DOCTYPE html>
 
 <div class="progress-wrap" id="progressWrap">
   <div class="cp-progress" id="cpProgress">
-    <div class="cp-progress-bar"><div class="cp-progress-fill" id="cpProgressFill"></div></div>
+    <svg class="cp-ring" width="28" height="28" viewBox="0 0 28 28" role="img" aria-label="CP-Fortschritt">
+      <circle class="cp-ring-track" cx="14" cy="14" r="11.5"/>
+      <circle class="cp-ring-fill" id="cpRingFill" cx="14" cy="14" r="11.5" transform="rotate(-90 14 14)"/>
+    </svg>
     <span class="cp-progress-label" id="cpProgressLabel"></span>
   </div>
   <button type="button" class="merkliste-toggle" id="merklisteToggle">★ Nur Merkliste zeigen</button>
@@ -629,8 +633,10 @@ function renderCPProgress(currentSem, overrides) {{
   const totalCP = MODULES.reduce((sum, m) => sum + m.cp, 0);
   const doneCP = MODULES.filter(m => isEffectivelyDone(m, currentSem, overrides)).reduce((sum, m) => sum + m.cp, 0);
   const pct = totalCP ? Math.round(doneCP / totalCP * 100) : 0;
-  document.getElementById('cpProgressFill').style.width = pct + '%';
-  document.getElementById('cpProgressLabel').textContent = `${{doneCP}} von ${{totalCP}} CP absolviert (${{pct}}%)`;
+  const circumference = 2 * Math.PI * 11.5;
+  document.getElementById('cpRingFill').style.strokeDasharray = circumference;
+  document.getElementById('cpRingFill').style.strokeDashoffset = circumference * (1 - pct / 100);
+  document.getElementById('cpProgressLabel').textContent = `${{pct}}% · ${{doneCP}}/${{totalCP}} CP`;
 }}
 
 let merklisteOnly = false;
