@@ -3,6 +3,21 @@
 Alle nennenswerten Änderungen an diesem Projekt werden hier dokumentiert.
 Format angelehnt an [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
+## [1.9.1] - 2026-08-07
+
+### Changed
+- **Favicon ersetzt**: Das bisherige Icon war schlicht das Kalender-Logo
+  (inkl. Kalenderblatt-Grafik), unpassend fürs Modulverzeichnis. Jetzt ein
+  schlichter, einfarbiger Kreis in Pink Orchid (`#dfbbea`, Farbe der
+  Disclaimer-Leiste oben). Bewusst als Platzhalter – ein eigenes,
+  inhaltlich passenderes Icon kann später folgen.
+
+### Added
+- **Versionsnummer im Footer**: Zeigt jetzt "Version X.Y.Z" unterhalb des
+  Lizenz-/Quellenhinweises, zur einfacheren Fehlerzuordnung bei
+  Rückmeldungen über die Kontakt-Box. Einzige Quelle der Wahrheit ist die
+  neue `SITE_VERSION`-Konstante am Anfang von `build.py`.
+
 ## [1.9.0] - 2026-08-06
 
 ### Added

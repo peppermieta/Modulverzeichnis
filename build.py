@@ -1,6 +1,10 @@
 import json
 from modules_data import MODULES, STUDIENBEREICHE
 
+# Einzige Quelle der Wahrheit für die im Footer angezeigte Versionsnummer –
+# bei jedem Release hier UND in CHANGELOG.md aktualisieren.
+SITE_VERSION = "1.9.1"
+
 MODULES_JSON = json.dumps(MODULES, ensure_ascii=False)
 SB_JSON = json.dumps(STUDIENBEREICHE, ensure_ascii=False)
 
@@ -17,7 +21,7 @@ html = f'''<!DOCTYPE html>
   }} catch (e) {{}}
 </script>
 <title>Modulverzeichnis – B.A. Soziale Arbeit</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0ODAgNDgwIj4KICA8Y2lyY2xlIGN4PSIyNDAiIGN5PSIyNDAiIHI9IjIyMCIgZmlsbD0iI2RmYmJlYSIvPgogIDxyZWN0IHg9IjE3NCIgeT0iMTU1IiB3aWR0aD0iMTYiIGhlaWdodD0iMzAiIHJ4PSI4IiBmaWxsPSIjNDAzZjRjIi8+CiAgPHJlY3QgeD0iMjkwIiB5PSIxNTUiIHdpZHRoPSIxNiIgaGVpZ2h0PSIzMCIgcng9IjgiIGZpbGw9IiM0MDNmNGMiLz4KICA8cmVjdCB4PSIxNjAiIHk9IjE3NSIgd2lkdGg9IjE2MCIgaGVpZ2h0PSIxNTAiIHJ4PSIyOCIgZmlsbD0iIzQwM2Y0YyIvPgogIDxyZWN0IHg9IjE4MCIgeT0iMTkyIiB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEwIiByeD0iNSIgZmlsbD0iI2RmYmJlYSIvPgogIDxyZWN0IHg9IjE4NiIgeT0iMjIyIiB3aWR0aD0iMjgiIGhlaWdodD0iMjIiIHJ4PSI2IiBmaWxsPSIjZGZiYmVhIi8+CiAgPHJlY3QgeD0iMjI2IiB5PSIyMjIiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyMiIgcng9IjYiIGZpbGw9IiNkZmJiZWEiLz4KICA8cmVjdCB4PSIyNjYiIHk9IjIyMiIgd2lkdGg9IjI4IiBoZWlnaHQ9IjIyIiByeD0iNiIgZmlsbD0iI2RmYmJlYSIvPgogIDxyZWN0IHg9IjE4NiIgeT0iMjU0IiB3aWR0aD0iMjgiIGhlaWdodD0iMjIiIHJ4PSI2IiBmaWxsPSIjZGZiYmVhIi8+CiAgPHJlY3QgeD0iMjI2IiB5PSIyNTQiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyMiIgcng9IjYiIGZpbGw9IiNkZmJiZWEiLz4KICA8cmVjdCB4PSIyNjYiIHk9IjI1NCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjIyIiByeD0iNiIgZmlsbD0iI2RmYmJlYSIvPgo8L3N2Zz4=">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0ODAgNDgwIj48Y2lyY2xlIGN4PSIyNDAiIGN5PSIyNDAiIHI9IjIyMCIgZmlsbD0iI2RmYmJlYSIvPjwvc3ZnPg==">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
@@ -397,6 +401,7 @@ html = f'''<!DOCTYPE html>
   Der Quellcode dieser Seite ist unter der <strong>MIT-Lizenz</strong> frei nutzbar und veränderbar –
   Repository auf <a href="https://github.com/peppermieta/Modulverzeichnis" target="_blank">GitHub</a>.
   Die Inhalte (Modulhandbuch-Daten) gehören der EH Ludwigsburg und sind davon ausgenommen.
+  <br><span style="opacity:.7;">Version {SITE_VERSION}</span>
 </footer>
 
 <script>
