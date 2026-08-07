@@ -413,7 +413,7 @@
   Der Quellcode dieser Seite ist unter der <strong>MIT-Lizenz</strong> frei nutzbar und veränderbar –
   Repository auf <a href="https://github.com/peppermieta/Modulverzeichnis" target="_blank">GitHub</a>.
   Die Inhalte (Modulhandbuch-Daten) gehören der EH Ludwigsburg und sind davon ausgenommen.
-  <br><span style="opacity:.7;">Version 1.11.1</span>
+  <br><span style="opacity:.7;">Version 1.11.2</span>
 </footer>
 
 <script>
@@ -421,6 +421,7 @@ const MODULES = [{"nr": 1, "name": "Wissenschaftliches Arbeiten", "sem": [1], "c
 const STUDIENBEREICHE = {"1": {"name": "Grundlagen der Sozialen Arbeit als Disziplin und Profession", "bg": "#E8F5ED", "tx": "#1A5C34", "bd": "#A8D5B5", "dot": "#2E8B57"}, "2": {"name": "Zielgruppen und Arbeitsfelder der Sozialen Arbeit", "bg": "#EDE8FF", "tx": "#3B1D8C", "bd": "#B8A8F0", "dot": "#5B3FC8"}, "3": {"name": "Gesellschaftliche Rahmenbedingungen", "bg": "#E0F4EF", "tx": "#0D5A4A", "bd": "#8DD4C2", "dot": "#1A8C70"}, "4": {"name": "Bezugsdisziplinen", "bg": "#FEF3E2", "tx": "#7A5500", "bd": "#F5CC80", "dot": "#C48A00"}, "5": {"name": "Schlüsselqualifikationen", "bg": "#E0EEFF", "tx": "#1A3A8C", "bd": "#A0BCEA", "dot": "#2050C8"}, "6": {"name": "Sozialarbeiterische Handlungskompetenzen", "bg": "#FCE9E0", "tx": "#8A4526", "bd": "#EFC0A8", "dot": "#CC6B3F"}, "7": {"name": "Reflexion und Evaluation der Sozialen Arbeit", "bg": "#FCE8EF", "tx": "#7A1038", "bd": "#F0A0BC", "dot": "#C41A50"}, "0": {"name": "Ohne spezifische Zuordnung", "bg": "#EEEEEC", "tx": "#444440", "bd": "#BBBBBA", "dot": "#777775"}};
 const CURRENT_KEY = 'mv_current_semester';
 const OVERRIDE_KEY = 'mv_status_overrides';
+const CP_SEEN_KEY = 'mv_cp_seen'; // s. renderCPProgress(): haelt fest, ob die CP-Anzeige je sichtbar war
 
 // HTML-Sonderzeichen escapen, gegen Cross-Site-Scripting bei allen Werten,
 // die letztlich aus modules_data.py stammen und ungeprüft in Templates landen.
@@ -684,8 +685,18 @@ function renderDetails(currentSem, merklisteOnly) {
 function renderCPProgress(currentSem, overrides) {
   const headerEl = document.getElementById('cpProgressHeader');
   const hasData = currentSem || Object.keys(overrides).length > 0;
-  headerEl.classList.toggle('visible', !!hasData);
-  if (!hasData) return; // noch kein Semester/Status gewählt: Ring bleibt versteckt statt 0% zu zeigen
+  // Einmal sichtbar gewordene Anzeige bleibt sichtbar (zeigt dann ggf. "0%"),
+  // statt beim Zurücksetzen unerwartet zu verschwinden – das wirkte wie ein
+  // Datenverlust, obwohl es nur dieselbe "nichts gewählt"-Regel war wie beim
+  // allerersten, noch nie genutzten Besuch. Nur DORT bleibt sie unsichtbar,
+  // um kein bedeutungsloses "0%" zu zeigen; CP_SEEN_KEY unterscheidet beide Fälle.
+  let everSeen = hasData;
+  try {
+    if (hasData) localStorage.setItem(CP_SEEN_KEY, '1');
+    else everSeen = localStorage.getItem(CP_SEEN_KEY) === '1';
+  } catch (e) {}
+  headerEl.classList.toggle('visible', !!everSeen);
+  if (!everSeen) return;
   const totalCP = MODULES.reduce((sum, m) => sum + m.cp, 0);
   const doneCP = MODULES.filter(m => isEffectivelyDone(m, currentSem, overrides)).reduce((sum, m) => sum + m.cp, 0);
   const pct = totalCP ? Math.round(doneCP / totalCP * 100) : 0;

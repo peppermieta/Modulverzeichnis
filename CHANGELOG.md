@@ -3,6 +3,19 @@
 Alle nennenswerten Änderungen an diesem Projekt werden hier dokumentiert.
 Format angelehnt an [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
+## [1.11.2] - 2026-08-07
+
+### Fixed
+- **CP-Anzeige verschwand nach "Auswahl zurücksetzen"**: War die Anzeige
+  schon sichtbar und danach kein Semester ausgewählt, blendete sie sich
+  beim Zurücksetzen komplett aus, statt "0%" zu zeigen – wirkte wie ein
+  Datenverlust. Ursache: dieselbe "nichts ausgewählt"-Regel, die eigentlich
+  nur beim allerersten, noch nie genutzten Besuch ein bedeutungsloses "0%"
+  verhindern sollte, griff hier ungewollt mit. Neuer `CP_SEEN_KEY` merkt
+  sich jetzt separat, ob die Anzeige schon einmal sichtbar war – danach
+  bleibt sie es dauerhaft (zeigt bei Bedarf "0%"), nur der allererste
+  Besuch bleibt weiterhin ohne Anzeige.
+
 ## [1.11.1] - 2026-08-07
 
 ### Changed

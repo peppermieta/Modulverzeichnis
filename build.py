@@ -3,7 +3,7 @@ from modules_data import MODULES, STUDIENBEREICHE
 
 # Einzige Quelle der Wahrheit für die im Footer angezeigte Versionsnummer –
 # bei jedem Release hier UND in CHANGELOG.md aktualisieren.
-SITE_VERSION = "1.11.1"
+SITE_VERSION = "1.11.2"
 
 MODULES_JSON = json.dumps(MODULES, ensure_ascii=False)
 SB_JSON = json.dumps(STUDIENBEREICHE, ensure_ascii=False)
@@ -431,6 +431,7 @@ const MODULES = {MODULES_JSON};
 const STUDIENBEREICHE = {SB_JSON};
 const CURRENT_KEY = 'mv_current_semester';
 const OVERRIDE_KEY = 'mv_status_overrides';
+const CP_SEEN_KEY = 'mv_cp_seen'; // s. renderCPProgress(): haelt fest, ob die CP-Anzeige je sichtbar war
 
 // HTML-Sonderzeichen escapen, gegen Cross-Site-Scripting bei allen Werten,
 // die letztlich aus modules_data.py stammen und ungeprüft in Templates landen.
@@ -694,8 +695,18 @@ function renderDetails(currentSem, merklisteOnly) {{
 function renderCPProgress(currentSem, overrides) {{
   const headerEl = document.getElementById('cpProgressHeader');
   const hasData = currentSem || Object.keys(overrides).length > 0;
-  headerEl.classList.toggle('visible', !!hasData);
-  if (!hasData) return; // noch kein Semester/Status gewählt: Ring bleibt versteckt statt 0% zu zeigen
+  // Einmal sichtbar gewordene Anzeige bleibt sichtbar (zeigt dann ggf. "0%"),
+  // statt beim Zurücksetzen unerwartet zu verschwinden – das wirkte wie ein
+  // Datenverlust, obwohl es nur dieselbe "nichts gewählt"-Regel war wie beim
+  // allerersten, noch nie genutzten Besuch. Nur DORT bleibt sie unsichtbar,
+  // um kein bedeutungsloses "0%" zu zeigen; CP_SEEN_KEY unterscheidet beide Fälle.
+  let everSeen = hasData;
+  try {{
+    if (hasData) localStorage.setItem(CP_SEEN_KEY, '1');
+    else everSeen = localStorage.getItem(CP_SEEN_KEY) === '1';
+  }} catch (e) {{}}
+  headerEl.classList.toggle('visible', !!everSeen);
+  if (!everSeen) return;
   const totalCP = MODULES.reduce((sum, m) => sum + m.cp, 0);
   const doneCP = MODULES.filter(m => isEffectivelyDone(m, currentSem, overrides)).reduce((sum, m) => sum + m.cp, 0);
   const pct = totalCP ? Math.round(doneCP / totalCP * 100) : 0;
