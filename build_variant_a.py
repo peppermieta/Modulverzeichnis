@@ -3,7 +3,7 @@ from modules_data import MODULES, STUDIENBEREICHE
 
 # Einzige Quelle der Wahrheit für die im Footer angezeigte Versionsnummer –
 # bei jedem Release hier UND in CHANGELOG.md aktualisieren.
-SITE_VERSION = "1.11.0"
+SITE_VERSION = "1.10.0"
 
 MODULES_JSON = json.dumps(MODULES, ensure_ascii=False)
 SB_JSON = json.dumps(STUDIENBEREICHE, ensure_ascii=False)
@@ -72,8 +72,6 @@ html = f'''<!DOCTYPE html>
   header p {{ font-size: 13px; color: var(--muted); margin: 2px 0 0; }}
 
   .header-right {{ display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }}
-  .header-cal-icon {{ display: inline-flex; vertical-align: -4px; line-height: 0; transition: transform .15s; }}
-  .header-cal-icon:hover {{ transform: scale(1.12); }}
 
   .theme-toggle {{ background: none; border: none; padding: 0; cursor: pointer; display: flex; align-items: center; flex-shrink: 0; }}
   .theme-toggle-track {{
@@ -155,6 +153,12 @@ html = f'''<!DOCTYPE html>
   /* ── SUCHE ── */
   /* ── CP-FORTSCHRITT & MERKLISTE-FILTER ── */
   .progress-wrap {{ max-width: 1100px; margin: 0 auto; padding: 4px 24px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }}
+  .cp-progress {{ display: none; align-items: center; gap: 8px; }}
+  .cp-progress.visible {{ display: flex; }}
+  .cp-ring {{ flex-shrink: 0; }}
+  .cp-ring-track {{ fill: none; stroke: var(--border); stroke-width: 3; }}
+  .cp-ring-fill {{ fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; transition: stroke-dashoffset .3s; }}
+  .cp-progress-label {{ font-size: 11.5px; color: var(--muted); white-space: nowrap; }}
   .merkliste-toggle {{
     display: inline-flex; align-items: center; gap: 6px; font-family: 'Inter', sans-serif;
     font-size: 12px; padding: 5px 11px; border-radius: 20px; border: 1px solid var(--border);
@@ -306,6 +310,7 @@ html = f'''<!DOCTYPE html>
     .search-wrap {{ padding: 4px 16px; }}
     .search-inner {{ max-width: none; }}
     .progress-wrap {{ padding: 4px 16px; }}
+    .cp-progress {{ max-width: none; }}
     .mv-plan {{ padding: 0 16px; }}
     .sb-legend {{ padding: 0 16px 8px; }}
     .mv-row {{ flex-direction: column; gap: 8px; }}
@@ -329,24 +334,17 @@ html = f'''<!DOCTYPE html>
   <div>
     <h1>Modulverzeichnis</h1>
     <p>Bachelor Soziale Arbeit · EH Ludwigsburg · alle 28 Module im Überblick ·
-      <a class="header-cal-icon" href="https://kalender.xn--peppermita-lnb.de/" target="_blank" aria-label="Zum Vorlesungskalender">
-        <svg width="18" height="18" viewBox="0 0 480 480" aria-hidden="true">
-          <circle cx="240" cy="240" r="220" fill="#dfbbea"/>
-          <rect x="174" y="155" width="16" height="30" rx="8" fill="#403f4c"/>
-          <rect x="290" y="155" width="16" height="30" rx="8" fill="#403f4c"/>
-          <rect x="160" y="175" width="160" height="150" rx="28" fill="#403f4c"/>
-          <rect x="180" y="192" width="120" height="10" rx="5" fill="#dfbbea"/>
-          <rect x="186" y="222" width="28" height="22" rx="6" fill="#dfbbea"/>
-          <rect x="226" y="222" width="28" height="22" rx="6" fill="#dfbbea"/>
-          <rect x="266" y="222" width="28" height="22" rx="6" fill="#dfbbea"/>
-          <rect x="186" y="254" width="28" height="22" rx="6" fill="#dfbbea"/>
-          <rect x="226" y="254" width="28" height="22" rx="6" fill="#dfbbea"/>
-          <rect x="266" y="254" width="28" height="22" rx="6" fill="#dfbbea"/>
-        </svg>
-      </a>
-    </p>
+       <a href="https://kalender.xn--peppermita-lnb.de/" target="_blank" style="color:var(--accent);font-weight:600;text-decoration:none;">Vorlesungskalender ↗</a></p>
   </div>
   <div class="header-right">
+    <div class="cp-progress-header" id="cpProgressHeader">
+      <svg width="40" height="40" viewBox="0 0 40 40" role="img" aria-label="CP-Fortschritt">
+        <circle class="cp-ring-h-track" cx="20" cy="20" r="16"/>
+        <circle class="cp-ring-h-fill" id="cpRingFillHeader" cx="20" cy="20" r="16" transform="rotate(-90 20 20)"/>
+        <text class="cp-ring-h-pct" id="cpRingPctHeader" x="20" y="24" text-anchor="middle">0%</text>
+      </svg>
+      <span class="cp-progress-header-label"><strong id="cpProgressHeaderCP"></strong>CP absolviert</span>
+    </div>
     <button type="button" class="theme-toggle" id="themeToggle" role="switch" aria-checked="false" aria-label="Dunkles Farbschema">
       <span class="theme-toggle-track"><span class="theme-toggle-thumb" id="themeToggleThumb">☀</span></span>
     </button>
@@ -362,14 +360,6 @@ html = f'''<!DOCTYPE html>
         <option value="6">6. Semester</option>
         <option value="7">7. Semester</option>
       </select>
-    </div>
-    <div class="cp-progress-header" id="cpProgressHeader">
-      <svg width="40" height="40" viewBox="0 0 40 40" role="img" aria-label="CP-Fortschritt">
-        <circle class="cp-ring-h-track" cx="20" cy="20" r="16"/>
-        <circle class="cp-ring-h-fill" id="cpRingFillHeader" cx="20" cy="20" r="16" transform="rotate(-90 20 20)"/>
-        <text class="cp-ring-h-pct" id="cpRingPctHeader" x="20" y="24" text-anchor="middle">0%</text>
-      </svg>
-      <span class="cp-progress-header-label"><strong id="cpProgressHeaderCP"></strong>CP absolviert</span>
     </div>
   </div>
 </header>
@@ -391,6 +381,13 @@ html = f'''<!DOCTYPE html>
 </div>
 
 <div class="progress-wrap" id="progressWrap">
+  <div class="cp-progress" id="cpProgress">
+    <svg class="cp-ring" width="28" height="28" viewBox="0 0 28 28" role="img" aria-label="CP-Fortschritt">
+      <circle class="cp-ring-track" cx="14" cy="14" r="11.5"/>
+      <circle class="cp-ring-fill" id="cpRingFill" cx="14" cy="14" r="11.5" transform="rotate(-90 14 14)"/>
+    </svg>
+    <span class="cp-progress-label" id="cpProgressLabel"></span>
+  </div>
   <button type="button" class="merkliste-toggle" id="merklisteToggle">★ Nur Merkliste zeigen</button>
   <button type="button" class="merkliste-toggle" id="statusResetBtn">↺ Auswahl zurücksetzen</button>
 </div>
@@ -644,13 +641,20 @@ function renderDetails(currentSem, merklisteOnly) {{
 }}
 
 function renderCPProgress(currentSem, overrides) {{
-  const headerEl = document.getElementById('cpProgressHeader');
+  const cpEl = document.getElementById('cpProgress');
   const hasData = currentSem || Object.keys(overrides).length > 0;
-  headerEl.classList.toggle('visible', !!hasData);
+  cpEl.classList.toggle('visible', !!hasData);
   if (!hasData) return;
   const totalCP = MODULES.reduce((sum, m) => sum + m.cp, 0);
   const doneCP = MODULES.filter(m => isEffectivelyDone(m, currentSem, overrides)).reduce((sum, m) => sum + m.cp, 0);
   const pct = totalCP ? Math.round(doneCP / totalCP * 100) : 0;
+  const circumference = 2 * Math.PI * 11.5;
+  document.getElementById('cpRingFill').style.strokeDasharray = circumference;
+  document.getElementById('cpRingFill').style.strokeDashoffset = circumference * (1 - pct / 100);
+  document.getElementById('cpProgressLabel').textContent = `${{pct}}% · ${{doneCP}}/${{totalCP}} CP`;
+
+  const headerEl = document.getElementById('cpProgressHeader');
+  headerEl.classList.toggle('visible', !!hasData);
   const circumferenceH = 2 * Math.PI * 16;
   document.getElementById('cpRingFillHeader').style.strokeDasharray = circumferenceH;
   document.getElementById('cpRingFillHeader').style.strokeDashoffset = circumferenceH * (1 - pct / 100);

@@ -3,6 +3,21 @@
 Alle nennenswerten Änderungen an diesem Projekt werden hier dokumentiert.
 Format angelehnt an [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
+## [1.11.0] - 2026-08-07
+
+### Changed
+- **CP-Fortschrittsanzeige in den (sticky) Header verschoben**: Stand bisher
+  in der Toolbar und scrollte mit dem Inhalt weg – Statusänderungen weiter
+  unten in der Modulliste waren dadurch nicht live sichtbar, ohne
+  zurückzuscrollen. Jetzt als größerer Ring (40px) rechts im Header, neben
+  der Semesterauswahl, bleibt beim Scrollen durchgehend sichtbar. Die
+  bisherige kleinere Ring-Anzeige in der Toolbar wurde entfernt (keine
+  doppelte Anzeige mehr).
+- **Kalender-Verlinkung von Textlink auf Icon umgestellt**: "Vorlesungskalender ↗"
+  ist jetzt ein kleines, anklickbares Icon (das echte Kalender-Logo, inline
+  in der Unterzeile) statt eines Textlinks – platzsparender, ohne den Link
+  zu verstecken.
+
 ## [1.10.0] - 2026-08-07
 
 ### Changed
