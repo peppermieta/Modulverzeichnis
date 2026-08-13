@@ -3,6 +3,32 @@
 Alle nennenswerten Änderungen an diesem Projekt werden hier dokumentiert.
 Format angelehnt an [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
+## [1.11.3] - 2026-08-09
+
+### Fixed
+- **`esc()` escaped jetzt auch Anführungszeichen** (`"`/`'`), nicht nur
+  `&`/`<`/`>`. Betraf u. a. den generierten Mail-Link-Titel – ein Name
+  mit doppeltem Anführungszeichen hätte aus dem `title`-Attribut
+  ausbrechen können. Geprüft: die zwei anderen Stellen ohne `esc()`
+  (Status-Badge, PL/UPL-Badge) waren ungefährlich, da die Werte nur aus
+  festen `<select>`-Optionen bzw. fest hinterlegten Strings stammen.
+- **`location.hash`-Absturz behoben**: `document.querySelector
+  (location.hash)` am Skript-Ende warf bei ungültigem Hash (z. B.
+  manuell verändertem Link) einen Fehler. Auf `getElementById`
+  umgestellt, das bei Fehlschlag einfach `null` statt eines Fehlers
+  zurückgibt.
+
+### Changed
+- **DOM-Elemente in `renderCPProgress()` gecacht**: `cpProgressHeader`,
+  `cpRingFillHeader`, `cpRingPctHeader` und `cpProgressHeaderCP` wurden
+  bisher bei jedem Aufruf neu gesucht, obwohl sie statisch im Header
+  liegen – jetzt einmalig als Konstanten zwischengespeichert (wie
+  `searchInput`).
+- **`rel="noopener"` bei allen vier externen Links** ergänzt
+  (Kalender-Icon, Modulhandbuch-PDF, Personenverzeichnis, GitHub) –
+  übliche Absicherung gegen Zugriff der geöffneten Seite auf den
+  ursprünglichen Tab über `window.opener`.
+
 ## [1.11.2] - 2026-08-07
 
 ### Fixed

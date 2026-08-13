@@ -53,30 +53,6 @@ sich nichts bis möglichst wenig ändern.
 
 ## 🔍 Code-Qualität & Sicherheit
 
-Basiert auf einem extern erstellten Code-Review, gegen den echten Code
-verifiziert.
-
-- **`esc()`-Funktion um Anführungszeichen ergänzen** – escaped bisher
-  nur `&`/`<`/`>`, nicht `"`/`'`. Betrifft u. a. den generierten
-  Mail-Link-Titel. Geprüft: die zwei anderen Stellen ohne `esc()`
-  (Status-Badge, PL/UPL-Badge) sind ungefährlich, da die Werte nur aus
-  festen `<select>`-Optionen bzw. fest hinterlegten Strings stammen –
-  trotzdem sinnvoll, die Funktion selbst konsistent zu machen.
-- **`location.hash`-Absturzschutz** –
-  `document.querySelector(location.hash)` am Skript-Ende wirft bei
-  ungültigem Hash (z. B. manuell verändertem Link) einen Fehler. Auf
-  `getElementById` mit entfernter Raute umstellen (kein Try/Catch
-  nötig, gibt bei Fehlschlag einfach `null` zurück).
-- **DOM-Elemente in `renderCPProgress()` cachen** –
-  `cpRingFillHeader`/`cpRingPctHeader` werden bei jedem Aufruf neu
-  gesucht, obwohl sie statisch im Header liegen. Einmalig als
-  Konstanten zwischenspeichern (wie `searchInput`).
-- **`rel="noopener"` bei externen Links** – vier
-  `target="_blank"`-Links (Kalender-Icon, Modulhandbuch-PDF,
-  Personenverzeichnis, GitHub) haben kein `rel="noopener"`. Übliche
-  Absicherung gegen Zugriff der geöffneten Seite auf den ursprünglichen
-  Tab (`window.opener`); bei diesen vier Zielen unkritisch, aber
-  günstig mitzunehmen.
 - **`setTimeout` in `jumpToModule()` – nur Hinweis, keine Umsetzung
   geplant:** 150ms-Wartezeit vor dem Scrollen (Workaround für mobile
   Tastaturen) ist fehleranfällig, funktioniert aber bisher zuverlässig
