@@ -3,6 +3,32 @@
 Alle nennenswerten Änderungen an diesem Projekt werden hier dokumentiert.
 Format angelehnt an [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
+## [1.11.4] - 2026-08-09
+
+### Added
+- **Barrierefreiheits-Verbesserungen** (oberflächlicher Check, keine
+  visuellen Änderungen – s. Planung.md):
+  - Suchfeld: `aria-label="Modul suchen"`, Suchicon `aria-hidden="true"`.
+  - Status-Select je Modul: `aria-label="Status für Modul MXX"`.
+  - Merkliste-Toggle: `aria-pressed` wird jetzt bei jeder
+    Zustandsänderung mitgeführt (Klick, Zurücksetzen, automatisches
+    Deaktivieren bei nicht mehr sichtbarem Zielmodul).
+  - Status-Badge und Mail-Icon in den Modulkarten: `aria-label`
+    zusätzlich zum bestehenden `title` (robuster für Screenreader).
+    Die drei Symbol-Texte in den Select-Optionen ("★ Vorgemerkt" etc.)
+    bewusst unverändert gelassen – dort steht der erklärende Text schon
+    direkt neben dem Symbol.
+  - Suchergebnisse: `aria-live="polite"` + `aria-atomic="true"`, dabei
+    Eingabe um 300ms entschärft, damit nicht bei jedem Tastendruck neu
+    angekündigt wird.
+  - Globale `:focus-visible`-Regel (Rahmen in `var(--accent)`) – bisher
+    gab es nur beim Suchfeld einen eigenen Fokus-Zustand.
+- **Kontrastprüfung durchgeführt** (nur Check): alle 8
+  Studienbereichsfarben liegen in Hell und Dunkel komfortabel über dem
+  WCAG-AA-Mindestwert 4.5:1. Einzig `--muted` (gedämpfter Text) fällt im
+  hellen Modus knapp durch (4.09:1 auf Hintergrund, 4.42:1 auf
+  Flächen) – bewusst nicht geändert, siehe Planung.md.
+
 ## [1.11.3] - 2026-08-09
 
 ### Fixed

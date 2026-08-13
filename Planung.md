@@ -9,45 +9,19 @@ Offene technische Punkte, noch nicht umgesetzt.
 
 ## ♿ Barrierefreiheit (oberflächlicher Check, keine visuellen Änderungen)
 
-Basiert auf einem extern erstellten Barrierefreiheits-Bericht, gemeinsam
-durchgegangen und geschärft. Ziel bewusst nur unsichtbare Verbesserungen
-(ARIA, Tastatur, Fokus) – am sichtbaren Erscheinungsbild der Seite soll
-sich nichts bis möglichst wenig ändern.
-
-- **Suchfeld-Label** – `<input id="searchInput">` hat nur einen
-  Placeholder, kein semantisches Label. `aria-label="Modul suchen"`
-  ergänzen, Suchicon (`🔍`) mit `aria-hidden="true"` vor Screenreadern
-  verstecken.
-- **Status-Dropdown-Labels** – der Text "Mein Status:" steht lose in
-  einem `<div>`, nicht mit dem zugehörigen `<select>` verknüpft.
-  Entweder echtes `<label for="…">` oder `aria-label` direkt am
-  `<select>`.
-- **Merkliste-Toggle-Zustand** – Button `#merklisteToggle` zeigt seinen
-  An/Aus-Zustand nur visuell über `.active`. `aria-pressed="true"/
-  "false"` per JS mitführen.
-- **Symbole/Badges mit Alternativtext** – ★/✓/○ sowie das Mail-Icon
-  (`✉`) werden von Screenreadern oft unsinnig vorgelesen. Symbole per
-  `aria-hidden="true"` verstecken, stattdessen sinnvollen Text/
-  `aria-label` am umschließenden Element anbieten. Aufwändigster Punkt
-  der Liste, da mehrere Einzelstellen betroffen sind. (Das
-  Kalender-Logo-SVG im Untertitel wurde ebenfalls geprüft – hat bereits
-  ein korrektes `aria-label`, hier ist nichts zu tun.)
-- **Live-Suche ankündigen** – `#searchResults` bekommt
-  `aria-live="polite"`, damit Screenreader über neue Trefferlisten
-  informiert werden. Dabei Geschwätzigkeit vermeiden: kurze Verzögerung
-  einbauen, bevor vorgelesen wird, statt bei jedem Tastendruck neu
-  anzukündigen.
-- **Fokus-Sichtbarkeit** – bisher nur beim Suchfeld ein expliziter
-  Fokus-Zustand definiert, sonst Browser-Standard (im Dark Mode ggf.
-  schlecht sichtbar). Globale `:focus-visible`-Regel ergänzen (Rahmen
-  in `var(--accent)`, etwas `outline-offset`). **Vorher:** kurzer
-  Tastatur-Erreichbarkeits-Check – falls irgendwo klickbare `<div>`s
-  statt echter `<button>`/`<a>`-Elemente verwendet werden, helfen
-  Fokus-Styles allein nichts.
-- **Kontrastprüfung** – reiner Check gegen WCAG-AA-Mindestkontrast
-  (4.5:1 für normalen Text), keine Garantie für eine Code-Änderung.
-  Falls etwas durchfällt: erst melden, keine Farbe ohne Rückfrage
-  ändern.
+- **Tastatur-Erreichbarkeit der Suchergebnisse** – die Suchtreffer
+  (`.search-result`) sind aktuell `<div>`-Elemente, keine echten
+  `<button>`/`<a>`-Elemente. Per Tastatur (Tab) daher nicht erreichbar,
+  unabhängig von Fokus-Styling. Braucht eine kleine Strukturänderung
+  (z. B. echte `<button>`-Elemente statt `<div>`s), bewusst noch nicht
+  umgesetzt.
+- **Kontrastprüfung – Ergebnis:** alle 8 Studienbereichsfarben liegen in
+  Hell und Dunkel komfortabel über dem WCAG-AA-Mindestwert 4.5:1.
+  Einzig `--muted` (gedämpfter Text, `#7A7870`) fällt im hellen Modus
+  knapp durch: 4.09:1 auf dem Hintergrund, 4.42:1 auf weißen Flächen.
+  Käme man mit ca. 10 % Abdunkelung (z. B. Richtung `#6D6C64`) locker
+  über 4.5:1, optisch kaum wahrnehmbar – bewusst nicht ohne Rückfrage
+  geändert.
 - ~~Skip-Link~~ – bewusst verworfen, Nutzen bei einer eher kurzen Seite
   zu gering.
 
@@ -89,6 +63,5 @@ Weniger dringend, eher strategisch – kein akuter Zeitdruck.
 
 ---
 
-Wenn wir Barrierefreiheit + Code-Qualität gemeinsam umsetzen: alles
-dort oben ohne sichtbare Änderung möglich, bis auf die Kontrastprüfung
-(dort ggf. Rückfrage vor einer Farbänderung).
+Wenn die Tastatur-Erreichbarkeit der Suche umgesetzt wird: ebenfalls
+ohne sichtbare Änderung möglich.
