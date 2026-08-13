@@ -3,6 +3,10 @@
 Offene technische Punkte, noch nicht umgesetzt.
 *(Stand: 9. August 2026)*
 
+> **Pflege-Hinweis, bewusst anders als bei der Kalender-Ideensammlung:**
+> Erledigte Punkte werden hier nicht als "✅ Umgesetzt" markiert und
+> stehen gelassen, sondern nach Umsetzung komplett aus der Datei entfernt.
+
 ## ♿ Barrierefreiheit (oberflächlicher Check, keine visuellen Änderungen)
 
 Basiert auf einem extern erstellten Barrierefreiheits-Bericht, gemeinsam
@@ -82,6 +86,33 @@ verifiziert.
 
 ---
 
-Wenn wir beides gemeinsam umsetzen: alles oben ohne sichtbare Änderung
-möglich, bis auf die Kontrastprüfung (dort ggf. Rückfrage vor einer
-Farbänderung).
+## 🔭 Langfristige Themen
+
+Weniger dringend, eher strategisch – kein akuter Zeitdruck.
+
+- **Umzug auf eigene Domain (basamodule.info)** – langfristiges Ziel,
+  weg von der aktuellen Subdomain unter der Kalender-Domain
+  (`module.xn--peppermita-lnb.de`). Wichtig dabei: der Kalender
+  verlinkt direkt auf die aktuelle Domain (Modul-Badges im
+  Termin-Detail, Header-Link), das ist also kein rein internes
+  Modulverzeichnis-Thema, sondern betrifft beide Projekte – bei
+  Umsetzung müsste der Umzug in beiden Repos koordiniert erfolgen
+  (CNAME, harte Links im Kalender-Code, README/PALETTE.md-Verweise).
+- **Update-Konzept für neue Studienordnungen** – was passiert, wenn
+  sich die Studienordnung ändert (neue/andere Module, andere
+  CP-/SWS-Verteilung)? Bisher ungeklärt, ob die Seite einfach in-place
+  aktualisiert wird oder ob es eine Art Versionierung je Jahrgang
+  braucht, damit Studierende mit älterer Studienordnung weiterhin die
+  für sie gültigen Angaben finden.
+- **Anleitung/Vorlage für andere Studiengänge oder Jahrgänge** – hängt
+  mit dem Punkt darüber zusammen. Eine Dokumentation, welche Dateien
+  (`modules_data.py`, `build.py`, Farbpalette, Branding) für eine
+  Übertragung auf einen anderen Studiengang oder Jahrgang angepasst
+  werden müssten, damit das nicht bei jedem Mal neu durchdacht werden
+  muss.
+
+---
+
+Wenn wir Barrierefreiheit + Code-Qualität gemeinsam umsetzen: alles
+dort oben ohne sichtbare Änderung möglich, bis auf die Kontrastprüfung
+(dort ggf. Rückfrage vor einer Farbänderung).
