@@ -3,6 +3,24 @@
 Alle nennenswerten Änderungen an diesem Projekt werden hier dokumentiert.
 Format angelehnt an [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
+## [1.12.0] - 2026-08-27
+
+### Added
+- **`workload.json`**: neue, schlanke Datenbrücke für den Vorlesungskalender
+  (CP/SWS/Workload-Aufteilung je Modul, Schlüssel als zweistellig gepaddeter
+  Modulcode wie `"M02"`, passend zum `ev.modul`-Feld im Kalender). Wird bei
+  jedem `build.py`-Lauf automatisch neu erzeugt, bewusst ohne die
+  vollständigen Moduldaten (keine Verantwortlichen/E-Mails/Bausteine), um
+  die Datei klein zu halten. Erster Baustein für die im Kalender geplante
+  Belastungs-Heatmap (Etappe 4 dort) - CORS-Abruf von der Kalender-Domain
+  aus vorab getestet und bestätigt.
+
+### Fixed
+- **`SITE_VERSION`-Konstante war veraltet** (stand auf 1.11.2, obwohl laut
+  diesem Changelog bereits 1.11.4 aktuell war) - im Footer der Live-Seite
+  wurde dadurch die falsche Version angezeigt. Reine Doku-/Anzeige-
+  Abweichung, kein Funktionsbug.
+
 ## [1.11.4] - 2026-08-09
 
 ### Added

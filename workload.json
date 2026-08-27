@@ -1,0 +1,314 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-27T17:29:15Z",
+  "modules": {
+    "M01": {
+      "label": "Wissenschaftliches Arbeiten",
+      "cp": 6,
+      "sws": 4,
+      "workload": {
+        "gesamt": 180,
+        "kontakt": 42,
+        "selbst": 138,
+        "praxis": 0
+      }
+    },
+    "M02": {
+      "label": "Theorie und Methoden der Beratung in der Sozialen Arbeit",
+      "cp": 6,
+      "sws": 4,
+      "workload": {
+        "gesamt": 180,
+        "kontakt": 42,
+        "selbst": 138,
+        "praxis": 0
+      }
+    },
+    "M03": {
+      "label": "Ethische und theologische Perspektiven",
+      "cp": 6,
+      "sws": 4,
+      "workload": {
+        "gesamt": 180,
+        "kontakt": 42,
+        "selbst": 138,
+        "praxis": 0
+      }
+    },
+    "M04": {
+      "label": "Genderperspektiven",
+      "cp": 6,
+      "sws": 4,
+      "workload": {
+        "gesamt": 180,
+        "kontakt": 42,
+        "selbst": 138,
+        "praxis": 0
+      }
+    },
+    "M05": {
+      "label": "Einführung in die Soziale Arbeit als Disziplin und Profession",
+      "cp": 6,
+      "sws": 6,
+      "workload": {
+        "gesamt": 180,
+        "kontakt": 63,
+        "selbst": 117,
+        "praxis": 0
+      }
+    },
+    "M06": {
+      "label": "Inklusion und Exklusion",
+      "cp": 6,
+      "sws": 4,
+      "workload": {
+        "gesamt": 180,
+        "kontakt": 42,
+        "selbst": 138,
+        "praxis": 0
+      }
+    },
+    "M07": {
+      "label": "Entwicklung und Sozialisation",
+      "cp": 6,
+      "sws": 4,
+      "workload": {
+        "gesamt": 180,
+        "kontakt": 42,
+        "selbst": 138,
+        "praxis": 0
+      }
+    },
+    "M08": {
+      "label": "Rechtliche Grundlagen und Aufträge Sozialer Arbeit",
+      "cp": 6,
+      "sws": 5,
+      "workload": {
+        "gesamt": 180,
+        "kontakt": 53,
+        "selbst": 127,
+        "praxis": 0
+      }
+    },
+    "M09": {
+      "label": "Ästhetik, Kultur, Medien",
+      "cp": 6,
+      "sws": 5,
+      "workload": {
+        "gesamt": 180,
+        "kontakt": 53,
+        "selbst": 127,
+        "praxis": 0
+      }
+    },
+    "M10": {
+      "label": "Forschung",
+      "cp": 6,
+      "sws": 5,
+      "workload": {
+        "gesamt": 180,
+        "kontakt": 53,
+        "selbst": 127,
+        "praxis": 0
+      }
+    },
+    "M11": {
+      "label": "Projektstudium I",
+      "cp": 12,
+      "sws": 6,
+      "workload": {
+        "gesamt": 360,
+        "kontakt": 63,
+        "selbst": 147,
+        "praxis": 150
+      }
+    },
+    "M12": {
+      "label": "Unterstützung bei der Lebensbewältigung: Beratung und Begleitung",
+      "cp": 6,
+      "sws": 4,
+      "workload": {
+        "gesamt": 180,
+        "kontakt": 42,
+        "selbst": 138,
+        "praxis": 0
+      }
+    },
+    "M13": {
+      "label": "Rechtliche Perspektiven und Organisationsgrundlagen Sozialer Arbeit",
+      "cp": 6,
+      "sws": 4,
+      "workload": {
+        "gesamt": 180,
+        "kontakt": 42,
+        "selbst": 138,
+        "praxis": 0
+      }
+    },
+    "M14": {
+      "label": "Internationale, interkulturelle und interreligiöse Perspektiven",
+      "cp": 6,
+      "sws": 5,
+      "workload": {
+        "gesamt": 180,
+        "kontakt": 53,
+        "selbst": 127,
+        "praxis": 0
+      }
+    },
+    "M15": {
+      "label": "Projektstudium II",
+      "cp": 12,
+      "sws": 6,
+      "workload": {
+        "gesamt": 360,
+        "kontakt": 63,
+        "selbst": 147,
+        "praxis": 150
+      }
+    },
+    "M16": {
+      "label": "Kasuistik, Case-Management und Hilfeplanung",
+      "cp": 6,
+      "sws": 5,
+      "workload": {
+        "gesamt": 180,
+        "kontakt": 53,
+        "selbst": 127,
+        "praxis": 0
+      }
+    },
+    "M17": {
+      "label": "Unterstützung ausgewählter Zielgruppen in Rechtsfragen und betriebswirtschaftliche Aspekte",
+      "cp": 6,
+      "sws": 4,
+      "workload": {
+        "gesamt": 180,
+        "kontakt": 42,
+        "selbst": 138,
+        "praxis": 0
+      }
+    },
+    "M18": {
+      "label": "Gesellschaftliche Strukturen und Prozesse",
+      "cp": 6,
+      "sws": 5,
+      "workload": {
+        "gesamt": 180,
+        "kontakt": 53,
+        "selbst": 127,
+        "praxis": 0
+      }
+    },
+    "M19": {
+      "label": "Praxissemester",
+      "cp": 30,
+      "sws": 3,
+      "workload": {
+        "gesamt": 900,
+        "kontakt": 32,
+        "selbst": 68,
+        "praxis": 800
+      }
+    },
+    "M20": {
+      "label": "Rahmenbedingungen Sozialer Arbeit und Öffentlichkeitsbezug",
+      "cp": 6,
+      "sws": 4,
+      "workload": {
+        "gesamt": 180,
+        "kontakt": 42,
+        "selbst": 138,
+        "praxis": 0
+      }
+    },
+    "M21": {
+      "label": "Soziale Arbeit als Disziplin und Profession",
+      "cp": 6,
+      "sws": 6,
+      "workload": {
+        "gesamt": 180,
+        "kontakt": 63,
+        "selbst": 117,
+        "praxis": 0
+      }
+    },
+    "M22": {
+      "label": "Gemeinwesen und Sozialraum in pluralen Gesellschaften",
+      "cp": 6,
+      "sws": 5,
+      "workload": {
+        "gesamt": 180,
+        "kontakt": 53,
+        "selbst": 127,
+        "praxis": 0
+      }
+    },
+    "M23": {
+      "label": "Diakonie und weltanschauliche Organisationen im sozialen Wandel: religiöse und ethische Perspektiven",
+      "cp": 6,
+      "sws": 4,
+      "workload": {
+        "gesamt": 180,
+        "kontakt": 42,
+        "selbst": 138,
+        "praxis": 0
+      }
+    },
+    "M24": {
+      "label": "Gesundheit und Soziale Arbeit / Gesundheitsförderung",
+      "cp": 6,
+      "sws": 4,
+      "workload": {
+        "gesamt": 180,
+        "kontakt": 42,
+        "selbst": 138,
+        "praxis": 0
+      }
+    },
+    "M25": {
+      "label": "Organisation und Management sozialer Einrichtungen",
+      "cp": 6,
+      "sws": 4,
+      "workload": {
+        "gesamt": 180,
+        "kontakt": 42,
+        "selbst": 138,
+        "praxis": 0
+      }
+    },
+    "M26": {
+      "label": "Gestaltung von Lern- und Bildungsprozessen",
+      "cp": 6,
+      "sws": 4,
+      "workload": {
+        "gesamt": 180,
+        "kontakt": 42,
+        "selbst": 138,
+        "praxis": 0
+      }
+    },
+    "M27": {
+      "label": "Sozialpolitik und transnationale Bezüge Sozialer Arbeit",
+      "cp": 6,
+      "sws": 4,
+      "workload": {
+        "gesamt": 180,
+        "kontakt": 42,
+        "selbst": 138,
+        "praxis": 0
+      }
+    },
+    "M28": {
+      "label": "Bachelor-Thesis / Bachelor-Kolloquium",
+      "cp": 12,
+      "sws": 0,
+      "workload": {
+        "gesamt": 360,
+        "kontakt": 0,
+        "selbst": 360,
+        "praxis": 0
+      }
+    }
+  }
+}

@@ -1,9 +1,10 @@
 import json
+from datetime import datetime, timezone
 from modules_data import MODULES, STUDIENBEREICHE
 
 # Einzige Quelle der Wahrheit für die im Footer angezeigte Versionsnummer –
 # bei jedem Release hier UND in CHANGELOG.md aktualisieren.
-SITE_VERSION = "1.11.2"
+SITE_VERSION = "1.12.0"
 
 MODULES_JSON = json.dumps(MODULES, ensure_ascii=False)
 SB_JSON = json.dumps(STUDIENBEREICHE, ensure_ascii=False)
@@ -932,3 +933,41 @@ if (location.hash) {{
 with open('index.html', 'w', encoding='utf-8') as f:
     f.write(html)
 print("Fertig:", len(html), "Zeichen")
+
+# ─── workload.json: schlanke Datenbrücke für den Vorlesungskalender ────────
+# Liefert nur, was die geplante Belastungs-Heatmap dort braucht (CP/SWS/
+# Workload-Aufteilung je Modul) - bewusst NICHT die kompletten MODULES-Daten
+# (Verantwortliche, E-Mails, Bausteine, Prüfungsnummern etc.), um die Datei
+# klein zu halten und keine Daten preiszugeben, die dafür nicht nötig sind.
+# CORS-Abruf von der Kalender-Domain aus bereits getestet und bestätigt
+# (s. IDEENSAMMLUNG.md im Kalender-Repo, Abschnitt "Prospektive
+# Belastungs-Heatmap", Etappe 3).
+WORKLOAD_SCHEMA_VERSION = 1
+
+def build_workload_data():
+    modules = {}
+    for m in MODULES:
+        # Zweistellig gepaddeter Code (z.B. "M02"), damit der Schlüssel exakt
+        # zum ev.modul-Feld im Kalender passt - dort ist "M02" nicht "M2".
+        code = f"M{m['nr']:02d}"
+        modules[code] = {
+            "label": m["name"],
+            "cp": m["cp"],
+            "sws": m["sws"],
+            "workload": {
+                "gesamt": m["workload"]["gesamt"],
+                "kontakt": m["workload"]["kontakt"],
+                "selbst": m["workload"]["selbst"],
+                "praxis": m["workload"]["praxis"],
+            },
+        }
+    return {
+        "schemaVersion": WORKLOAD_SCHEMA_VERSION,
+        "generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
+        "modules": modules,
+    }
+
+workload_json_str = json.dumps(build_workload_data(), ensure_ascii=False, indent=2)
+with open('workload.json', 'w', encoding='utf-8') as f:
+    f.write(workload_json_str)
+print("Fertig:", len(workload_json_str), "Zeichen (workload.json)")

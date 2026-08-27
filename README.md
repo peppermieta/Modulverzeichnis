@@ -33,8 +33,10 @@ Alle Moduldaten liegen zentral in `modules_data.py` (Python), aus der `index.htm
 python3 build.py
 ```
 
-erzeugt eine neue `index.html` aus den aktuellen Daten in `modules_data.py`. Nicht direkt in der
-generierten `index.html` editieren – Änderungen gehen beim nächsten Build verloren.
+erzeugt eine neue `index.html` aus den aktuellen Daten in `modules_data.py`, sowie eine schlanke
+`workload.json` (CP/SWS/Workload-Aufteilung je Modul) als Datenbrücke für den separaten
+[Vorlesungskalender](https://kalender.peppermięta.de). Nicht direkt in den generierten Dateien
+editieren – Änderungen gehen beim nächsten Build verloren.
 
 ## Lizenz & Quelle
 
@@ -50,7 +52,7 @@ Fehler gefunden oder Feedback? `info@peppermięta.de`
 
 ## Versionshistorie
 
-Alle Änderungen werden in [CHANGELOG.md](CHANGELOG.md) dokumentiert (aktuelle Version: **1.11.2**).
+Alle Änderungen werden in [CHANGELOG.md](CHANGELOG.md) dokumentiert (aktuelle Version: **1.12.0**).
 
 ## Farbpalette
 

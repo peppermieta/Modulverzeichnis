@@ -165,14 +165,6 @@
     font-size: 13px; background: var(--surface); color: var(--text);
   }
   #searchInput:focus { outline: none; border-color: var(--accent); }
-
-  /* Globaler Tastatur-Fokus-Indikator – bisher gab es nur beim Suchfeld
-     einen expliziten Fokus-Zustand, sonst den (im Dark Mode teils
-     schlecht sichtbaren) Browser-Standard. */
-  :focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
   .search-results {
     display: none; position: absolute; top: calc(100% + 6px); left: 0; right: 0;
     background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
@@ -327,7 +319,7 @@
   <div>
     <h1>Modulverzeichnis</h1>
     <p>Bachelor Soziale Arbeit · EH Ludwigsburg · alle 28 Module im Überblick ·
-      <a class="header-cal-icon" href="https://kalender.xn--peppermita-lnb.de/" target="_blank" rel="noopener" aria-label="Zum Vorlesungskalender">
+      <a class="header-cal-icon" href="https://kalender.xn--peppermita-lnb.de/" target="_blank" aria-label="Zum Vorlesungskalender">
         <svg width="18" height="18" viewBox="0 0 480 480" aria-hidden="true">
           <circle cx="240" cy="240" r="220" fill="#dfbbea"/>
           <rect x="174" y="155" width="16" height="30" rx="8" fill="#403f4c"/>
@@ -382,14 +374,14 @@
 
 <div class="search-wrap">
   <div class="search-inner">
-    <span class="search-icon" aria-hidden="true">🔍</span>
-    <input id="searchInput" type="text" placeholder="Modul, Nummer oder Verantwortliche suchen…" autocomplete="off" aria-label="Modul suchen" />
-    <div id="searchResults" class="search-results" aria-live="polite" aria-atomic="true"></div>
+    <span class="search-icon">🔍</span>
+    <input id="searchInput" type="text" placeholder="Modul, Nummer oder Verantwortliche suchen…" autocomplete="off" />
+    <div id="searchResults" class="search-results"></div>
   </div>
 </div>
 
 <div class="progress-wrap">
-  <button type="button" class="merkliste-toggle" id="merklisteToggle" aria-pressed="false">★ Nur Merkliste zeigen</button>
+  <button type="button" class="merkliste-toggle" id="merklisteToggle">★ Nur Merkliste zeigen</button>
   <button type="button" class="merkliste-toggle" id="statusResetBtn">↺ Auswahl zurücksetzen</button>
 </div>
 
@@ -414,14 +406,14 @@
   Diese inoffizielle, selbst erstellte Übersicht ist rechtlich nicht bindend. Alle Angaben wurden
   nach bestem Wissen übertragen, Fehler sind aber nicht ausgeschlossen – maßgeblich ist
   ausschließlich das offizielle
-  <a href="https://www.eh-ludwigsburg.de/fileadmin/user_upload/Studium/Studienangebot/Bachelorstudiengaenge/Soziale_Arbeit/BA_Soziale_Arbeit_MHB_2025_Stand_03.2026.pdf" target="_blank" rel="noopener">Modulhandbuch der EH Ludwigsburg</a>
+  <a href="https://www.eh-ludwigsburg.de/fileadmin/user_upload/Studium/Studienangebot/Bachelorstudiengaenge/Soziale_Arbeit/BA_Soziale_Arbeit_MHB_2025_Stand_03.2026.pdf" target="_blank">Modulhandbuch der EH Ludwigsburg</a>
   (Version 2025, Stand: 27.03.2026). Kontaktdaten der Modulverantwortlichen entnommen aus dem
-  <a href="https://www.eh-ludwigsburg.de/hochschule/personenverzeichnis" target="_blank" rel="noopener">Personenverzeichnis der EH Ludwigsburg</a>,
+  <a href="https://www.eh-ludwigsburg.de/hochschule/personenverzeichnis" target="_blank">Personenverzeichnis der EH Ludwigsburg</a>,
   alle übrigen Angaben aus dem verlinkten Modulhandbuch.<br>
   Der Quellcode dieser Seite ist unter der <strong>MIT-Lizenz</strong> frei nutzbar und veränderbar –
-  Repository auf <a href="https://github.com/peppermieta/Modulverzeichnis" target="_blank" rel="noopener">GitHub</a>.
+  Repository auf <a href="https://github.com/peppermieta/Modulverzeichnis" target="_blank">GitHub</a>.
   Die Inhalte (Modulhandbuch-Daten) gehören der EH Ludwigsburg und sind davon ausgenommen.
-  <br><span style="opacity:.7;">Version 1.11.2</span>
+  <br><span style="opacity:.7;">Version 1.12.0</span>
 </footer>
 
 <script>
@@ -434,12 +426,7 @@ const CP_SEEN_KEY = 'mv_cp_seen'; // s. renderCPProgress(): haelt fest, ob die C
 // HTML-Sonderzeichen escapen, gegen Cross-Site-Scripting bei allen Werten,
 // die letztlich aus modules_data.py stammen und ungeprüft in Templates landen.
 function esc(s) {
-  return String(s ?? '')
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;')
-    .replace(/'/g,'&#39;');
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
 // ── PERSÖNLICHER STATUS (Merkliste + Fortschritts-Tracker) ──────────────────
@@ -498,7 +485,7 @@ function moduleCardHtml(m, currentSem, overrides) {
   const override = overrides[m.nr];
   const badgeIcon = {vorgemerkt: '★', abgeschlossen: '✓', offen: '○'}[override];
   const badgeHtml = badgeIcon
-    ? `<span class="mv-card-badge badge-${override}" title="Manuell: ${override}" aria-label="Manuell: ${override}">${badgeIcon}</span>` : '';
+    ? `<span class="mv-card-badge badge-${override}" title="Manuell: ${override}">${badgeIcon}</span>` : '';
   const span = m.sem.length > 1 ? `<div class="mv-card-span">${m.sem[0]}.–${m.sem[m.sem.length-1]}. Sem.</div>` : '';
   return `<a href="#modul-${m.nr}" class="${cls}">
     ${badgeHtml}
@@ -570,7 +557,7 @@ function renderVerantwortung(names, emails) {
   const emailList = (emails || '').split(' / ');
   return '<div class="mv-verantwortung">' + nameList.map((name, i) => {
     const email = emailList[i];
-    const mail = email ? ` <a href="mailto:${email}" class="mv-mail-link" title="E-Mail an ${esc(name)}" aria-label="E-Mail an ${esc(name)}">✉</a>` : '';
+    const mail = email ? ` <a href="mailto:${email}" class="mv-mail-link" title="E-Mail an ${esc(name)}">✉</a>` : '';
     return `<div>${esc(name)}${mail}</div>`;
   }).join('') + '</div>';
 }
@@ -608,7 +595,7 @@ function renderDetails(currentSem, merklisteOnly) {
     const statusBar = `
       <div class="mv-status-bar">
         Mein Status:
-        <select class="mv-status-select" data-nr="${m.nr}" aria-label="Status für Modul M${String(m.nr).padStart(2,'0')}">
+        <select class="mv-status-select" data-nr="${m.nr}">
           ${opt('', `Automatisch (${autoLabel})`)}
           ${opt('vorgemerkt', '★ Vorgemerkt')}
           ${opt('abgeschlossen', '✓ Abgeschlossen')}
@@ -696,7 +683,7 @@ function renderDetails(currentSem, merklisteOnly) {
 // "Lücke" (nichts sichtbar), bei 100 % ist die Lücke 0 (ganzer Kreis sichtbar).
 // r=16 im SVG-<circle> (siehe HTML weiter unten) → Umfang = 2 * π * 16.
 function renderCPProgress(currentSem, overrides) {
-  const headerEl = cpProgressHeaderEl;
+  const headerEl = document.getElementById('cpProgressHeader');
   const hasData = currentSem || Object.keys(overrides).length > 0;
   // Einmal sichtbar gewordene Anzeige bleibt sichtbar (zeigt dann ggf. "0%"),
   // statt beim Zurücksetzen unerwartet zu verschwinden – das wirkte wie ein
@@ -714,10 +701,10 @@ function renderCPProgress(currentSem, overrides) {
   const doneCP = MODULES.filter(m => isEffectivelyDone(m, currentSem, overrides)).reduce((sum, m) => sum + m.cp, 0);
   const pct = totalCP ? Math.round(doneCP / totalCP * 100) : 0;
   const circumferenceH = 2 * Math.PI * 16;
-  cpRingFillHeaderEl.style.strokeDasharray = circumferenceH;
-  cpRingFillHeaderEl.style.strokeDashoffset = circumferenceH * (1 - pct / 100);
-  cpRingPctHeaderEl.textContent = pct + '%';
-  cpProgressHeaderCPEl.textContent = `${doneCP}/${totalCP} `;
+  document.getElementById('cpRingFillHeader').style.strokeDasharray = circumferenceH;
+  document.getElementById('cpRingFillHeader').style.strokeDashoffset = circumferenceH * (1 - pct / 100);
+  document.getElementById('cpRingPctHeader').textContent = pct + '%';
+  document.getElementById('cpProgressHeaderCP').textContent = `${doneCP}/${totalCP} `;
 }
 
 let merklisteOnly = false;
@@ -744,7 +731,6 @@ function applySemester(sem) {
 document.getElementById('merklisteToggle').addEventListener('click', () => {
   merklisteOnly = !merklisteOnly;
   document.getElementById('merklisteToggle').classList.toggle('active', merklisteOnly);
-  document.getElementById('merklisteToggle').setAttribute('aria-pressed', String(merklisteOnly));
   refreshAll();
 });
 
@@ -758,7 +744,6 @@ document.getElementById('statusResetBtn').addEventListener('click', () => {
   if (merklisteOnly) {
     merklisteOnly = false;
     document.getElementById('merklisteToggle').classList.remove('active');
-    document.getElementById('merklisteToggle').setAttribute('aria-pressed', 'false');
   }
   refreshAll();
 });
@@ -787,7 +772,6 @@ function ensureModuleVisible(nr) {
   if (merklisteOnly && getOverrides()[nr] !== 'vorgemerkt') {
     merklisteOnly = false;
     document.getElementById('merklisteToggle').classList.remove('active');
-    document.getElementById('merklisteToggle').setAttribute('aria-pressed', 'false');
     refreshAll();
   }
 }
@@ -818,14 +802,6 @@ document.addEventListener('click', e => {
     requestAnimationFrame(() => { location.hash = 'modul-' + nr; });
   }
 });
-
-// Statisch im Header, werden nie per innerHTML neu erzeugt – einmalig
-// gecacht statt bei jedem renderCPProgress()-Aufruf neu gesucht (wie
-// searchInput direkt darunter).
-const cpProgressHeaderEl = document.getElementById('cpProgressHeader');
-const cpRingFillHeaderEl = document.getElementById('cpRingFillHeader');
-const cpRingPctHeaderEl = document.getElementById('cpRingPctHeader');
-const cpProgressHeaderCPEl = document.getElementById('cpProgressHeaderCP');
 
 const searchInput = document.getElementById('searchInput');
 const searchResultsEl = document.getElementById('searchResults');
@@ -867,14 +843,7 @@ function renderSearchResults(query) {
   });
 }
 
-// Kurze Verzögerung vor dem Rendern (statt bei jedem Tastendruck sofort),
-// damit die aria-live-Ankündigung der Trefferliste (s. #searchResults)
-// Screenreader-Nutzer nicht bei jedem einzelnen Buchstaben unterbricht.
-let searchDebounceTimer = null;
-searchInput.addEventListener('input', () => {
-  clearTimeout(searchDebounceTimer);
-  searchDebounceTimer = setTimeout(() => renderSearchResults(searchInput.value), 300);
-});
+searchInput.addEventListener('input', () => renderSearchResults(searchInput.value));
 searchInput.addEventListener('focus', () => { if (searchInput.value.trim()) renderSearchResults(searchInput.value); });
 document.addEventListener('click', e => {
   if (!e.target.closest('.search-wrap')) searchResultsEl.style.display = 'none';
@@ -941,11 +910,8 @@ if ('ResizeObserver' in window) {
 }
 // Falls die Seite direkt mit einem #modul-Anker geöffnet wurde, könnte der
 // Browser schon vor der Höhenmessung gescrollt haben – einmal korrigieren.
-// getElementById statt querySelector(location.hash): wirft anders als
-// querySelector keinen Fehler bei einem ungültigen Hash (z.B. manuell
-// veränderter Link), sondern liefert im Zweifel einfach null zurück.
 if (location.hash) {
-  const target = document.getElementById(location.hash.slice(1));
+  const target = document.querySelector(location.hash);
   if (target) requestAnimationFrame(() => target.scrollIntoView({block: 'start'}));
 }
 </script>
